@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.0.0">
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/logo.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/logo.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/logo.png">
+  <link rel="mask-icon" href="/images/logo.png" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha256-CTSx/A06dm1B063156EVh15m6Y67pAjZZaQc89LLSrU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"scorevictim.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":true,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta property="og:type" content="blog">
+<meta property="og:title" content="大数据建模与分析笔记">
+<meta property="og:url" content="https://scorevictim.github.io/posts/47238/index.html">
+<meta property="og:site_name" content="青崖之间">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://scorevictim.github.io/images/BigData1/big-data-2.jpg">
+<meta property="og:image" content="https://scorevictim.github.io/posts/47238/intro.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/47238/helloworld.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/47238/simple_social_graph.png">
+<meta property="article:published_time" content="2022-09-20T22:40:47.000Z">
+<meta property="article:modified_time" content="2023-11-12T02:42:19.002Z">
+<meta property="article:author" content="分数受害者">
+<meta property="article:tag" content="大数据">
+<meta property="article:tag" content="数据分析">
+<meta property="article:tag" content="笔记">
+<meta property="article:tag" content="建模">
+<meta property="article:tag" content="python">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://scorevictim.github.io/images/BigData1/big-data-2.jpg">
+
+
+<link rel="canonical" href="https://scorevictim.github.io/posts/47238/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://scorevictim.github.io/posts/47238/","path":"posts/47238/","title":"大数据建模与分析笔记"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>大数据建模与分析笔记 | 青崖之间</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="青崖之间" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">青崖之间</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">北海虽赊，扶摇可接</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-留言板"><a href="/contact/" rel="section"><i class="fa fa-comment fa-fw"></i>留言板</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-sitemap"><a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a></li><li class="menu-item menu-item-rss"><a href="/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>RSS</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">2.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%98%A0%E5%B0%84%E8%A7%84%E7%BA%A6-MapReduce"><span class="nav-number">3.</span> <span class="nav-text">映射规约-MapReduce</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A1%88%E4%BE%8B%E2%80%94-%E8%AF%8D%E9%A2%91%E7%BB%9F%E8%AE%A1"><span class="nav-number">3.1.</span> <span class="nav-text">案例—-词频统计</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spark"><span class="nav-number">4.</span> <span class="nav-text">Spark</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PySpark"><span class="nav-number">5.</span> <span class="nav-text">PySpark</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SparkContext%E5%AF%B9%E8%B1%A1"><span class="nav-number">5.1.</span> <span class="nav-text">SparkContext对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RDD%E7%AE%97%E5%AD%90%E4%BB%AC"><span class="nav-number">5.2.</span> <span class="nav-text">RDD算子们</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PySpark-SQL"><span class="nav-number">6.</span> <span class="nav-text">PySpark SQL</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SparkSession%E5%AF%B9%E8%B1%A1"><span class="nav-number">6.1.</span> <span class="nav-text">SparkSession对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%A9%E7%94%A8%E4%B8%8D%E5%90%8CAPI%E9%A3%8E%E6%A0%BC%E8%BF%9B%E8%A1%8C%E5%BC%80%E5%8F%91"><span class="nav-number">6.2.</span> <span class="nav-text">利用不同API风格进行开发</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GraphFrames"><span class="nav-number">7.</span> <span class="nav-text">GraphFrames</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-number">7.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE"><span class="nav-number">7.2.</span> <span class="nav-text">配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Python-%E7%8E%AF%E5%A2%83%E4%BD%BF%E7%94%A8-GraphFrames"><span class="nav-number">7.2.1.</span> <span class="nav-text">Python 环境使用 GraphFrames</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Jupyter-%E7%8E%AF%E5%A2%83%E4%BD%BF%E7%94%A8-GraphFrames"><span class="nav-number">7.2.2.</span> <span class="nav-text">Jupyter 环境使用 GraphFrames</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Motif-Find"><span class="nav-number">7.3.</span> <span class="nav-text">Motif Find</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Amazon-Athena"><span class="nav-number">8.</span> <span class="nav-text">Amazon Athena</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B-1"><span class="nav-number">8.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8"><span class="nav-number">8.2.</span> <span class="nav-text">使用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%8E%E8%AE%B0"><span class="nav-number">9.</span> <span class="nav-text">后记</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="分数受害者"
+      src="/uploads/avatar.jpg">
+  <p class="site-author-name" itemprop="name">分数受害者</p>
+  <div class="site-description" itemprop="description">人生如痴人说梦，充满着喧哗与骚动，却没有任何意义</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">76</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://blog.vinfall.com/" title="https:&#x2F;&#x2F;blog.vinfall.com&#x2F;" rel="noopener" target="_blank">Vinfall@Geekademy</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://scorevictim.github.io/posts/47238/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+      <meta itemprop="name" content="分数受害者">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="青崖之间">
+      <meta itemprop="description" content="人生如痴人说梦，充满着喧哗与骚动，却没有任何意义">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="大数据建模与分析笔记 | 青崖之间">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          大数据建模与分析笔记
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-09-20 15:40:47" itemprop="dateCreated datePublished" datetime="2022-09-20T15:40:47-07:00">2022-09-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-11-11 18:42:19" itemprop="dateModified" datetime="2023-11-11T18:42:19-08:00">2023-11-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>13k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>12 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><img src="/images/BigData1/big-data-2.jpg" alt="banner"></p>
+<span id="more"></span>
+
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>就在十几年前，计算机的储存空间对于普通消费用户来说还是一个相对稀缺的资源。还记得当年家里购买的第一台台式机，它一整台机器满打满算不过只有40多GB的空间，而去除XP系统后，空间更是所剩无几。因此，对于当年的我来说，像“暗黑破坏神2”这种占用空间高达1.1GB的游戏就已经十分令人震撼了。</p>
+<p>随着这些年的硬件迭代，用户的储存需求也高速增长着，如今，我们买的一台新电脑如果没个TB级的储存空间，仿佛都不好意思和人打招呼。当然，这并不仅仅是参数的好看与否的问题，更重要的是，每个人所需的存储空间的确是指数级的上升了。比如随便下载一个3A水准的游戏、随便下载一个蓝光电影、或随便装点软件，所需的容量就要50+GB了。</p>
+<p>对于普通用户尚且如此，那就更不用说企业级的数据储存需求了。事实上，对于企业、或是数据中心来说，TB都算不上是基本单位。在数据中心中，EB这样的夸张单位其实也就是属于基本操作。</p>
+<p>好了，意识流的废话就先说这么多了，总而言之，在这个所谓的“大数据”的时代，过去的存储计算结构，比如将所有数据放在一台服务器上进行存储、运算，显然已经无法胜任当前的需求。这种背景下，便出现了各类与“大数据”相关的技术，以更高效地解决分布式计算的各种需求。为了追赶一下时代的步伐，本学渣也在这一学期选了“大数据建模与分析”这门课，而一如既往，为了防止课程内容量超出本人微薄的脑容量，我在这里开一篇笔记博文，以备未来不时之需。</p>
+<p>目前课程还未结束，本文会随着课程进度，同步更新。</p>
+<hr>
+<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>简而言之，这门课程主要只学习三大块内容：大数据分析核心“MapReduce”、MapReduce的新一代实现Spark以及Python环境下的PySpark、最后是云存储Amazon Athena (SQL)。</p>
+<img src="/posts/47238/intro.png" class="">
+
+<h2 id="映射规约-MapReduce"><a href="#映射规约-MapReduce" class="headerlink" title="映射规约-MapReduce"></a>映射规约-MapReduce</h2><p>大数据分析中，最基础的部分被称为“MapReduce”。那么什么是“MapReduce”呢？官方一点的说法是一种软件架构，但对我而言，这就是一套标准化的工作流程范式，最初，谷歌在它发表的一篇论文中对其进行了描述。当然，谷歌并没有好心到把它内部使用的MapReduce源代码放出，而仅仅是从宏观层面“描述”了整个流程。当然只看宏观描述就能复现实验的大佬总是存在的，于是在这篇论文后，Hadoop团队利用Java实现了MapReduce并进行了开源，得以让大众从代码层面可以使用这一套流程，因此当我们说到MapReduce时，大多指的就是Hadoop团队实现的这一套开源代码。</p>
+<p>见名知意，MapReduce是“Map”和“Reduce”两词的和，也就是说，这一工作流程被分为映射Map和规约Reduce。在Map阶段之前，首先我们会将要处理的文件拆分，然后分发给不同的子节点机器，每个机器便会按照Map中我们自定义的方法对数据进行处理并输出结果。而Reduce阶段则将前面的结果进行汇总，最终得到我们想要的数据。</p>
+<p>当然，由于MapReduce是在业界进化出来的模式，自带反直觉性，也就是说，我们正常人一般来说是不会按它那套模式思考问题的，这就导致了这些描述性的文字对我们而言其实没有实感。所以我就不在这多写了，直接上案例，多做几个案例就能大概明白这一套玩法了。</p>
+<h3 id="案例—-词频统计"><a href="#案例—-词频统计" class="headerlink" title="案例—-词频统计"></a>案例—-词频统计</h3><p>词频统计属于是MapReduce的入门案例。</p>
+<p>需求很直观：统计一份文档中每个词出现的频次。</p>
+<p>我们最直观的想法，当然是遍历文档中每一个词，然后将其放到哈希表中。当然，这种方法最大问题就是耗时长，且对于超出机器内存大小的文件无法处理。</p>
+<p>而MapReduce则将过程分为“Map”和“Reduce”，在map阶段，将原数据处理为许多(word, 1)的格式，在reduce阶段，则将这些键值对整理为(word, count)的结果输出。</p>
+<img src="/posts/47238/helloworld.png" class="">
+
+<hr>
+<h2 id="Spark"><a href="#Spark" class="headerlink" title="Spark"></a>Spark</h2><p>Spark是Apache下的大数据处理引擎，其建立在“弹性分布式数据集”(Resilient Distributed Dataset)之上，当然我们一般将这个数据集简称为“RDD”</p>
+<p>这里不去讨论RDD的具体实现，也不过多探讨Spark的底层原理，简介可以在 <a href="%5Bhttps://en.wikipedia.org/wiki/Apache_Spark%5D" title="[Apache_Spark Wiki]" target="">这里</a> 看到。总而言之，相较于之前的Hadoop MapReduce，Spark的中间数据都是储存在内存层面，而不是硬盘，因此其速度较Hadoop MapReduce要快许多。也就是说Spark是Hadoop MapReduce的继任者。</p>
+<hr>
+<h2 id="PySpark"><a href="#PySpark" class="headerlink" title="PySpark"></a>PySpark</h2><p>Spark起初是写在Java语言之上，然而，由于Python相较java而言，对于大部分用户来说更简单易用，Spark也对于Python进行了适配，而这就是PySpark。</p>
+<p>当我们在Python平台下使用Spark，由于其弱类语言的特性，我们无需考虑返回值的类型之类的东西，开发极其简单。可以说PySpark将大数据的门槛极大的拉低。</p>
+<h3 id="SparkContext对象"><a href="#SparkContext对象" class="headerlink" title="SparkContext对象"></a>SparkContext对象</h3><p>使用Spark时，我们首先要获取一个SparkContext对象来进行初始化。</p>
+<h3 id="RDD算子们"><a href="#RDD算子们" class="headerlink" title="RDD算子们"></a>RDD算子们</h3><p>Spark处理大数据，其实和SQL很像，我们作为开发者，代码无需过多关注集群机器之间的交互，在开发时，只要使用RDD的算子，Spark会在运行时自动调度集群资源。只要当成是在同一台机器上运行进行开发即可。</p>
+<p>RDD算子有很多，这里不一一阐述，就用一次作业来作为案例。</p>
+<blockquote>
+<p>需求：我们现在有一份电影评分数据，格式为：&lt;用户名user_id&gt;&lt;,&gt;&lt;电影名movie_id&gt;&lt;,&gt;&lt;评分rating&gt;。我们想得到的结果有:</p>
+</blockquote>
+<ol>
+<li>每个电影的平均分数，输出为：[movie_id_1] [average-rating-for-movie_id_1]</li>
+<li>获得到5分的电影列表，输出为：[“rating-5”] [list-of-unique_movies-rated-as-5]<br>P.S. 额外要求是过滤掉低于2的评分以及结果过滤掉均分小于2.5的结果。</li>
+</ol>
+<p>做法如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">#　首先我们创建一个SparkContext对象，这是标准流程</span></span><br><span class="line"><span class="keyword">from</span> pyspark <span class="keyword">import</span> SparkContext</span><br><span class="line">sc = SparkContext(<span class="string">&#x27;local&#x27;</span>, <span class="string">&#x27;test&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#　通过textFile方法来从txt中读取数据</span></span><br><span class="line">raw_rdd = sc.textFile(<span class="string">&quot;movies.txt&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#　按逗号切分每一行数据，然后将评分小于２的过滤</span></span><br><span class="line">filtered_rdd = raw_rdd \</span><br><span class="line">    .<span class="built_in">map</span>(<span class="keyword">lambda</span> x: x.split(<span class="string">&#x27;,&#x27;</span>)) \</span><br><span class="line">    .<span class="built_in">filter</span>(<span class="keyword">lambda</span> x: (<span class="built_in">len</span>(x)==<span class="number">3</span>) <span class="keyword">and</span> (x[<span class="number">2</span>]&gt;=<span class="string">&#x27;2&#x27;</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将数据转换为(“电影名”，评分)的格式</span></span><br><span class="line">mapped_rdd = filtered_rdd \</span><br><span class="line">    .<span class="built_in">map</span>(<span class="keyword">lambda</span> x: (x[<span class="number">1</span>], <span class="built_in">ord</span>(x[<span class="number">2</span>])-<span class="number">48</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment">#　这里做一下缓存，因为第二个需求还是要用到这个RDD</span></span><br><span class="line">mapped_rdd.cache()</span><br><span class="line">	</span><br><span class="line"><span class="comment">#　计算并输出评分均值结果</span></span><br><span class="line">average_rdd = mapped_rdd.mapValues(<span class="keyword">lambda</span> v: (v, <span class="number">1</span>)) \</span><br><span class="line">    .reduceByKey(<span class="keyword">lambda</span> a,b: (a[<span class="number">0</span>]+b[<span class="number">0</span>], a[<span class="number">1</span>]+b[<span class="number">1</span>])) \</span><br><span class="line">    .mapValues(<span class="keyword">lambda</span> v: v[<span class="number">0</span>]/v[<span class="number">1</span>]) \</span><br><span class="line">    .<span class="built_in">filter</span>(<span class="keyword">lambda</span> x: x[<span class="number">1</span>]&gt;=<span class="number">2.5</span>)</span><br><span class="line">	</span><br><span class="line"><span class="comment">#　统计获得到五分的电影</span></span><br><span class="line">rate_five_rdd = mapped_rdd.<span class="built_in">filter</span>(<span class="keyword">lambda</span> x: x[<span class="number">1</span>]==<span class="number">5</span>) \</span><br><span class="line">    .<span class="built_in">map</span>(<span class="keyword">lambda</span> x: (<span class="string">&quot;rating-5&quot;</span>, x[<span class="number">0</span>])) \</span><br><span class="line">    .distinct() \</span><br><span class="line">    .groupByKey() \</span><br><span class="line">    .<span class="built_in">map</span>(<span class="keyword">lambda</span> x: (x[<span class="number">0</span>], <span class="built_in">list</span>(x[<span class="number">1</span>])))</span><br><span class="line">	</span><br><span class="line"><span class="comment">#　加入缓存区</span></span><br><span class="line">rate_five_rdd.cache()</span><br><span class="line">average_rdd.cache()</span><br><span class="line">	</span><br><span class="line"><span class="comment">#	后续无需这个缓存，将其清出内存</span></span><br><span class="line">mapped_rdd.unpersist()</span><br><span class="line"></span><br><span class="line"><span class="comment">#　将两个需求结果连接为一份RDD</span></span><br><span class="line">result_rdd = average_rdd.union(rate_five_rdd)</span><br><span class="line"></span><br><span class="line"><span class="comment">#　输出结果</span></span><br><span class="line">result_rdd.saveAsTextFile(<span class="string">&quot;result&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 最终结果为：</span></span><br><span class="line"><span class="comment"># [(&#x27;m1&#x27;, 3.0),</span></span><br><span class="line"><span class="comment">#  (&#x27;m2&#x27;, 4.0),</span></span><br><span class="line"><span class="comment">#  (&#x27;m3&#x27;, 4.2),</span></span><br><span class="line"><span class="comment">#  (&#x27;m4&#x27;, 4.5),</span></span><br><span class="line"><span class="comment">#  (&#x27;m5&#x27;, 5.0),</span></span><br><span class="line"><span class="comment">#  (&#x27;rating-5&#x27;, [&#x27;m1&#x27;, &#x27;m3&#x27;, &#x27;m2&#x27;, &#x27;m4&#x27;, &#x27;m5&#x27;])]</span></span><br></pre></td></tr></table></figure>
+
+<p>还有一个作业，这里用到了csv文件，其实更好的做法是放在下文讲的PySpark SQL中来做，但这里还是先采用RDD算子的方式，以增加熟练度。</p>
+<blockquote>
+<p>需求：我们现在有一份白宫的访客数据。我们想得到的有：</p>
+</blockquote>
+<ol>
+<li>前十的访客名单，输出为：[visitor] [frequency]，其中[visitor]中为(NAMELAST, NAMEFIRST)</li>
+<li>前十的受访者名单，输出为：[visitor] [frequency]，其中[visitor]中为(visitee_namelast, visitee_namefirst)</li>
+<li>前十的访客-受访者列表，输出为：[visitor][-][visitee] [frequency]</li>
+<li>丢弃（无效）的数据数，无效的判定标准为：NAMELAST或visitee_namelast为空</li>
+</ol>
+<p>做法如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 下载文件</span></span><br><span class="line">wget https://obamawhitehouse.archives.gov/sites/default/files/disclosures/whitehouse_waves-2016_12.csv_.zip</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 解压文件</span></span><br><span class="line"><span class="keyword">import</span> zipfile</span><br><span class="line"><span class="keyword">with</span> zipfile.ZipFile(<span class="string">&quot;whitehouse_waves-2016_12.csv_.zip&quot;</span>, <span class="string">&quot;r&quot;</span>) <span class="keyword">as</span> zip_ref:</span><br><span class="line">    zip_ref.extractall()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建SparkContext对象</span></span><br><span class="line"><span class="keyword">from</span> pyspark.sql <span class="keyword">import</span> SparkSession</span><br><span class="line">spark = SparkSession.builder.appName(<span class="string">&quot;white-house-log&quot;</span>).getOrCreate()</span><br><span class="line">sc = spark.sparkContext</span><br><span class="line"></span><br><span class="line"><span class="comment"># 读取文件</span></span><br><span class="line">records_raw_rdd = sc.textFile(<span class="string">&quot;whitehouse_waves-2016_12.csv&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 保存首行数据并在rdd中移除首行</span></span><br><span class="line">header = records_raw_rdd.first()</span><br><span class="line">recordsNoHeader_raw_rdd = records_raw_rdd.<span class="built_in">filter</span>(<span class="keyword">lambda</span> row: row != header)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 由于首行数据存放在driver机器中，其他节点想要使用该数据，</span></span><br><span class="line"><span class="comment"># 则需向其网络请求，因此先将首行数据进行广播，以节约网络IO资源</span></span><br><span class="line">header_list = header.split(<span class="string">&quot;,&quot;</span>)</span><br><span class="line">broadcast = sc.broadcast(header_list)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 声明一个累加器，来记录抛弃的数据数</span></span><br><span class="line"><span class="comment"># 这里为什么不能直接声明一个变量count=0，然后使用count+=1？</span></span><br><span class="line"><span class="comment"># 和上面一样，因为普通变量只会存在driver机器中，</span></span><br><span class="line"><span class="comment"># 导致每次子节点使用，都会先请求该变量，</span></span><br><span class="line"><span class="comment"># 而driver永远都只会将count=0发出。</span></span><br><span class="line"><span class="comment"># 这里由于我们已经去除首行，所以初始化为1</span></span><br><span class="line">acmlt = sc.accumulator(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 声明一个函数，</span></span><br><span class="line"><span class="comment"># 用来过滤 &#x27;NAMELAST&#x27; 或 &#x27;visitee_namelast&#x27;为空的记录</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">filter_function</span>(<span class="params">line</span>):</span><br><span class="line">    <span class="keyword">if</span>(line[broadcast.value.index(<span class="string">&#x27;NAMELAST&#x27;</span>)] == <span class="string">&quot;&quot;</span> <span class="keyword">or</span> line[broadcast.value.index(<span class="string">&#x27;visitee_namelast&#x27;</span>)] == <span class="string">&quot;&quot;</span>):</span><br><span class="line">        <span class="keyword">global</span> acmlt</span><br><span class="line">        acmlt += <span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取过滤后的RDD并进行缓存	</span></span><br><span class="line">filtered_rdd = recordsNoHeader_raw_rdd\</span><br><span class="line">    .<span class="built_in">map</span>(<span class="keyword">lambda</span> line: line.split(<span class="string">&quot;,&quot;</span>))\</span><br><span class="line">    .<span class="built_in">filter</span>(filter_function)</span><br><span class="line">filtered_rdd.cache()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 实现需求一并缓存</span></span><br><span class="line">vistor_rdd = filtered_rdd\</span><br><span class="line">    .<span class="built_in">map</span>(<span class="keyword">lambda</span> line: ((line[broadcast.value.index(<span class="string">&#x27;NAMELAST&#x27;</span>)].upper(), line[broadcast.value.index(<span class="string">&#x27;NAMEFIRST&#x27;</span>)].upper()), <span class="number">1</span>))\</span><br><span class="line">    .reduceByKey(<span class="keyword">lambda</span> x, y: x + y)\</span><br><span class="line">    .sortBy(<span class="keyword">lambda</span> x: x[<span class="number">1</span>], <span class="literal">False</span>)</span><br><span class="line">vistor_rdd.cache()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 实现需求二并缓存</span></span><br><span class="line">vistee_rdd = filtered_rdd\</span><br><span class="line">    .<span class="built_in">map</span>(<span class="keyword">lambda</span> line: ((line[broadcast.value.index(<span class="string">&#x27;visitee_namelast&#x27;</span>)].upper(), line[broadcast.value.index(<span class="string">&#x27;visitee_namefirst&#x27;</span>)].upper()), <span class="number">1</span>))\</span><br><span class="line">    .reduceByKey(<span class="keyword">lambda</span> x, y: x + y)\</span><br><span class="line">    .sortBy(<span class="keyword">lambda</span> x: x[<span class="number">1</span>], <span class="literal">False</span>)</span><br><span class="line">vistee_rdd.cache()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 实现需求三并缓存</span></span><br><span class="line">vistor_to_vistee_rdd = filtered_rdd\</span><br><span class="line">    .<span class="built_in">map</span>(<span class="keyword">lambda</span> line: (<span class="string">&quot;&lt;&quot;</span>+line[broadcast.value.index(<span class="string">&#x27;NAMELAST&#x27;</span>)].upper() + <span class="string">&quot;_&quot;</span> +\ </span><br><span class="line">	line[broadcast.value.index(<span class="string">&#x27;NAMEFIRST&#x27;</span>)].upper() + <span class="string">&quot;&gt; - &lt;&quot;</span> +\</span><br><span class="line">	line[broadcast.value.index(<span class="string">&#x27;visitee_namelast&#x27;</span>)].upper() + <span class="string">&quot;_&quot;</span> +\</span><br><span class="line">	line[broadcast.value.index(<span class="string">&#x27;visitee_namefirst&#x27;</span>)].upper()+<span class="string">&quot;&gt;&quot;</span>, <span class="number">1</span>))\</span><br><span class="line">    .reduceByKey(<span class="keyword">lambda</span> x, y: x + y)\</span><br><span class="line">    .sortBy(<span class="keyword">lambda</span> x: x[<span class="number">1</span>], <span class="literal">False</span>)</span><br><span class="line">vistor_to_vistee_rdd.cache()</span><br></pre></td></tr></table></figure>
+
+<h2 id="PySpark-SQL"><a href="#PySpark-SQL" class="headerlink" title="PySpark SQL"></a>PySpark SQL</h2><p>要进行数据处理、分析，除了上述的文本文档格式外，处理结构化数据SQL是无法绕开的一环，毕竟大部分学大数据的人，本质是要给企业打工的，而在企业中，数据一般都是存储在数据库中。</p>
+<p>对于SQL来说，Spark也支持直接对数据库进行访问，并可以SQL语句与代码混合运行，很方便。</p>
+<p>SparkSQL中，数据存储在一种叫DataFrame的类中，当然这与Pandas的DataFrame并不是一个东西，不过他们两个的实现十分相似，不同点是Spark的数据表存储在分布式集合之中，而非本机。</p>
+<p>当然，对于Jvm的开发，SparkSQL使用的数据抽象则是DataSet，其带有泛型特性，这里我们主要不讨论这个，因为python不支持泛型。</p>
+<p>那么DataFrame与之前的RDD有什么区别？主要是在于其存储的数据结构不同，RDD中什么都可以存，而DataFrame则仅存二维结构化数据（其实就是我们常见的表格）。</p>
+<h3 id="SparkSession对象"><a href="#SparkSession对象" class="headerlink" title="SparkSession对象"></a>SparkSession对象</h3><p>在之前的使用中，我们通过SparkContext来获取初始化，而在SparkSQL中，我们则是用更新的SparkSession来创建初始化对象。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 构建核心对象</span></span><br><span class="line">spark = SparkSession.builder.\</span><br><span class="line">		appName(<span class="string">&quot;test&quot;</span>).\</span><br><span class="line">		master(<span class="string">&quot;local[*]&quot;</span>).\</span><br><span class="line">		getOrCreate()</span><br><span class="line">		</span><br><span class="line"><span class="comment"># 也可以通过其构造之前使用的SparkContext</span></span><br><span class="line">sc = spark.sparkContext</span><br></pre></td></tr></table></figure>
+
+<p>之前的白宫访客问题，也可以使用DataFrame来处理：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># create a SparkSession object</span></span><br><span class="line"><span class="keyword">from</span> pyspark.sql <span class="keyword">import</span> SparkSession</span><br><span class="line"><span class="keyword">import</span> pyspark.sql.functions <span class="keyword">as</span> f</span><br><span class="line">spark = SparkSession.builder.appName(<span class="string">&quot;white-house-log&quot;</span>).getOrCreate()</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> zipfile</span><br><span class="line"><span class="keyword">with</span> zipfile.ZipFile(<span class="string">&quot;whitehouse_waves-2016_12.csv_.zip&quot;</span>, <span class="string">&quot;r&quot;</span>) <span class="keyword">as</span> zip_ref:</span><br><span class="line">    zip_ref.extractall()</span><br><span class="line"></span><br><span class="line"><span class="comment"># Header to be used as metadata</span></span><br><span class="line">df = spark.read.option(<span class="string">&quot;header&quot;</span>, <span class="string">&quot;true&quot;</span>).csv(<span class="string">&quot;whitehouse_waves-2016_12.csv&quot;</span>)</span><br><span class="line"></span><br><span class="line">df_visitor_n_visitee = df[<span class="string">&quot;namelast&quot;</span>, <span class="string">&quot;namefirst&quot;</span>, <span class="string">&quot;visitee_namelast&quot;</span>, <span class="string">&quot;visitee_namefirst&quot;</span>] \</span><br><span class="line">    .na.drop(subset=[<span class="string">&quot;namelast&quot;</span>, <span class="string">&quot;visitee_namelast&quot;</span>]) \</span><br><span class="line">    .toDF(*[c.lower() <span class="keyword">for</span> c <span class="keyword">in</span> [<span class="string">&quot;namelast&quot;</span>, <span class="string">&quot;namefirst&quot;</span>, <span class="string">&quot;visitee_namelast&quot;</span>, <span class="string">&quot;visitee_namefirst&quot;</span>]]) \</span><br><span class="line">    .withColumn(<span class="string">&#x27;namelast&#x27;</span>, f.lower(f.col(<span class="string">&#x27;namelast&#x27;</span>))) \</span><br><span class="line">    .withColumn(<span class="string">&#x27;namefirst&#x27;</span>, f.lower(f.col(<span class="string">&#x27;namefirst&#x27;</span>))) \</span><br><span class="line">    .withColumn(<span class="string">&#x27;visitee_namelast&#x27;</span>, f.lower(f.col(<span class="string">&#x27;visitee_namelast&#x27;</span>))) \</span><br><span class="line">    .withColumn(<span class="string">&#x27;visitee_namefirst&#x27;</span>, f.lower(f.col(<span class="string">&#x27;visitee_namefirst&#x27;</span>))) \</span><br><span class="line">    .select(f.concat_ws(<span class="string">&#x27;_&#x27;</span>,<span class="string">&quot;namelast&quot;</span>,<span class="string">&quot;namefirst&quot;</span>).alias(<span class="string">&quot;visitor&quot;</span>), </span><br><span class="line">            f.concat_ws(<span class="string">&#x27;_&#x27;</span>,<span class="string">&quot;visitee_namelast&quot;</span>,<span class="string">&quot;visitee_namefirst&quot;</span>).alias(<span class="string">&quot;visitee&quot;</span>)) \</span><br><span class="line">    .select(<span class="string">&quot;visitor&quot;</span>, </span><br><span class="line">            <span class="string">&quot;visitee&quot;</span>,</span><br><span class="line">            f.concat_ws(<span class="string">&#x27; - &#x27;</span>,<span class="string">&quot;visitor&quot;</span>,<span class="string">&quot;visitee&quot;</span>).alias(<span class="string">&quot;visitor-visitee&quot;</span>))</span><br><span class="line">			</span><br><span class="line">df_visitor_count = df_visitor_n_visitee.groupBy(<span class="string">&quot;visitor&quot;</span>) \</span><br><span class="line">    .count() \</span><br><span class="line">    .sort(<span class="string">&quot;count&quot;</span>, ascending=<span class="literal">False</span>) \</span><br><span class="line">    .limit(<span class="number">10</span>)</span><br><span class="line"></span><br><span class="line">df_visitee_count = df_visitor_n_visitee.groupBy(<span class="string">&quot;visitee&quot;</span>) \</span><br><span class="line">    .count() \</span><br><span class="line">    .sort(<span class="string">&quot;count&quot;</span>, ascending=<span class="literal">False</span>) \</span><br><span class="line">    .limit(<span class="number">10</span>)</span><br><span class="line"></span><br><span class="line">df_visitor_n_visitee_count = df_visitor_n_visitee.groupBy(<span class="string">&quot;visitor-visitee&quot;</span>) \</span><br><span class="line">    .count() \</span><br><span class="line">    .sort(<span class="string">&quot;count&quot;</span>, ascending=<span class="literal">False</span>) \</span><br><span class="line">    .limit(<span class="number">10</span>)</span><br><span class="line"></span><br><span class="line">dropped_count = df.count() - df_visitor_n_visitee.count()</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;The 10 most frequent visitors to the White House are:&quot;</span>)</span><br><span class="line">df_visitor_count.show()</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;The 10 most frequently visited people in the White House are:&quot;</span>)</span><br><span class="line">df_visitee_count.show()</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;The 10 most frequent visitor-visitee combinations are:&quot;</span>)</span><br><span class="line">df_visitor_n_visitee_count.show()</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;The number of records dropped is: <span class="subst">&#123;dropped_count&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># The 10 most frequent visitors to the White House are:</span></span><br><span class="line"><span class="comment"># +----------------+-----+</span></span><br><span class="line"><span class="comment"># |         visitor|count|</span></span><br><span class="line"><span class="comment"># +----------------+-----+</span></span><br><span class="line"><span class="comment"># |  kidwell_lauren|  222|</span></span><br><span class="line"><span class="comment"># | thomas_benjamin|  196|</span></span><br><span class="line"><span class="comment"># |     haro_steven|  183|</span></span><br><span class="line"><span class="comment"># |berner_katherine|  177|</span></span><br><span class="line"><span class="comment"># |   grant_patrick|  155|</span></span><br><span class="line"><span class="comment"># |     haas_jordan|  152|</span></span><br><span class="line"><span class="comment"># |    garza_steven|  127|</span></span><br><span class="line"><span class="comment"># |  martin_kathryn|  122|</span></span><br><span class="line"><span class="comment"># |     cohen_mandy|  122|</span></span><br><span class="line"><span class="comment"># |  brown_jennifer|  117|</span></span><br><span class="line"><span class="comment"># +----------------+-----+</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># The 10 most frequently visited people in the White House are:</span></span><br><span class="line"><span class="comment"># +--------------------+------+</span></span><br><span class="line"><span class="comment"># |             visitee| count|</span></span><br><span class="line"><span class="comment"># +--------------------+------+</span></span><br><span class="line"><span class="comment"># |     office_visitors|430881|</span></span><br><span class="line"><span class="comment"># |waves_visitorsoffice| 44129|</span></span><br><span class="line"><span class="comment"># |         bryant_ruth| 13970|</span></span><br><span class="line"><span class="comment"># |        oneil_olivia| 13155|</span></span><br><span class="line"><span class="comment"># |      thompson_jared| 11618|</span></span><br><span class="line"><span class="comment"># |             /_potus| 10900|</span></span><br><span class="line"><span class="comment"># |       burton_collin|  9672|</span></span><br><span class="line"><span class="comment"># |       megan_matthew|  7944|</span></span><br><span class="line"><span class="comment"># |      mayerson_asher|  6886|</span></span><br><span class="line"><span class="comment"># |  dessources_kalisha|  5289|</span></span><br><span class="line"><span class="comment"># +--------------------+------+</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># The 10 most frequent visitor-visitee combinations are:</span></span><br><span class="line"><span class="comment"># +--------------------+-----+</span></span><br><span class="line"><span class="comment"># |     visitor-visitee|count|</span></span><br><span class="line"><span class="comment"># +--------------------+-----+</span></span><br><span class="line"><span class="comment"># |kidwell_lauren - ...|  103|</span></span><br><span class="line"><span class="comment"># |haas_jordan - yud...|   90|</span></span><br><span class="line"><span class="comment"># |grant_patrick - y...|   89|</span></span><br><span class="line"><span class="comment"># |thomas_benjamin -...|   89|</span></span><br><span class="line"><span class="comment"># |haro_steven - yud...|   84|</span></span><br><span class="line"><span class="comment"># |cohen_mandy - lam...|   84|</span></span><br><span class="line"><span class="comment"># |berner_katherine ...|   82|</span></span><br><span class="line"><span class="comment"># |roche_shannon - y...|   70|</span></span><br><span class="line"><span class="comment"># |urizar_jennifer -...|   68|</span></span><br><span class="line"><span class="comment"># |martin_kathryn - ...|   61|</span></span><br><span class="line"><span class="comment"># +--------------------+-----+</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># The number of records dropped is: 59255</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="利用不同API风格进行开发"><a href="#利用不同API风格进行开发" class="headerlink" title="利用不同API风格进行开发"></a>利用不同API风格进行开发</h3><p>pyspark sql 可以使用两种风格：SQL风格或DSL风格</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># HelloWorld</span></span><br><span class="line">df = spark.read.csv(xxx.csv)</span><br><span class="line">df2 = df.toDF(<span class="string">&quot;id&quot;</span>, <span class="string">&quot;name&quot;</span>, <span class="string">&quot;score&quot;</span>)</span><br><span class="line">df2.printSchema()</span><br><span class="line">df2.show()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用SQL风格处理</span></span><br><span class="line">df2.createTempView(<span class="string">&quot;score&quot;</span>)</span><br><span class="line"></span><br><span class="line">spark.sql(<span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">	SELECT * FROM score WHERE name=&#x27;aa&#x27; LIMIT 5</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span>).show()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用DSL风格处理，这就和我们熟悉的pandas df很像了</span></span><br><span class="line">df2.where(<span class="string">&quot;name=&#x27;aa&#x27;&quot;</span>).limit(<span class="number">5</span>).show()</span><br></pre></td></tr></table></figure>
+
+<p>当然，pyspark的API还有很多很多，使用时查文档即可，这里就不多赘述了。</p>
+<hr>
+<h2 id="GraphFrames"><a href="#GraphFrames" class="headerlink" title="GraphFrames"></a>GraphFrames</h2><h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>除了上述的结构化表数据外，还有一种数据结构会在很多地方用到：图Graph。</p>
+<p>Graph简而言之就是用来描述关系的一类数据，如下图：</p>
+<img src="/posts/47238/simple_social_graph.png" class="">
+
+<p>而Spark原生并未对图数据定义相应的数据抽象，为了对图进行处理，社区大佬们制作了GraphFrames这一插件，以便对图进行计算。</p>
+<h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><h4 id="Python-环境使用-GraphFrames"><a href="#Python-环境使用-GraphFrames" class="headerlink" title="Python 环境使用 GraphFrames"></a>Python 环境使用 GraphFrames</h4><p>如果pySpark代码里用到了GraphFrame，则需要在提交程序文件时让spark加载相应版本的GraphFrame插件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">spark-submit --packages graphframes:graphframes:0.8.0-spark3.0-s_2.12 xxxx.py</span><br></pre></td></tr></table></figure>
+
+<h4 id="Jupyter-环境使用-GraphFrames"><a href="#Jupyter-环境使用-GraphFrames" class="headerlink" title="Jupyter 环境使用 GraphFrames"></a>Jupyter 环境使用 GraphFrames</h4><p>很多时候我们希望用jupyter来进行程序的调试，然而GraphFrame并不能安装到python环境中，因此运行import时会提示无法找到GraphFrame包。为了解决这一问题，我们需要在启动pyspark时开启一个包含了GraphFrame的jupyter的服务器。</p>
+<p>只需要在环境变量中添加两个变量即可：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> PYSPARK_DRIVER_PYTHON=jupyter</span><br><span class="line"><span class="built_in">export</span> PYSPARK_DRIVER_PYTHON_OPTS=notebook</span><br></pre></td></tr></table></figure>
+<p>运行下述指令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pyspark --packages graphframes:graphframes:0.8.0-spark3.0-s_2.12 --jars graphframes-0.8.0-spark3.0-s_2.12.jar</span><br></pre></td></tr></table></figure>
+
+<p>如果不加之前的环境变量，此时会直接进入pyspark环境，然而添加环境变量后，便会开启一个jupyter服务器，按提示连接便可。</p>
+<p>这里要提一句，该方法只有在本地环境才能使用，如果你在用Colab一类的远程环境，就没法用GraphFrame了。</p>
+<h3 id="Motif-Find"><a href="#Motif-Find" class="headerlink" title="Motif Find"></a>Motif Find</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> graphframes <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> pyspark <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> pyspark.sql <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> pyspark.sql.functions <span class="keyword">as</span> f</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line">input_path = sys.argv[<span class="number">1</span>]</span><br><span class="line">spark = SparkSession.builder.master(<span class="string">&quot;local[*]&quot;</span>).appName(<span class="string">&#x27;fun&#x27;</span>).getOrCreate()</span><br><span class="line">sc = spark.sparkContext</span><br><span class="line"></span><br><span class="line"><span class="comment"># read text as rdd</span></span><br><span class="line">records_raw_rdd = sc.textFile(input_path)</span><br><span class="line"></span><br><span class="line"><span class="comment"># create edge df from rdd</span></span><br><span class="line">edges = records_raw_rdd\</span><br><span class="line">    .<span class="built_in">map</span>(<span class="keyword">lambda</span> x: x.split(<span class="string">&quot;,&quot;</span>))\</span><br><span class="line">    .toDF([<span class="string">&#x27;src&#x27;</span>, <span class="string">&#x27;dst&#x27;</span>, <span class="string">&#x27;type&#x27;</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># create vertices df from rdd</span></span><br><span class="line">vertices = records_raw_rdd\</span><br><span class="line">    .<span class="built_in">map</span>(<span class="keyword">lambda</span> x: x.split(<span class="string">&quot;,&quot;</span>))\</span><br><span class="line">    .flatMap(<span class="keyword">lambda</span> x: [x[<span class="number">0</span>], x[<span class="number">1</span>]])\</span><br><span class="line">    .distinct()\</span><br><span class="line">    .<span class="built_in">map</span>(<span class="keyword">lambda</span> x: [x])\</span><br><span class="line">    .toDF([<span class="string">&#x27;id&#x27;</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># motif finding</span></span><br><span class="line">graph = GraphFrame(vertices, edges)</span><br><span class="line">motifs = graph.find(<span class="string">&quot;(a)-[]-&gt;(b); (b)-[]-&gt;(c); (c)-[]-&gt;(a)&quot;</span>)</span><br><span class="line">motifs[(motifs.a&lt;motifs.b) &amp; (motifs.b&lt;motifs.c)].show()</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Amazon-Athena"><a href="#Amazon-Athena" class="headerlink" title="Amazon Athena"></a>Amazon Athena</h2><h3 id="简介-1"><a href="#简介-1" class="headerlink" title="简介"></a>简介</h3><p>没啥高深的，就是一个文件服务器，用户可以用SQL语句访问。</p>
+<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><p>买了参考文档即可，要花钱，本人就没有很深入的研究。</p>
+<hr>
+<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p><br>&lt;br&gt;</p>
+<center><br\>**未完待续...**<center\><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>请我一杯咖啡吧！</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/Sponsor/wechat.png" alt="分数受害者 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/Sponsor/alipay.jpg" alt="分数受害者 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>原作者： </strong>分数受害者
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://scorevictim.github.io/posts/47238/" title="大数据建模与分析笔记">https://scorevictim.github.io/posts/47238/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/" rel="tag"># 大数据</a>
+              <a href="/tags/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/" rel="tag"># 数据分析</a>
+              <a href="/tags/%E7%AC%94%E8%AE%B0/" rel="tag"># 笔记</a>
+              <a href="/tags/%E5%BB%BA%E6%A8%A1/" rel="tag"># 建模</a>
+              <a href="/tags/python/" rel="tag"># python</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/posts/32311/" rel="prev" title="《莉莉安》吉他谱">
+                  <i class="fa fa-angle-left"></i> 《莉莉安》吉他谱
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/posts/56183/" rel="next" title="面向对象编程学习笔记">
+                  面向对象编程学习笔记 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2021 – 
+    <span itemprop="copyrightYear">2023</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">分数受害者</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">195k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">2:57</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  
+
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://scorevictim.github.io/posts/47238/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"scorevictim/blogcomments","issue_term":"title","theme":"github-dark"}</script>
+<script src="/js/third-party/comments/utterances.js"></script>
+
+</body>
+</html>

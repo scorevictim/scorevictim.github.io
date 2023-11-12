@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.0.0">
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/logo.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/logo.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/logo.png">
+  <link rel="mask-icon" href="/images/logo.png" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha256-CTSx/A06dm1B063156EVh15m6Y67pAjZZaQc89LLSrU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"scorevictim.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":true,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta property="og:type" content="blog">
+<meta property="og:title" content="时序分析学习笔记（二）">
+<meta property="og:url" content="https://scorevictim.github.io/posts/11531/index.html">
+<meta property="og:site_name" content="青崖之间">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://scorevictim.github.io/images/TSNote2/TsCover.jpeg">
+<meta property="og:image" content="https://scorevictim.github.io/posts/11531/smt.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/11531/ex1.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/11531/ht1.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/11531/dmp.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/11531/htw.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/11531/htw2.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/11531/htw3.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/11531/ets2.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/11531/etsf1.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/11531/mstl.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/11531/kpss1.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/11531/kpss2.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/11531/elc.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/11531/elc1.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/11531/kpss3.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/11531/ar1.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/11531/MA1.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/11531/ARIMA1.png">
+<meta property="article:published_time" content="2022-04-12T17:26:02.000Z">
+<meta property="article:modified_time" content="2023-11-12T02:45:39.379Z">
+<meta property="article:author" content="分数受害者">
+<meta property="article:tag" content="数据分析">
+<meta property="article:tag" content="笔记">
+<meta property="article:tag" content="时间序列">
+<meta property="article:tag" content="统计">
+<meta property="article:tag" content="R语言">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://scorevictim.github.io/images/TSNote2/TsCover.jpeg">
+
+
+<link rel="canonical" href="https://scorevictim.github.io/posts/11531/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://scorevictim.github.io/posts/11531/","path":"posts/11531/","title":"时序分析学习笔记（二）"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>时序分析学习笔记（二） | 青崖之间</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="青崖之间" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">青崖之间</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">北海虽赊，扶摇可接</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-留言板"><a href="/contact/" rel="section"><i class="fa fa-comment fa-fw"></i>留言板</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-sitemap"><a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a></li><li class="menu-item menu-item-rss"><a href="/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>RSS</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%92%99%E7%89%B9%E5%8D%A1%E6%B4%9B%E6%A8%A1%E6%8B%9F-Monte-Carlo-Simulation"><span class="nav-number">2.</span> <span class="nav-text">蒙特卡洛模拟(Monte Carlo Simulation)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8C%87%E6%95%B0%E5%B9%B3%E6%BB%91%E6%B3%95-Exponential-Smoothing-Method"><span class="nav-number">3.</span> <span class="nav-text">指数平滑法(Exponential Smoothing Method)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E5%8D%95%E6%8C%87%E6%95%B0%E5%B9%B3%E6%BB%91-Simple-Smoothing-Method"><span class="nav-number">3.1.</span> <span class="nav-text">简单指数平滑(Simple Smoothing Method)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E6%AC%A1%E6%8C%87%E6%95%B0%E5%B9%B3%E6%BB%91-Double-Exponential-Smoothing-Method"><span class="nav-number">3.2.</span> <span class="nav-text">二次指数平滑(Double Exponential Smoothing Method)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%9C%8D%E5%B0%94%E7%89%B9%E6%B3%95-Holt-Linear-Method"><span class="nav-number">3.2.1.</span> <span class="nav-text">霍尔特法(Holt Linear Method)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%98%BB%E5%B0%BC%E6%B3%95-Damped-Trend-Method"><span class="nav-number">3.2.2.</span> <span class="nav-text">阻尼法(Damped Trend Method)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89%E6%AC%A1%E6%8C%87%E6%95%B0%E5%B9%B3%E6%BB%91-Triple-Exponential-Smoothing-Method"><span class="nav-number">3.3.</span> <span class="nav-text">三次指数平滑(Triple Exponential Smoothing Method)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%9C%8D%E5%B0%94%E7%89%B9-%E6%B8%A9%E7%89%B9%E6%96%AF%E7%B4%AF%E5%8A%A0%E6%B3%95-Holt-Winters%E2%80%99-Additive-Method"><span class="nav-number">3.3.1.</span> <span class="nav-text">霍尔特-温特斯累加法(Holt-Winters’ Additive Method)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%9C%8D%E5%B0%94%E7%89%B9-%E6%B8%A9%E7%89%B9%E6%96%AF%E7%B4%AF%E4%B9%98%E6%B3%95-Holt-Winters%E2%80%99-Additive-Method"><span class="nav-number">3.3.2.</span> <span class="nav-text">霍尔特-温特斯累乘法(Holt-Winters’ Additive Method)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%9C%8D%E5%B0%94%E7%89%B9-%E6%B8%A9%E7%89%B9%E6%96%AF%E9%98%BB%E5%B0%BC%E6%B3%95-Holt-Winters%E2%80%99-Additive-Method"><span class="nav-number">3.3.3.</span> <span class="nav-text">霍尔特-温特斯阻尼法(Holt-Winters’ Additive Method)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ETS%E6%A8%A1%E5%9E%8B"><span class="nav-number">4.</span> <span class="nav-text">ETS模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B4%E5%90%88%E7%A7%BB%E5%8A%A8%E5%B9%B3%E5%9D%87%E8%87%AA%E5%9B%9E%E5%BD%92%E6%A8%A1%E5%9E%8B-ARIMA"><span class="nav-number">5.</span> <span class="nav-text">整合移动平均自回归模型(ARIMA)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B9%B3%E7%A8%B3%E6%80%A7%E5%8F%8A%E5%B7%AE%E5%88%86-Stationarity-and-Differencing"><span class="nav-number">5.1.</span> <span class="nav-text">平稳性及差分(Stationarity and Differencing)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B9%B3%E7%A8%B3%E6%80%A7-Stationarity"><span class="nav-number">5.1.1.</span> <span class="nav-text">平稳性(Stationarity)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B7%AE%E5%88%86-Differencing"><span class="nav-number">5.1.2.</span> <span class="nav-text">差分(Differencing)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8D%95%E4%BD%8D%E6%A0%B9%E6%A3%80%E9%AA%8C-Unit-Root-Tests"><span class="nav-number">5.1.3.</span> <span class="nav-text">单位根检验(Unit Root Tests)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9D%9E%E5%AD%A3%E8%8A%82%E6%80%A7ARIMA%E6%A8%A1%E5%9E%8B-Non-seasonal-ARIMA-model"><span class="nav-number">5.2.</span> <span class="nav-text">非季节性ARIMA模型(Non-seasonal ARIMA model)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%87%AA%E5%9B%9E%E5%BD%92%E6%A8%A1%E5%9E%8BAR-Autoregressive-Model"><span class="nav-number">5.2.1.</span> <span class="nav-text">自回归模型AR(Autoregressive Model)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A7%BB%E5%8A%A8%E5%B9%B3%E5%9D%87%E6%A8%A1%E5%9E%8BMA-Moving-Average-Model"><span class="nav-number">5.2.2.</span> <span class="nav-text">移动平均模型MA(Moving Average Model)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A7%BB%E5%8A%A8%E5%B9%B3%E5%9D%87%E8%87%AA%E5%9B%9E%E5%BD%92%E6%A8%A1%E5%9E%8BARMA-Autoregressive-Moving-Average-Model"><span class="nav-number">5.2.3.</span> <span class="nav-text">移动平均自回归模型ARMA(Autoregressive Moving Average Model)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B4%E5%90%88%E7%A7%BB%E5%8A%A8%E5%B9%B3%E5%9D%87%E8%87%AA%E5%9B%9E%E5%BD%92%E6%A8%A1%E5%9E%8B-ARIMA-1"><span class="nav-number">5.2.4.</span> <span class="nav-text">整合移动平均自回归模型(ARIMA)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SARIMA%E3%80%81%E5%8A%A8%E6%80%81%E5%9B%9E%E5%BD%92%E5%8F%8A%E5%85%B6%E4%BB%96%E9%AB%98%E7%BA%A7%E9%A2%84%E6%B5%8B%E6%A8%A1%E5%9E%8B"><span class="nav-number">6.</span> <span class="nav-text">SARIMA、动态回归及其他高级预测模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%8E%E8%AE%B0"><span class="nav-number">7.</span> <span class="nav-text">后记</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="分数受害者"
+      src="/uploads/avatar.jpg">
+  <p class="site-author-name" itemprop="name">分数受害者</p>
+  <div class="site-description" itemprop="description">人生如痴人说梦，充满着喧哗与骚动，却没有任何意义</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">76</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://blog.vinfall.com/" title="https:&#x2F;&#x2F;blog.vinfall.com&#x2F;" rel="noopener" target="_blank">Vinfall@Geekademy</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://scorevictim.github.io/posts/11531/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+      <meta itemprop="name" content="分数受害者">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="青崖之间">
+      <meta itemprop="description" content="人生如痴人说梦，充满着喧哗与骚动，却没有任何意义">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="时序分析学习笔记（二） | 青崖之间">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          时序分析学习笔记（二）
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-04-12 10:26:02" itemprop="dateCreated datePublished" datetime="2022-04-12T10:26:02-07:00">2022-04-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-11-11 18:45:39" itemprop="dateModified" datetime="2023-11-11T18:45:39-08:00">2023-11-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>9.7k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>9 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><img src="/images/TSNote2/TsCover.jpeg" alt="banner"></p>
+<span id="more"></span>
+
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在上一篇文章<a href="/posts/11530/" title="时序分析学习笔记（一）">[时序分析学习笔记（一）]</a>中，笔者整理了时序分析这门课前两周的课程内容笔记，由于博客目录存在容量上限，之后的内容目录会无法显示，因此为了美观起见，在此重开一篇文章，作为该系列的第二部分</p>
+<p><del>当然，目前课程还未结束，本文会随着课程进度，同步更新。</del></p>
+<p>于2022年5月3日完结</p>
+<hr>
+<h2 id="蒙特卡洛模拟-Monte-Carlo-Simulation"><a href="#蒙特卡洛模拟-Monte-Carlo-Simulation" class="headerlink" title="蒙特卡洛模拟(Monte Carlo Simulation)"></a>蒙特卡洛模拟(Monte Carlo Simulation)</h2><p>这个概念本质上就是：已知一个概率分布时，使用计算机模拟一系列的“实际值”来使用。</p>
+<p>这部分内容应用详情参见<a href="/posts/11532/" title="时间序列案例分析（一） —— Lac Leman Festival De La Musique">[时间序列案例分析（一）——Lac Leman Festival De La Musique]</a>中的五、六两题。</p>
+<hr>
+<h2 id="指数平滑法-Exponential-Smoothing-Method"><a href="#指数平滑法-Exponential-Smoothing-Method" class="headerlink" title="指数平滑法(Exponential Smoothing Method)"></a>指数平滑法(Exponential Smoothing Method)</h2><p>大部分时序数据可以被分为两类：信号(Signal)、噪音(Noise)。它们时常是交织在一起的。</p>
+<p>平滑(Smoothing)是一种尽量分离信号和噪音的方法，主要方式是将当前数据与过去关联。</p>
+<img src="/posts/11531/smt.png" class="" title="指数平滑示例">
+
+<h3 id="简单指数平滑-Simple-Smoothing-Method"><a href="#简单指数平滑-Simple-Smoothing-Method" class="headerlink" title="简单指数平滑(Simple Smoothing Method)"></a>简单指数平滑(Simple Smoothing Method)</h3><p>简单指数平滑，也可叫一次指数平滑，将历史每一期的数据分别赋予权重，来预测当期数据。其中越近的数据权重越大：</p>
+<br/>
+
+<center>$\hat{y}_{T+1 \mid T}=\alpha y_{T}+\alpha (1-\alpha)y_{T-1}+\alpha (1-\alpha)^2y_{T-2}+...$</center>
+
+<center>($0 \le \alpha \le 1$)</center>
+
+<br/>
+
+<p>其中通过简单的数学运算，可以知道各项权重的总和为1：</p>
+<br/>
+
+<p>$\alpha +\alpha (1-\alpha)+\alpha (1-\alpha)^2+\alpha (1-\alpha)^3+…+\alpha (1-\alpha)^t+…$</p>
+<p>$&#x3D;\alpha (1+(1-\alpha)+(1-\alpha)^2+1-(\alpha)^3+…$</p>
+<p>$&#x3D;\frac{\alpha}{1-(1-\alpha)}$</p>
+<p>$&#x3D;1$</p>
+<br/>
+
+<table>
+<thead>
+<tr>
+<th>Forecast equation</th>
+<th>$\hat{y}<em>{T+1 \mid T}&#x3D;l</em>{T}$</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Smoothing equation</td>
+<td>$l_{T}&#x3D; \alpha y_{T}+(1-\alpha)(l_{T-1})$</td>
+</tr>
+</tbody></table>
+<p>其中，$l_{T}$是在时间$T$时的平滑值。</p>
+<p>通过将上述形式迭代，我们可以把它化为加权平均形式：</p>
+<p>$$\hat{y}<em>{T+1 \mid T}&#x3D;\sum</em>{j&#x3D;0}^{T-1} \alpha (1-\alpha)^{j}y_{T-j}+(1-\alpha)^{T}l_{0}$$</p>
+<p>当然，为啥权重要这么设计，本人的数学知识就并不足以解释了，无论如何，这个模型就是这么建的，本学渣就不刨根问底了。可以看出，随着$\alpha$的值变大，我们赋予近期的数据更大的权重，而随着$\alpha$的值变小，我们赋予过去的数据更大权重。</p>
+<p>一般而言，当时间数列无明显的趋势变化时，使用这一方法。</p>
+<p>我们将这里的$\alpha$称为平滑系数(Smoothing Parameter)，它其实就是机器学习中的超参；$l_{0}$则是设定的初始值。</p>
+<p>调参的指标我们可以使用SSE：</p>
+<p>$$SSE&#x3D;\sum_{t&#x3D;0}^{T} (y_{t}-\hat{y}_{t \mid t-1})^2$$</p>
+<p>纯数学的东西，没啥大的意义，反正公式都是今天看明天忘，但无论如何，记录在这里表示自己在某一时点学过……</p>
+<p>具体使用：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">library<span class="punctuation">(</span>fpp2<span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line">oildata <span class="operator">&lt;-</span> window<span class="punctuation">(</span>oil<span class="punctuation">,</span> start<span class="operator">=</span><span class="number">1996</span><span class="punctuation">)</span></span><br><span class="line">fc <span class="operator">&lt;-</span> ses<span class="punctuation">(</span>oildata<span class="punctuation">,</span> h<span class="operator">=</span><span class="number">5</span><span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line">autoplot<span class="punctuation">(</span>fc<span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  autolayer<span class="punctuation">(</span>fitted<span class="punctuation">(</span>fc<span class="punctuation">)</span><span class="punctuation">,</span> series<span class="operator">=</span><span class="string">&quot;Fitted&quot;</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  ylab<span class="punctuation">(</span><span class="string">&quot;Oil (millions of tonnes)&quot;</span><span class="punctuation">)</span> <span class="operator">+</span> xlab<span class="punctuation">(</span><span class="string">&quot;Year&quot;</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="二次指数平滑-Double-Exponential-Smoothing-Method"><a href="#二次指数平滑-Double-Exponential-Smoothing-Method" class="headerlink" title="二次指数平滑(Double Exponential Smoothing Method)"></a>二次指数平滑(Double Exponential Smoothing Method)</h3><p>对于许多有趋势性的时序数据，简单平滑法并不能很好地进行预测，如：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">fc <span class="operator">&lt;-</span> ses<span class="punctuation">(</span>elecsales<span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line">autoplot<span class="punctuation">(</span>fc<span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  autolayer<span class="punctuation">(</span>fitted<span class="punctuation">(</span>fc<span class="punctuation">)</span><span class="punctuation">,</span> series<span class="operator">=</span><span class="string">&quot;Fitted&quot;</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  ylab<span class="punctuation">(</span><span class="string">&quot;Oil (millions of tonnes)&quot;</span><span class="punctuation">)</span> <span class="operator">+</span> xlab<span class="punctuation">(</span><span class="string">&quot;Year&quot;</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<img src="/posts/11531/ex1.png" class="">
+
+<p>在上图的例子中，我们不难发现，源数据集有着向上的运动趋势，然而通过简单平滑出的预测数据则失去了趋势特征，为了解决这个问题，我们引入了趋势特征，发展出了二次平滑法。同时，二次平滑也有不同的方式。</p>
+<h4 id="霍尔特法-Holt-Linear-Method"><a href="#霍尔特法-Holt-Linear-Method" class="headerlink" title="霍尔特法(Holt Linear Method)"></a>霍尔特法(Holt Linear Method)</h4><p>霍尔特二次指数平滑法的形式如下：</p>
+<table>
+<thead>
+<tr>
+<th>Forecast</th>
+<th>$\hat{y}<em>{T+h \mid T}&#x3D;l</em>{t}+hb_{t}$</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Level</td>
+<td>$l_{T}&#x3D; \alpha y_{T}+(1-\alpha)(l_{T-1}+b_{T-1})$</td>
+</tr>
+<tr>
+<td>Tred</td>
+<td>$b_{T}&#x3D;\beta (l_{T}-l{T-1})+(1- \beta)b_{T-1}$</td>
+</tr>
+</tbody></table>
+<p>纯数学的东西，没啥大的意义，反正公式都是今天看明天忘，但无论如何，记录在这里表示自己在某一时点学过……</p>
+<p>使用方法：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">air <span class="operator">&lt;-</span> window<span class="punctuation">(</span>ausair<span class="punctuation">,</span> start<span class="operator">=</span><span class="number">1990</span><span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line">fc <span class="operator">&lt;-</span> holt<span class="punctuation">(</span>air<span class="punctuation">,</span> h<span class="operator">=</span><span class="number">5</span><span class="punctuation">,</span> PI<span class="operator">=</span><span class="literal">FALSE</span><span class="punctuation">)</span></span><br><span class="line">autoplot<span class="punctuation">(</span>fc<span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<p>也可以用pipeline实现：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">window<span class="punctuation">(</span>ausair<span class="punctuation">,</span> start<span class="operator">=</span><span class="number">1990</span><span class="punctuation">)</span> <span class="operator">%&gt;%</span></span><br><span class="line">  holt<span class="punctuation">(</span>h<span class="operator">=</span><span class="number">5</span><span class="punctuation">,</span> PI<span class="operator">=</span><span class="literal">FALSE</span><span class="punctuation">)</span> <span class="operator">%&gt;%</span></span><br><span class="line">  autoplot<span class="punctuation">(</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<img src="/posts/11531/ht1.png" class="">
+
+<p>可以看出，此模型将趋势纳入了拟合曲线中。</p>
+<h4 id="阻尼法-Damped-Trend-Method"><a href="#阻尼法-Damped-Trend-Method" class="headerlink" title="阻尼法(Damped Trend Method)"></a>阻尼法(Damped Trend Method)</h4><p>当数据的趋势并非保持线性，而是逐步减少时，我们可以在霍尔特法的基础上引入一个阻尼系数来拟合。</p>
+<table>
+<thead>
+<tr>
+<th>Forecast</th>
+<th>$\hat{y}<em>{T+h \mid T}&#x3D;l</em>{T}+(\phi +\phi^2 +…+\phi^{h})b_{T}$</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Level</td>
+<td>$l_{T}&#x3D; \alpha y_{T}+(1-\alpha)(l_{T-1}+\phi b_{T-1})$</td>
+</tr>
+<tr>
+<td>Tred</td>
+<td>$b_{T}&#x3D;\beta (l_{T}-l{T-1})+(1- \beta)\phi b_{T-1}$</td>
+</tr>
+</tbody></table>
+<p>其中，$0 &lt; \phi &lt; 1$</p>
+<p>当 $ \phi &#x3D;1$ 时，便成为了上述的霍尔特模型。</p>
+<p>$ \phi $越小，趋势收敛的就越快。</p>
+<p>对于短期数据，拟合曲线显示出趋势性，对于长期数据，预测则近似常数。</p>
+<p>纯数学的东西，没啥大的意义，反正公式都是今天看明天忘，但无论如何，记录在这里表示自己在某一时点学过……</p>
+<p>使用方法：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">window<span class="punctuation">(</span>ausair<span class="punctuation">,</span> start<span class="operator">=</span><span class="number">1990</span><span class="punctuation">)</span> <span class="operator">%&gt;%</span></span><br><span class="line">  holt<span class="punctuation">(</span>damped<span class="operator">=</span><span class="literal">TRUE</span><span class="punctuation">,</span> h<span class="operator">=</span><span class="number">5</span><span class="punctuation">,</span> PI<span class="operator">=</span><span class="literal">FALSE</span><span class="punctuation">)</span> <span class="operator">%&gt;%</span></span><br><span class="line">  autoplot<span class="punctuation">(</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<p>对比图：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">fc <span class="operator">&lt;-</span> holt<span class="punctuation">(</span>air<span class="punctuation">,</span> h<span class="operator">=</span><span class="number">100</span><span class="punctuation">)</span></span><br><span class="line">fc2 <span class="operator">&lt;-</span> holt<span class="punctuation">(</span>air<span class="punctuation">,</span> damped<span class="operator">=</span><span class="literal">TRUE</span><span class="punctuation">,</span> h<span class="operator">=</span><span class="number">100</span><span class="punctuation">)</span></span><br><span class="line">autoplot<span class="punctuation">(</span>air<span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  autolayer<span class="punctuation">(</span>fc<span class="punctuation">,</span> series<span class="operator">=</span><span class="string">&quot;Holt&#x27;s method&quot;</span><span class="punctuation">,</span> PI<span class="operator">=</span><span class="literal">FALSE</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  autolayer<span class="punctuation">(</span>fc2<span class="punctuation">,</span> series<span class="operator">=</span><span class="string">&quot;Damped Holt&#x27;s method&quot;</span><span class="punctuation">,</span> PI<span class="operator">=</span><span class="literal">FALSE</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  ggtitle<span class="punctuation">(</span><span class="string">&quot;Forecasts from Holt&#x27;s method&quot;</span><span class="punctuation">)</span> <span class="operator">+</span> xlab<span class="punctuation">(</span><span class="string">&quot;Year&quot;</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  ylab<span class="punctuation">(</span><span class="string">&quot;Air passengers in Australia (millions)&quot;</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  guides<span class="punctuation">(</span>colour<span class="operator">=</span>guide_legend<span class="punctuation">(</span>title<span class="operator">=</span><span class="string">&quot;Forecast&quot;</span><span class="punctuation">)</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<img src="/posts/11531/dmp.png" class="">
+
+<p>可以直观看出两种二次平滑的不同。</p>
+<h3 id="三次指数平滑-Triple-Exponential-Smoothing-Method"><a href="#三次指数平滑-Triple-Exponential-Smoothing-Method" class="headerlink" title="三次指数平滑(Triple Exponential Smoothing Method)"></a>三次指数平滑(Triple Exponential Smoothing Method)</h3><p>在上述的二次平滑中，我们可以相对有效的拟合出数据的趋势，然而面对季节性数据，则难以有效处理。于是在这种需求下便有了加入了季节考量的三次指数平滑法。</p>
+<h4 id="霍尔特-温特斯累加法-Holt-Winters’-Additive-Method"><a href="#霍尔特-温特斯累加法-Holt-Winters’-Additive-Method" class="headerlink" title="霍尔特-温特斯累加法(Holt-Winters’ Additive Method)"></a>霍尔特-温特斯累加法(Holt-Winters’ Additive Method)</h4><p><del>首先不得不吐槽这个翻译，这个温特斯中的“斯”竟然也要翻译出来，实在太丑陋了…</del></p>
+<p>累加法的方程形式如下：</p>
+<table>
+<thead>
+<tr>
+<th>Forecast</th>
+<th>$\hat{y}<em>{T+h \mid T}&#x3D;l</em>{T}+hb_{T}+s_{T+h-m(k+1)}$</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Level</td>
+<td>$l_{T}&#x3D; \alpha (y_{T}-s_{T-m})+(1-\alpha)(l_{T-1}+b_{T-1})$</td>
+</tr>
+<tr>
+<td>Tred</td>
+<td>$b_{T}&#x3D;\beta (l_{T}-l{T-1})+(1- \beta)b_{T-1}$</td>
+</tr>
+<tr>
+<td>Seasonal</td>
+<td>$s_{T}&#x3D;\gamma (y_{T}-l_{T-1}-b_{T-1})+(1-\gamma)s_{T-m}$</td>
+</tr>
+</tbody></table>
+<p>其中，m为季节周期，比如4表示一年4季度。</p>
+<p>纯数学的东西，没啥大的意义，反正公式都是今天看明天忘，但无论如何，记录在这里表示自己在某一时点学过……</p>
+<h4 id="霍尔特-温特斯累乘法-Holt-Winters’-Additive-Method"><a href="#霍尔特-温特斯累乘法-Holt-Winters’-Additive-Method" class="headerlink" title="霍尔特-温特斯累乘法(Holt-Winters’ Additive Method)"></a>霍尔特-温特斯累乘法(Holt-Winters’ Additive Method)</h4><p>累乘法的方程形式如下：</p>
+<table>
+<thead>
+<tr>
+<th>Forecast</th>
+<th>$\hat{y}<em>{T+h \mid T}&#x3D;(l</em>{T}+hb_{T})s_{T+h-m(k+1)}$</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Level</td>
+<td>$l_{T}&#x3D; \alpha \frac{y_{T}}{s_{T-m}}+(1-\alpha)(l_{T-1}+b_{T-1})$</td>
+</tr>
+<tr>
+<td>Tred</td>
+<td>$b_{T}&#x3D;\beta (l_{T}-l{T-1})+(1- \beta)b_{T-1}$</td>
+</tr>
+<tr>
+<td>Seasonal</td>
+<td>$s_{T}&#x3D;\gamma \frac{y_{T}}{(l_{T-1}-b_{T-1})}+(1-\gamma)s_{T-m}$</td>
+</tr>
+</tbody></table>
+<p>纯数学的东西，没啥大的意义，反正公式都是今天看明天忘，但无论如何，记录在这里表示自己在某一时点学过……</p>
+<p>使用方法以及与累加法的区别：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">aust <span class="operator">&lt;-</span> window<span class="punctuation">(</span>austourists<span class="punctuation">,</span>start<span class="operator">=</span><span class="number">2005</span><span class="punctuation">)</span></span><br><span class="line">fit1 <span class="operator">&lt;-</span> hw<span class="punctuation">(</span>aust<span class="punctuation">,</span>seasonal<span class="operator">=</span><span class="string">&quot;additive&quot;</span><span class="punctuation">,</span> h<span class="operator">=</span><span class="number">50</span><span class="punctuation">)</span></span><br><span class="line">fit2 <span class="operator">&lt;-</span> hw<span class="punctuation">(</span>aust<span class="punctuation">,</span>seasonal<span class="operator">=</span><span class="string">&quot;multiplicative&quot;</span><span class="punctuation">,</span> h<span class="operator">=</span><span class="number">50</span><span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line">autoplot<span class="punctuation">(</span>aust<span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  autolayer<span class="punctuation">(</span>fit1<span class="punctuation">,</span> series<span class="operator">=</span><span class="string">&quot;HW additive&quot;</span><span class="punctuation">,</span> PI<span class="operator">=</span><span class="literal">FALSE</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  autolayer<span class="punctuation">(</span>fit2<span class="punctuation">,</span> series<span class="operator">=</span><span class="string">&quot;HW multiplicative&quot;</span><span class="punctuation">,</span> PI<span class="operator">=</span><span class="literal">FALSE</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  ggtitle<span class="punctuation">(</span><span class="string">&quot;Forecasts from ETS&quot;</span><span class="punctuation">)</span> <span class="operator">+</span> xlab<span class="punctuation">(</span><span class="string">&quot;Year&quot;</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  ylab<span class="punctuation">(</span><span class="string">&quot;International visitor night in Australia (millions)&quot;</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  guides<span class="punctuation">(</span>colour<span class="operator">=</span>guide_legend<span class="punctuation">(</span>title<span class="operator">=</span><span class="string">&quot;Forecast&quot;</span><span class="punctuation">)</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<img src="/posts/11531/htw.png" class="">
+
+<p>这两种方法具体数学上的区别，这里我们不做探讨，而仅关注应用层面的区别。一般来说，下图中左侧类型的数据适合用累加法，右侧的适合用累乘法。</p>
+<img src="/posts/11531/htw2.png" class="">
+
+<h4 id="霍尔特-温特斯阻尼法-Holt-Winters’-Additive-Method"><a href="#霍尔特-温特斯阻尼法-Holt-Winters’-Additive-Method" class="headerlink" title="霍尔特-温特斯阻尼法(Holt-Winters’ Additive Method)"></a>霍尔特-温特斯阻尼法(Holt-Winters’ Additive Method)</h4><p>阻尼法的方程形式如下：</p>
+<table>
+<thead>
+<tr>
+<th>Forecast</th>
+<th>$\hat{y}<em>{T+h \mid T}&#x3D;(l</em>{T}+(\phi +\phi^2 +…+\phi^{h})b_{T})s_{T+h-m(k+1)}$</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Level</td>
+<td>$l_{T}&#x3D; \alpha \frac{y_{T}}{s_{T-m}}+(1-\alpha)(l_{T-1}+\phi b_{T-1})$</td>
+</tr>
+<tr>
+<td>Tred</td>
+<td>$b_{T}&#x3D;\beta (l_{T}-l{T-1})+(1- \beta)\phi b_{T-1}$</td>
+</tr>
+<tr>
+<td>Seasonal</td>
+<td>$s_{T}&#x3D;\gamma \frac{y_{T}}{(l_{T-1}-\phi b_{T-1})}+(1-\gamma)s_{T-m}$</td>
+</tr>
+</tbody></table>
+<p>使用方法及对比：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">autoplot<span class="punctuation">(</span>a10<span class="punctuation">)</span></span><br><span class="line">fit1 <span class="operator">&lt;-</span> hw<span class="punctuation">(</span>a10<span class="punctuation">,</span>seasonal<span class="operator">=</span><span class="string">&quot;additive&quot;</span><span class="punctuation">,</span> h<span class="operator">=</span><span class="number">100</span><span class="punctuation">)</span></span><br><span class="line">fit2 <span class="operator">&lt;-</span> hw<span class="punctuation">(</span>a10<span class="punctuation">,</span>seasonal<span class="operator">=</span><span class="string">&quot;multiplicative&quot;</span><span class="punctuation">,</span> h<span class="operator">=</span><span class="number">100</span><span class="punctuation">)</span></span><br><span class="line">fit3 <span class="operator">&lt;-</span> hw<span class="punctuation">(</span>a10<span class="punctuation">,</span>damped<span class="operator">=</span><span class="literal">TRUE</span><span class="punctuation">,</span> seasonal<span class="operator">=</span><span class="string">&quot;multiplicative&quot;</span><span class="punctuation">,</span> h<span class="operator">=</span><span class="number">100</span><span class="punctuation">)</span></span><br><span class="line">autoplot<span class="punctuation">(</span>a10<span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  autolayer<span class="punctuation">(</span>fit1<span class="punctuation">,</span> series<span class="operator">=</span><span class="string">&quot;HW additive&quot;</span><span class="punctuation">,</span> PI<span class="operator">=</span><span class="literal">FALSE</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  autolayer<span class="punctuation">(</span>fit2<span class="punctuation">,</span> series<span class="operator">=</span><span class="string">&quot;HW multiplicative&quot;</span><span class="punctuation">,</span> PI<span class="operator">=</span><span class="literal">FALSE</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  autolayer<span class="punctuation">(</span>fit3<span class="punctuation">,</span> series<span class="operator">=</span><span class="string">&quot;damped HW multiplicative&quot;</span><span class="punctuation">,</span> PI<span class="operator">=</span><span class="literal">FALSE</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  ggtitle<span class="punctuation">(</span><span class="string">&quot;Forecasts from ETS&quot;</span><span class="punctuation">)</span> <span class="operator">+</span> xlab<span class="punctuation">(</span><span class="string">&quot;Year&quot;</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  ylab<span class="punctuation">(</span><span class="string">&quot;Monthly antidiabetic drug sales&quot;</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  guides<span class="punctuation">(</span>colour<span class="operator">=</span>guide_legend<span class="punctuation">(</span>title<span class="operator">=</span><span class="string">&quot;Forecast&quot;</span><span class="punctuation">)</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<img src="/posts/11531/htw3.png" class="">
+
+<hr>
+<h2 id="ETS模型"><a href="#ETS模型" class="headerlink" title="ETS模型"></a>ETS模型</h2><p>ETS模型是一个时间序列模型系列，其基础状态空间模型由水平分量、误差项（E）、趋势分量（T）、和季节分量（S）组成。</p>
+<p>其中：</p>
+<p>误差项(Error)包含加性(A)、乘性(M)</p>
+<p>趋势分量包含普通(N)、加性(A)、阻尼加性(Ad)、乘性(M)、阻尼乘性(Md)</p>
+<p>季节分量普通(N)、加性(A)、乘性(M)</p>
+<ul>
+<li>ETS(Error, Trend, Seasonal):<ul>
+<li>Error &#x3D; {A, M}</li>
+<li>Trend &#x3D; {N, A, M, Md}</li>
+<li>Seasonal &#x3D; {N, A, M}</li>
+</ul>
+</li>
+</ul>
+<p>如趋势项，其包含level、growth两部分，共有五种：</p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Form</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>None:</td>
+<td>$T_{h} &#x3D; l$</td>
+</tr>
+<tr>
+<td>Additive:</td>
+<td>$T_{h} &#x3D; l+bh$</td>
+</tr>
+<tr>
+<td>Additive Damped:</td>
+<td>$T_{h} &#x3D; l+(\phi +\phi^2 +…+\phi^{h})b$</td>
+</tr>
+<tr>
+<td>Multiplicative:</td>
+<td>$T_{h} &#x3D; lb^h$</td>
+</tr>
+<tr>
+<td>Multiplicative Damped:</td>
+<td>$T_{h} &#x3D; lb^{(\phi +\phi^2 +…+\phi^{h})}$</td>
+</tr>
+</tbody></table>
+<p>将E、T、S组合在一起，可知共有30种ETS模型。</p>
+<p>例如：</p>
+<p>A,N,N 模型代表有着加性误差项的一次指数平滑模型；</p>
+<p>A,A,N 模型代表有着加性误差项的Holt平滑模型；</p>
+<p>M,A,M 模型代表有着乘性误差项的Holt-Winters’平滑模型；</p>
+<p>使用方法：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">### ets方程会自动输出适合输入数据的ETS模型</span></span><br><span class="line">ets<span class="punctuation">(</span>h02<span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<p>这里需要注意的是，由于使用乘性趋势会使模型生成速度减缓，因此默认中，ets函数不开启乘性趋势，我们需手动将其设置打开：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ets<span class="punctuation">(</span>h02<span class="punctuation">,</span> allow.multiplicative.trend<span class="operator">=</span><span class="literal">TRUE</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<p>通过pipeline直接生成预测：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">h02 <span class="operator">%&gt;%</span> ets<span class="punctuation">(</span><span class="punctuation">)</span> <span class="operator">%&gt;%</span> forecast<span class="punctuation">(</span><span class="punctuation">)</span> <span class="operator">%&gt;%</span> autoplot<span class="punctuation">(</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<img src="/posts/11531/ets2.png" class="">
+
+<p>通过test数据测试效果：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">train <span class="operator">&lt;-</span> window<span class="punctuation">(</span>h02<span class="punctuation">,</span> end<span class="operator">=</span><span class="built_in">c</span><span class="punctuation">(</span><span class="number">2006</span><span class="punctuation">,</span><span class="number">6</span><span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line">fcast1 <span class="operator">&lt;-</span> forecast<span class="punctuation">(</span>ets<span class="punctuation">(</span>train<span class="punctuation">)</span><span class="punctuation">,</span> h<span class="operator">=</span><span class="number">24</span><span class="punctuation">)</span></span><br><span class="line">autoplot<span class="punctuation">(</span>fcast1<span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  autolayer<span class="punctuation">(</span>h02<span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<img src="/posts/11531/etsf1.png" class="">
+
+<p>虽然有自动化函数，但如果我们想人工查验一下数据的各项特征，则可以使用下述代码：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">autoplot<span class="punctuation">(</span>mstl<span class="punctuation">(</span>h02<span class="punctuation">)</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<img src="/posts/11531/mstl.png" class="">
+
+<p>便可看出原数据的趋势、误差及季节性特征，对于上图的数据，则应使用ETS[MAM]模型。</p>
+<p>额外参考资料：<a target="_blank" rel="noopener" href="https://link.springer.com/book/10.1007%2F978-3-540-71918-2">Forecasting with Exponential Smoothing: The State Space Approach</a></p>
+<hr>
+<h2 id="整合移动平均自回归模型-ARIMA"><a href="#整合移动平均自回归模型-ARIMA" class="headerlink" title="整合移动平均自回归模型(ARIMA)"></a>整合移动平均自回归模型(ARIMA)</h2><h3 id="平稳性及差分-Stationarity-and-Differencing"><a href="#平稳性及差分-Stationarity-and-Differencing" class="headerlink" title="平稳性及差分(Stationarity and Differencing)"></a>平稳性及差分(Stationarity and Differencing)</h3><h4 id="平稳性-Stationarity"><a href="#平稳性-Stationarity" class="headerlink" title="平稳性(Stationarity)"></a>平稳性(Stationarity)</h4><p>平稳性指对于一个时间序列，时间因素对于数据本身没有影响。</p>
+<p>平稳时间序列有下述特征：</p>
+<p>大致水平、方差恒定、没有长期显著的可预测特征</p>
+<p>如何鉴别平稳化：</p>
+<ul>
+<li>观察时序图特征</li>
+<li>平稳时序的ACF较快降至零</li>
+<li>非平稳时序的ACF下降较慢</li>
+<li>非平稳时序的r1一般较大且为正</li>
+</ul>
+<h4 id="差分-Differencing"><a href="#差分-Differencing" class="headerlink" title="差分(Differencing)"></a>差分(Differencing)</h4><p>前文我们有提到将数据方差平稳化的方式，而为了让数据整体平稳，我们还需要将均值平稳化，这就需要用到差分。</p>
+<p>差分的意思是将当期数据减上期数据，操作很简单。</p>
+<p>对于季节性数据，则是将当季数据减上季数据。</p>
+<h4 id="单位根检验-Unit-Root-Tests"><a href="#单位根检验-Unit-Root-Tests" class="headerlink" title="单位根检验(Unit Root Tests)"></a>单位根检验(Unit Root Tests)</h4><p>这是用来检验平稳性的一种统计检验法，本课中我们讲到的是KPSS检验(Kwiatkowski-Phillips-Schmidt-Shin Test)</p>
+<p>它的零假设是：原数据为平稳且非季节性。（检验值小于显著值表示平稳）</p>
+<p>类似的还有ADF检验(Augmented Dickey–Fuller Test)</p>
+<p>例：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">library<span class="punctuation">(</span>urca<span class="punctuation">)</span></span><br><span class="line">summary<span class="punctuation">(</span>ur.kpss<span class="punctuation">(</span>goog<span class="punctuation">)</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<img src="/posts/11531/kpss1.png" class="">
+
+<p>这里的检验值为10.7，大于显著值，表示拒绝原假设，即数据为非平稳。</p>
+<p>让我们对数据进行一定平稳化处理：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">goog <span class="operator">%&gt;%</span> diff<span class="punctuation">(</span><span class="punctuation">)</span> <span class="operator">%&gt;%</span> ur.kpss<span class="punctuation">(</span><span class="punctuation">)</span> <span class="operator">%&gt;%</span> summary<span class="punctuation">(</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<p>这里我们首先进行了差分，然后再进行检验，可得：</p>
+<img src="/posts/11531/kpss2.png" class="">
+
+<p>可见检验值低于显著值，则处理后的数据为平稳时序。</p>
+<p><code>ndiff</code>函数可以告诉我们使数据稳定所需要的差分次数：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ndiffs<span class="punctuation">(</span>goog<span class="punctuation">)</span></span><br><span class="line">ndiffs<span class="punctuation">(</span>diff<span class="punctuation">(</span>goog<span class="punctuation">)</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<p><code>nsdiff</code>函数则是用来得到季节性数据的差分次数，组合使用：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">autoplot<span class="punctuation">(</span>usmelec<span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<img src="/posts/11531/elc.png" class="" title="原数据">
+
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">usmelec <span class="operator">%&gt;%</span> <span class="built_in">log</span><span class="punctuation">(</span><span class="punctuation">)</span> <span class="operator">%&gt;%</span> nsdiffs<span class="punctuation">(</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<p>得到返还值：1，于是进行一次季节性差分：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">usmelec <span class="operator">%&gt;%</span> <span class="built_in">log</span><span class="punctuation">(</span><span class="punctuation">)</span> <span class="operator">%&gt;%</span> diff<span class="punctuation">(</span>lag<span class="operator">=</span><span class="number">12</span><span class="punctuation">)</span> <span class="operator">%&gt;%</span> ndiffs<span class="punctuation">(</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<p>得到返还值：1，于是再进行一次普通差分：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">usmelec <span class="operator">%&gt;%</span> <span class="built_in">log</span><span class="punctuation">(</span><span class="punctuation">)</span> <span class="operator">%&gt;%</span> diff<span class="punctuation">(</span>lag<span class="operator">=</span><span class="number">12</span><span class="punctuation">)</span> <span class="operator">%&gt;%</span> diff<span class="punctuation">(</span>lag<span class="operator">=</span><span class="number">1</span><span class="punctuation">)</span> <span class="operator">%&gt;%</span> ndiffs<span class="punctuation">(</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<p>处理后的数据样貌：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">usmelec <span class="operator">%&gt;%</span> <span class="built_in">log</span><span class="punctuation">(</span><span class="punctuation">)</span> <span class="operator">%&gt;%</span> diff<span class="punctuation">(</span>lag<span class="operator">=</span><span class="number">12</span><span class="punctuation">)</span> <span class="operator">%&gt;%</span> diff<span class="punctuation">(</span>lag<span class="operator">=</span><span class="number">1</span><span class="punctuation">)</span> <span class="operator">%&gt;%</span> autoplot<span class="punctuation">(</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<img src="/posts/11531/elc1.png" class="" title="处理完毕数据">
+
+<p>KPSS检验：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">usmelec <span class="operator">%&gt;%</span> <span class="built_in">log</span><span class="punctuation">(</span><span class="punctuation">)</span> <span class="operator">%&gt;%</span> diff<span class="punctuation">(</span>lag<span class="operator">=</span><span class="number">12</span><span class="punctuation">)</span> <span class="operator">%&gt;%</span> diff<span class="punctuation">(</span>lag<span class="operator">=</span><span class="number">1</span><span class="punctuation">)</span> <span class="operator">%&gt;%</span> ur.kpss<span class="punctuation">(</span><span class="punctuation">)</span> <span class="operator">%&gt;%</span> summary<span class="punctuation">(</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<img src="/posts/11531/kpss3.png" class="">
+
+<p>成功转换为平稳时序。</p>
+<h3 id="非季节性ARIMA模型-Non-seasonal-ARIMA-model"><a href="#非季节性ARIMA模型-Non-seasonal-ARIMA-model" class="headerlink" title="非季节性ARIMA模型(Non-seasonal ARIMA model)"></a>非季节性ARIMA模型(Non-seasonal ARIMA model)</h3><h4 id="自回归模型AR-Autoregressive-Model"><a href="#自回归模型AR-Autoregressive-Model" class="headerlink" title="自回归模型AR(Autoregressive Model)"></a>自回归模型AR(Autoregressive Model)</h4><p>自回归方法的优点是所需资料不多，可用自身变数数列来进行预测。但是这种方法受到一定的限制：</p>
+<p>必须具有自相关，自相关系数（）是关键。如果自相关系数($R$)小于0.5，则不宜采用，否则预测结果极不准确。</p>
+<p>代码模拟：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ar1 <span class="operator">&lt;-</span> 2 <span class="operator">+</span> arima.sim<span class="punctuation">(</span><span class="built_in">list</span><span class="punctuation">(</span>ar <span class="operator">=</span> <span class="operator">-</span><span class="number">0.8</span><span class="punctuation">)</span><span class="punctuation">,</span> n <span class="operator">=</span> <span class="number">100</span><span class="punctuation">)</span></span><br><span class="line">p1 <span class="operator">&lt;-</span> autoplot<span class="punctuation">(</span>ar1<span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  ylab<span class="punctuation">(</span><span class="string">&quot;&quot;</span><span class="punctuation">)</span> <span class="operator">+</span> ggtitle<span class="punctuation">(</span><span class="string">&quot;AR(1)&quot;</span><span class="punctuation">)</span></span><br><span class="line">p1</span><br></pre></td></tr></table></figure>
+
+<img src="/posts/11531/ar1.png" class="">
+
+<h4 id="移动平均模型MA-Moving-Average-Model"><a href="#移动平均模型MA-Moving-Average-Model" class="headerlink" title="移动平均模型MA(Moving Average Model)"></a>移动平均模型MA(Moving Average Model)</h4><p>MA模型和AR大同小异，它并非是历史时序值的线性组合而是历史白噪声的线性组合。与AR最大的不同之处在于，AR模型中历史白噪声的影响是间接影响当前预测值的（通过影响历史时序值）。</p>
+<p>代码模拟：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">set.seed<span class="punctuation">(</span><span class="number">2</span><span class="punctuation">)</span></span><br><span class="line">ma1 <span class="operator">&lt;-</span> 20 <span class="operator">+</span> arima.sim<span class="punctuation">(</span><span class="built_in">list</span><span class="punctuation">(</span>ma <span class="operator">=</span> <span class="number">0.8</span><span class="punctuation">)</span><span class="punctuation">,</span> n <span class="operator">=</span> <span class="number">100</span><span class="punctuation">)</span></span><br><span class="line">p1 <span class="operator">&lt;-</span> autoplot<span class="punctuation">(</span>ma1<span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  ylab<span class="punctuation">(</span><span class="string">&quot;&quot;</span><span class="punctuation">)</span> <span class="operator">+</span> ggtitle<span class="punctuation">(</span><span class="string">&quot;MA(1)&quot;</span><span class="punctuation">)</span></span><br><span class="line">p1</span><br></pre></td></tr></table></figure>
+
+<img src="/posts/11531/MA1.png" class="">
+
+
+<h4 id="移动平均自回归模型ARMA-Autoregressive-Moving-Average-Model"><a href="#移动平均自回归模型ARMA-Autoregressive-Moving-Average-Model" class="headerlink" title="移动平均自回归模型ARMA(Autoregressive Moving Average Model)"></a>移动平均自回归模型ARMA(Autoregressive Moving Average Model)</h4><p>将AR和MA模型混合可得到ARMA模型，AR(p)和MA(q)共同组成了ARMA(p,q)。下面模拟一个ARMA(1,1)序列：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">x <span class="operator">&lt;-</span> arima.sim<span class="punctuation">(</span>n<span class="operator">=</span><span class="number">1000</span><span class="punctuation">,</span> model<span class="operator">=</span><span class="built_in">list</span><span class="punctuation">(</span>ar<span class="operator">=</span><span class="number">0.5</span><span class="punctuation">,</span> ma<span class="operator">=</span><span class="operator">-</span><span class="number">0.5</span><span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line">arima<span class="punctuation">(</span>x<span class="punctuation">,</span> order<span class="operator">=</span><span class="built_in">c</span><span class="punctuation">(</span><span class="number">1</span><span class="punctuation">,</span> <span class="number">0</span><span class="punctuation">,</span> <span class="number">1</span><span class="punctuation">)</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<p>那么在建模过程中应该如何选择ARMA模型的最佳参数p和q呢？最常用的技术是采用循环在p和q各自0到5（或者更大）的范围内搜索最小AIC或BIC的(p,q)组合。</p>
+<h4 id="整合移动平均自回归模型-ARIMA-1"><a href="#整合移动平均自回归模型-ARIMA-1" class="headerlink" title="整合移动平均自回归模型(ARIMA)"></a>整合移动平均自回归模型(ARIMA)</h4><p>终于，把上述的几个模型都组合在一块，就得到了这个名字看上去很高级的ARIMA模型。</p>
+<p>ARIMA模型是在ARMA模型的基础上解决非平稳序列的模型，因此在模型中会对原序列进行差分。</p>
+<p>例：对internet数据集预测</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">ggtsdisplay<span class="punctuation">(</span>internet<span class="punctuation">)</span></span><br><span class="line">ndiffs<span class="punctuation">(</span>internet<span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line">ggtsdisplay<span class="punctuation">(</span>diff<span class="punctuation">(</span>internet<span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line">fit <span class="operator">&lt;-</span> Arima<span class="punctuation">(</span>internet<span class="punctuation">,</span>order<span class="operator">=</span><span class="built_in">c</span><span class="punctuation">(</span><span class="number">3</span><span class="punctuation">,</span><span class="number">1</span><span class="punctuation">,</span><span class="number">0</span><span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line">summary<span class="punctuation">(</span>fit<span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line">auto.arima<span class="punctuation">(</span>internet<span class="punctuation">,</span> stepwise<span class="operator">=</span><span class="literal">FALSE</span><span class="punctuation">,</span></span><br><span class="line">           approximation<span class="operator">=</span><span class="literal">FALSE</span><span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line">checkresiduals<span class="punctuation">(</span>fit<span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line">fit <span class="operator">%&gt;%</span> forecast <span class="operator">%&gt;%</span> autoplot</span><br></pre></td></tr></table></figure>
+
+<img src="/posts/11531/ARIMA1.png" class="">
+
+<hr>
+<h2 id="SARIMA、动态回归及其他高级预测模型"><a href="#SARIMA、动态回归及其他高级预测模型" class="headerlink" title="SARIMA、动态回归及其他高级预测模型"></a>SARIMA、动态回归及其他高级预测模型</h2><p>在前文的基础上，ARIMA还可以引入季节性因素，组建成季节性(S)ARIMA，也有其它的模型，如动态回归、神经网络模型等等，然而，时间有限，这节课没有详述这些内容，因此，本学渣也没去做太多拓展阅读，实在是太累了。不过未来闲着的时候，我可能还是会去研究下吧，这里先挖个坑。</p>
+<hr>
+<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>至此，这一学期的时序分析课程笔记就算是整理完毕了。回过头来看，这门课的笔记洋洋洒洒写了快一万来字，虽然本人文笔实在很拙劣，但是码了这么多字多少也还是挺有成就感的。当然，眼尖的同学其实能看出来，学到ARIMA时本人学得就不是很扎实了，笔记也记得不是很能让人看明白。不过不管怎样，期末考试和Presentation还是搞定了，暂时就不再花更多时间去研究了，毕竟还有其他课程和项目要做。</p>
+<p>写到此处，不免有些感慨，为什么呢，主要是因为自己已经很多年没有这么高强度地学习了，就这两篇的笔记所涉及到的内容，是仅在半学期的两学分课程中讲完的，而与国内的大多大学不同，本学渣所在的Santa Clara University采取的是Quarter制，也就是三个月一学期，一年3学期。这就是说，博客里两篇时序分析学习笔记中的内容，仅用了一个半月就学习完毕，这就意味着本人前两个月几乎每天都在高强度地读材料、看讲义、写作业，可能对于很多一直努力的大佬来说，这也没什么，但对于摸了一辈子鱼的本人来说，属实是高压生活了（想学东西，果然在哪里都是不能避开填鸭式这条道路的）。</p>
+<p>不论如何，这门课也算是收获颇丰，这篇博文也就来到了尾声。本人不擅长、也不喜欢拽文，就不多说什么矫情的话了，如果真的有什么人有够闲，看到了这里，那也算是缘分了，很感谢。当然还是要说，本人同时深感抱歉，浪费了你人生宝贵的时间。</p>
+<p>Anyway，就让我们在别的什么地方再见吧。</p>
+<p><br>&lt;br&gt;</p>
+<center><br\>~~**未完待续...**~~<center\>
+
+<p>于2022年5月3日完结</p>
+<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>请我一杯咖啡吧！</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/Sponsor/wechat.png" alt="分数受害者 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/Sponsor/alipay.jpg" alt="分数受害者 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>原作者： </strong>分数受害者
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://scorevictim.github.io/posts/11531/" title="时序分析学习笔记（二）">https://scorevictim.github.io/posts/11531/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/" rel="tag"># 数据分析</a>
+              <a href="/tags/%E7%AC%94%E8%AE%B0/" rel="tag"># 笔记</a>
+              <a href="/tags/%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97/" rel="tag"># 时间序列</a>
+              <a href="/tags/%E7%BB%9F%E8%AE%A1/" rel="tag"># 统计</a>
+              <a href="/tags/R%E8%AF%AD%E8%A8%80/" rel="tag"># R语言</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/posts/11532/" rel="prev" title="时间序列案例分析（一） —— Lac Leman Festival De La Musique">
+                  <i class="fa fa-angle-left"></i> 时间序列案例分析（一） —— Lac Leman Festival De La Musique
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/posts/50176/" rel="next" title="机器学习基础笔记（一）">
+                  机器学习基础笔记（一） <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2021 – 
+    <span itemprop="copyrightYear">2023</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">分数受害者</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">195k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">2:57</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  
+
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://scorevictim.github.io/posts/11531/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"scorevictim/blogcomments","issue_term":"title","theme":"github-dark"}</script>
+<script src="/js/third-party/comments/utterances.js"></script>
+
+</body>
+</html>

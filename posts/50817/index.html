@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.0.0">
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/logo.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/logo.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/logo.png">
+  <link rel="mask-icon" href="/images/logo.png" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha256-CTSx/A06dm1B063156EVh15m6Y67pAjZZaQc89LLSrU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"scorevictim.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":true,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta property="og:type" content="blog">
+<meta property="og:title" content="利用Hexo搭建个人博客，并添加多语言功能">
+<meta property="og:url" content="https://scorevictim.github.io/posts/50817/index.html">
+<meta property="og:site_name" content="青崖之间">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://scorevictim.github.io/images/ruby/ruby.png">
+<meta property="article:published_time" content="2022-01-16T11:54:31.000Z">
+<meta property="article:modified_time" content="2023-11-12T02:40:09.969Z">
+<meta property="article:author" content="分数受害者">
+<meta property="article:tag" content="Hexo">
+<meta property="article:tag" content="个人博客">
+<meta property="article:tag" content="多语言">
+<meta property="article:tag" content="教程">
+<meta property="article:tag" content="Github">
+<meta property="article:tag" content="网站搭建">
+<meta property="article:tag" content="matery">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://scorevictim.github.io/images/ruby/ruby.png">
+
+
+<link rel="canonical" href="https://scorevictim.github.io/posts/50817/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://scorevictim.github.io/posts/50817/","path":"posts/50817/","title":"利用Hexo搭建个人博客，并添加多语言功能"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>利用Hexo搭建个人博客，并添加多语言功能 | 青崖之间</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="青崖之间" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">青崖之间</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">北海虽赊，扶摇可接</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-留言板"><a href="/contact/" rel="section"><i class="fa fa-comment fa-fw"></i>留言板</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-sitemap"><a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a></li><li class="menu-item menu-item-rss"><a href="/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>RSS</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hexo-%E7%AE%80%E4%BB%8B"><span class="nav-number">2.</span> <span class="nav-text">Hexo 简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E7%BD%AE%E5%B7%A5%E4%BD%9C"><span class="nav-number">3.</span> <span class="nav-text">前置工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BE%9D%E8%B5%96%E4%B8%8B%E8%BD%BD"><span class="nav-number">4.</span> <span class="nav-text">依赖下载</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Node-js-%E5%AE%89%E8%A3%85"><span class="nav-number">4.1.</span> <span class="nav-text">Node.js 安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Git-%E5%AE%89%E8%A3%85%E5%8F%8A%E9%85%8D%E7%BD%AE"><span class="nav-number">4.2.</span> <span class="nav-text">Git 安装及配置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hexo-%E5%AE%89%E8%A3%85%E5%8F%8A%E5%90%AF%E5%8A%A8"><span class="nav-number">5.</span> <span class="nav-text">Hexo 安装及启动</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Hexo%E5%AE%89%E8%A3%85"><span class="nav-number">5.1.</span> <span class="nav-text">Hexo安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hexo-%E5%90%AF%E5%8A%A8"><span class="nav-number">5.2.</span> <span class="nav-text">Hexo 启动</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hexo-%E9%85%8D%E7%BD%AE%E5%8F%8A%E4%BD%BF%E7%94%A8"><span class="nav-number">6.</span> <span class="nav-text">Hexo 配置及使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Hexo-%E9%85%8D%E7%BD%AE"><span class="nav-number">6.1.</span> <span class="nav-text">Hexo 配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%BB%E9%A2%98%E9%85%8D%E7%BD%AE"><span class="nav-number">6.1.1.</span> <span class="nav-text">主题配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Github%E8%BF%9C%E7%AB%AF%E9%83%A8%E7%BD%B2%E9%85%8D%E7%BD%AE"><span class="nav-number">6.1.2.</span> <span class="nav-text">Github远端部署配置</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hexo-%E4%BD%BF%E7%94%A8"><span class="nav-number">6.2.</span> <span class="nav-text">Hexo 使用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E6%96%87%E7%AB%A0"><span class="nav-number">6.2.1.</span> <span class="nav-text">创建文章</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%92%B0%E5%86%99%E5%86%85%E5%AE%B9"><span class="nav-number">6.2.2.</span> <span class="nav-text">撰写内容</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8%E6%9C%AC%E5%9C%B0%E6%9C%8D%E5%8A%A1%EF%BC%88%E4%B8%80%E8%88%AC%E7%94%A8%E4%BD%9C%E9%A2%84%E8%A7%88%EF%BC%89"><span class="nav-number">6.2.3.</span> <span class="nav-text">启动本地服务（一般用作预览）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%94%9F%E6%88%90%E6%96%87%E4%BB%B6"><span class="nav-number">6.2.4.</span> <span class="nav-text">生成文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%83%A8%E7%BD%B2%E5%88%B0%E8%BF%9C%E7%AB%AF"><span class="nav-number">6.2.5.</span> <span class="nav-text">部署到远端</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%8C%E8%AF%AD%E6%94%AF%E6%8C%81"><span class="nav-number">7.</span> <span class="nav-text">双语支持</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E8%AF%AD%E8%A8%80"><span class="nav-number">7.1.</span> <span class="nav-text">修改语言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E6%A0%B9%E7%9B%AE%E5%BD%95"><span class="nav-number">7.2.</span> <span class="nav-text">修改根目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E4%B8%BB%E9%A2%98"><span class="nav-number">7.3.</span> <span class="nav-text">修改主题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hexo%E5%8D%87%E7%BA%A7"><span class="nav-number">8.</span> <span class="nav-text">Hexo升级</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">9.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="分数受害者"
+      src="/uploads/avatar.jpg">
+  <p class="site-author-name" itemprop="name">分数受害者</p>
+  <div class="site-description" itemprop="description">人生如痴人说梦，充满着喧哗与骚动，却没有任何意义</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">76</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://blog.vinfall.com/" title="https:&#x2F;&#x2F;blog.vinfall.com&#x2F;" rel="noopener" target="_blank">Vinfall@Geekademy</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://scorevictim.github.io/posts/50817/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+      <meta itemprop="name" content="分数受害者">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="青崖之间">
+      <meta itemprop="description" content="人生如痴人说梦，充满着喧哗与骚动，却没有任何意义">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="利用Hexo搭建个人博客，并添加多语言功能 | 青崖之间">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          利用Hexo搭建个人博客，并添加多语言功能
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-01-16 03:54:31" itemprop="dateCreated datePublished" datetime="2022-01-16T03:54:31-08:00">2022-01-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-11-11 18:40:09" itemprop="dateModified" datetime="2023-11-11T18:40:09-08:00">2023-11-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%8A%98%E8%85%BE%E6%97%A5%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">折腾日记</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>4.8k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>4 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><img src="/images/ruby/ruby.png" alt="banner"></p>
+<span id="more"></span>
+
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>几年前在本科二年级时候，笔者曾经在学校的一个计算机应用比赛中，玩过Hexo建站作为项目的前端，不过当时用的是网上搜到的大佬的一键部署脚本，对于脚本中具体做了些什么操作，本人实际并不甚了解，只记得下载了许多不明所以的文件和创建了许多不明所以的目录。近期本学渣突然想怀怀旧，且正好想折腾一个写随笔的个人博客，便重头又学习了一下，谨以此文作为这段搭建的一个记录。</p>
+<hr>
+<h2 id="Hexo-简介"><a href="#Hexo-简介" class="headerlink" title="Hexo 简介"></a>Hexo 简介</h2><p>这一部分与文章内容其实并无关系，因为本文核心目的是用作日志性质，然而作为文科生，还是要象征性的做一下起承转合，如果上来就直接开始Hexo部署，难免会有读者心生疑惑：Hexo是啥？因此，在文章开头，本学渣还是要做一个简介，以引入主题。</p>
+<p>根据Hexo的官方文档的定义：</p>
+<blockquote>
+<p>Hexo 是一个快速、简洁且高效的博客框架。Hexo 使用 Markdown（或其他渲染引擎）解析文章，在几秒内，即可利用靓丽的主题生成静态网页。</p>
+</blockquote>
+<p>可知，本质上Hexo是一个设计用来部署博客的程序。当然，部署博客还有许多其他方式，如WordExpress，Ghost等等，而这些程序部署出来的博客可以分为动态和静态两类，基于Hexo的博客属于静态博客。</p>
+<p>关于动态和静态，网络上讨论很多，有人认为静态好，而有人更喜欢动态。由于本学渣只是一个文科生，对于其具体的区别和技术细节并不明白，在这里就不多讨论了，总之对于我来说，Hexo属于最易于上手且维护成本最低的方案，部署下来没有遇到什么功能缺失问题，因此，我便选择了利用Hexo搭建这个博客。</p>
+<p>了解了Hexo为何，那么我们就可以正式开始了。</p>
+<hr>
+<h2 id="前置工作"><a href="#前置工作" class="headerlink" title="前置工作"></a>前置工作</h2><p>依稀记得几年前本人是用Win10系统进行的操作，然而随着这些年我的折腾技能略微见长，再加上本人并不是搞开发的，在win10主力机上装一大堆开发相关的东西会让我很不舒服（没什么具体原因，单纯的个人强迫症），因此这次我选择单独开一台Linux的虚拟机来专门用作博客机。</p>
+<p>那么第一步便是创建一台Linux虚拟机，这部分与文章主题关系不大，略过不谈，总之便是按照本人习惯，在VMWare中准备好了一台Ubuntu的Server版本虚机。机器命名为Blog。</p>
+<p>接下来SSH连入Blog，进行具体配置。</p>
+<hr>
+<h2 id="依赖下载"><a href="#依赖下载" class="headerlink" title="依赖下载"></a>依赖下载</h2><h3 id="Node-js-安装"><a href="#Node-js-安装" class="headerlink" title="Node.js 安装"></a>Node.js 安装</h3><p>由于Hexo是基于Node.js开发，第一步便是安装Node.js。</p>
+<p>首先添加源，在命令行中输入：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -fsSL https://deb.nodesource.com/setup_17.x | sudo -E bash - </span><br></pre></td></tr></table></figure>
+
+<p>接下来下载并安装，在命令行中输入：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install -y nodejs</span><br></pre></td></tr></table></figure>
+
+<p>此时Node.js搞定。</p>
+<h3 id="Git-安装及配置"><a href="#Git-安装及配置" class="headerlink" title="Git 安装及配置"></a>Git 安装及配置</h3><p>Hexo还需要Git的存在来进行其他操作，安装很简单：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install git-core</span><br></pre></td></tr></table></figure>
+
+<p>不过Git安装完成后并未结束，还需要进行个人信息的配置，否则之后部署Hexo时会报错</p>
+<ol>
+<li>添加用户名</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name &quot;你的用户名&quot;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>添加邮箱</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.email &quot;你的邮箱&quot;</span><br></pre></td></tr></table></figure>
+<p>笔者测试下来，邮箱随便输即可，不需要填真实邮箱。不过为了Github页面中显示的Contributors为你本人，建议还是填绑定了Github的邮箱。</p>
+<p>此时Git搞定。</p>
+<hr>
+<h2 id="Hexo-安装及启动"><a href="#Hexo-安装及启动" class="headerlink" title="Hexo 安装及启动"></a>Hexo 安装及启动</h2><h3 id="Hexo安装"><a href="#Hexo安装" class="headerlink" title="Hexo安装"></a>Hexo安装</h3><p>安装指令依然很简单：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
+
+<p>此时所有的基础安装工作结束，可以开始正式部署。</p>
+<h3 id="Hexo-启动"><a href="#Hexo-启动" class="headerlink" title="Hexo 启动"></a>Hexo 启动</h3><p>Hexo的启动命令会在当前的PWD下创建所有文件，且需要PWD为空文件夹，此时需要计划文件想放在哪里。<br>本人就直接在开机默认目录下创建了blog文件夹：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> blog &amp;&amp; <span class="built_in">cd</span> blog</span><br></pre></td></tr></table></figure>
+
+<p>接下来：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo init</span><br></pre></td></tr></table></figure>
+
+<p>等待命令行跑完，此时敲ls指令便可看到基础文件已经生成。<br>万事俱备，只要敲下</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo start</span><br></pre></td></tr></table></figure>
+
+<p>不出意外，即可看到</p>
+<p><code>“Hexo is running at http://localhost:4000/ . Press Ctrl+C to stop.”</code></p>
+<p>之后只要浏览器访问博客主机的IP加端口号：如<code>10.10.10.1:4000</code>，就可以看到初始的博客站点啦。</p>
+<hr>
+<h2 id="Hexo-配置及使用"><a href="#Hexo-配置及使用" class="headerlink" title="Hexo 配置及使用"></a>Hexo 配置及使用</h2><p>初始化完成后，博客中会默认生成一篇”Helllo World”的文章，内容包括一些简单教程。</p>
+<h3 id="Hexo-配置"><a href="#Hexo-配置" class="headerlink" title="Hexo 配置"></a>Hexo 配置</h3><h4 id="主题配置"><a href="#主题配置" class="headerlink" title="主题配置"></a>主题配置</h4><p>到此，博客虽然跑了起来，但说实话，还是比较简陋的，这时候主题功能就派上了用场。</p>
+<p>由于Hexo的社区相当活跃，因此有许多大佬写好的现成的主题可以使用，可以网上搜索并按需选取。本人选用的是<code>&quot;hexo-theme-matery&quot;</code>，总体还是比较符合我的审美。</p>
+<p>配置方法也很简单，首先</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> themes</span><br></pre></td></tr></table></figure>
+
+<p>在确定PWD为blog目录下的<code>themes</code>时，</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/blinkfox/hexo-theme-matery.git</span><br></pre></td></tr></table></figure>
+
+<p>这样就下载完毕了。</p>
+<p>接下来，打开blog根目录下的<code>_config.yml</code>文件，找到其中的<code>theme</code>字段，将其改为：</p>
+<p><code>theme: hexo-theme-matery</code></p>
+<p>然后先按<code>Crtl + C</code></p>
+<p>再命令行中输入：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo s</span><br></pre></td></tr></table></figure>
+
+<p>也就是重启博客。</p>
+<p>此时再次访问即可看到美观的站点了。</p>
+<h4 id="Github远端部署配置"><a href="#Github远端部署配置" class="headerlink" title="Github远端部署配置"></a>Github远端部署配置</h4><p>搭建好了博客，总是要放置在公网环境中的，否则意义就不是很大了，而Hexo本身支持许多种本地向公网部署的方案，非常方便。</p>
+<p>笔者选择的是部署到Github的Pages之上，主要是因为免费，且无需考虑SSL加密，证书之类的繁琐事。虽然许多意义上说，免费的解决方案总有各种不足，遇到问题时的维护时间很可能超出预期，导致很多时候免费的才是最贵的，但无论如何，笔者总是免费先爽一把再说。</p>
+<p>要部署博客到Github上，首先你要有Github账号，此处不多赘述账号注册过程。</p>
+<p>登录Github，在右上角的+号中，点选<code> New Repository</code>，然后在<code>Repository name</code>中，输入<code>你的github用户名.github.io</code>，然后点下方的<code>Creat repository</code>完成创建。</p>
+<p>接下来，点击右上角头像—<code>Settings</code>—<code>Developer settings</code>—<code>Personal access tokens</code>—<code>Generate new token</code>，</p>
+<p>在权限选项中将有效期设为不过期，然后勾选<code>Repo</code>—最后点<code>Generate token</code>生成密匙</p>
+<p>复制生成的ghp_开头的一串字符</p>
+<p>在<code>blog</code>下的<code>_config.yml</code>文件中，找到<code>deploy</code>字段，将其改为：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">  <span class="attr">repo:</span> <span class="string">https://ghp_你的密钥@github.com/你的用户名/你的用户名.github.io.git</span></span><br><span class="line">  <span class="attr">branch:</span> <span class="string">master</span></span><br></pre></td></tr></table></figure>
+
+<p>保存文件，然后输入下述指令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>不出意外，此时Github库中会出现你的博客文件，然后访问 <code>https://你的用户名.github.io</code> 即可进入你的博客。</p>
+<h3 id="Hexo-使用"><a href="#Hexo-使用" class="headerlink" title="Hexo 使用"></a>Hexo 使用</h3><p>总体来说，Hexo的使用相当简单，发博客主要就是下面几步轮着做：</p>
+<h4 id="创建文章"><a href="#创建文章" class="headerlink" title="创建文章"></a>创建文章</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new <span class="string">&#x27;文章标题&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="撰写内容"><a href="#撰写内容" class="headerlink" title="撰写内容"></a>撰写内容</h4><p>Hexo管理的所有博客都是以<code>MarkDown</code>格式写作，因此，在写博客前，作者有必要了解一定的MarkDown语法。对于普通用户来说，熟练使用还是有一定门槛的。不过笔者在创作这篇文章前，几乎也是完全不会用MarkDown的，然而写了两三个小时后，大体操作就没有问题了，所以无基础的初学者也不用过于恐惧。</p>
+<p>在这篇文章中，我就不多赘述具体的语法细节，未来可能会另开一篇文章，总结下其常见的用法（喜闻乐见的重复造轮子环节）。</p>
+<h4 id="启动本地服务（一般用作预览）"><a href="#启动本地服务（一般用作预览）" class="headerlink" title="启动本地服务（一般用作预览）"></a>启动本地服务（一般用作预览）</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo s</span><br></pre></td></tr></table></figure>
+
+<h4 id="生成文件"><a href="#生成文件" class="headerlink" title="生成文件"></a>生成文件</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo g</span><br></pre></td></tr></table></figure>
+
+<h4 id="部署到远端"><a href="#部署到远端" class="headerlink" title="部署到远端"></a>部署到远端</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo d</span><br></pre></td></tr></table></figure>
+
+<h2 id="双语支持"><a href="#双语支持" class="headerlink" title="双语支持"></a>双语支持</h2><p>最后，考虑到可能的（?）外文读者，笔者产生了添加英文站点的需求，而虽然Hexo文档中推荐了了一款国际化插件 <code>Internationalization (i18n)</code>，但是它的功能仅限于翻译标题，没什么实质用处，在各种网上冲浪后，我找到了一些前辈的解决方案，秉承着重复造轮子的原则，我将其搬运于此。</p>
+<p>这套解决方案的核心原理很简单：克隆建好的中文站，然后将克隆体全局修改为英文版，最后在两个站点间互相插入链接。</p>
+<p>首先将<code>blog</code>文件夹中除了<code>node_modules</code>以外的所有文件复制到新的一个文件中（笔者使用<code>blogen</code>），然后将该文件移动至博客文件夹中（下文中的<code>aa</code>为笔者的用户名，读者按需修改）。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /home/aa</span><br><span class="line"><span class="built_in">mkdir</span> blogen</span><br><span class="line"><span class="built_in">cp</span> -r /home/aa/blog/* /home/aa/blogen</span><br><span class="line"><span class="built_in">rm</span> -r /home/aa/blogen/node_modules</span><br><span class="line"><span class="built_in">cp</span> -r /home/aa/blogen /home/aa/blog/</span><br><span class="line"><span class="built_in">rm</span> -rf /home/aa/blogen</span><br></pre></td></tr></table></figure>
+
+<p>接着进入<code>blogen</code>目录中</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> blogen</span><br></pre></td></tr></table></figure>
+
+<p>重新下载依赖</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install</span><br></pre></td></tr></table></figure>
+
+<h3 id="修改语言"><a href="#修改语言" class="headerlink" title="修改语言"></a>修改语言</h3><p>在<code>blog</code>下的<code>_config.yml</code>文件中，确保language为<code>zh-CN</code>，</p>
+<p>然后在<code>blogen</code>下的<code>_config.yml</code>文件中，修改language为<code>en</code>，</p>
+<h3 id="修改根目录"><a href="#修改根目录" class="headerlink" title="修改根目录"></a>修改根目录</h3><p>在<code>blog</code>下的<code>_config.yml</code>文件中，将root: 后改为<code>/</code>，</p>
+<p>然后在<code>blogen</code>下的<code>_config.yml</code>文件中，将root: 后改为<code>/en</code>，</p>
+<h3 id="修改主题"><a href="#修改主题" class="headerlink" title="修改主题"></a>修改主题</h3><p><code>&quot;hexo-theme-matery&quot;</code>主题会自动对全局语言进行适配，所以只需要添加另外语言站点的索引即可</p>
+<p>首先对于中文站，修改<code>blog/themes/hexo-theme-matery</code>下的<code>_config.yml</code>，在<code>menu</code>中新增一条：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">English Site:</span></span><br><span class="line">    <span class="attr">url:</span> <span class="string">‘你的url’/en</span></span><br></pre></td></tr></table></figure>
+
+<p>而对于英文站，修改<code>blogen/themes/hexo-theme-matery</code>下的<code>_config.yml</code>，在<code>menu</code>中新增一条：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">中文站:</span></span><br><span class="line">    <span class="attr">url:</span> <span class="string">‘你的url’</span></span><br></pre></td></tr></table></figure>
+
+<p>此时，利用下述命令重新启动博客：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /home/aa/blog &amp;&amp; hexo clean &amp;&amp; hexo g &amp;&amp;<span class="built_in">cd</span> /home/aa/blog/blogen &amp;&amp; hexo clean &amp;&amp; hexo g &amp;&amp; <span class="built_in">cd</span> /home/aa/blog &amp;&amp; <span class="built_in">cp</span> -r /home/aa/blog/blogen/public/. /home/aa/blog/public/en/ &amp;&amp; hexo s</span><br></pre></td></tr></table></figure>
+
+<p>再次进入博客便可看到右上角新增的指向另一个语言的站点图标。</p>
+<p>这之后，只要在文档编辑器里写好相应语言的文章，便可一键部署。</p>
+<hr>
+<h2 id="Hexo升级"><a href="#Hexo升级" class="headerlink" title="Hexo升级"></a>Hexo升级</h2><p>当我们的博客运行一段时间后，很有可能Hexo本体有了版本更新，虽然更新一般对于本人来说没有什么用，但强迫症发时，总会想要手里的东西是最新版，因此，这里也记录下框架更新的方式。</p>
+<p>注意：这里的部分本学渣不懂具体做了什么操作，只是复刻别的地方看到的大佬的教程，不保证不会出问题，仅供参考！！</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">npm install -g hexo-cli</span><br><span class="line">hexo version</span><br><span class="line"></span><br><span class="line">npm install -g npm-check</span><br><span class="line">npm-check</span><br><span class="line"></span><br><span class="line">npm install -g npm-upgrade</span><br><span class="line">npm-upgrade</span><br><span class="line"></span><br><span class="line">npm update -g</span><br><span class="line">npm install -g npm</span><br><span class="line"></span><br><span class="line">hexo clean <span class="comment">#清理hexo数据并重新生成页面并部署</span></span><br><span class="line">hexo g -s</span><br><span class="line">hexo d</span><br></pre></td></tr></table></figure>
+
+<p>到这里，Hexo的基础框架就更新完了，至于主题文件，由于修改了太多源码，实在没法更新了，最好就是删除+重新拉取主题源码，然后重新配置，太麻烦了，本人就不搞了。</p>
+<hr>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a target="_blank" rel="noopener" href="https://hexo.io/docs/">Hexo Documentation</a></p>
+<p><a target="_blank" rel="noopener" href="https://tstrs.me/1448.html">Hexo添加多语言支持「国际化i18n」</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/35668237">超详细Hexo+Github博客搭建小白教程</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/blinkfox/hexo-theme-matery/blob/develop/README_CN.md">hexo-theme-matery</a></p>
+<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>请我一杯咖啡吧！</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/Sponsor/wechat.png" alt="分数受害者 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/Sponsor/alipay.jpg" alt="分数受害者 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>原作者： </strong>分数受害者
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://scorevictim.github.io/posts/50817/" title="利用Hexo搭建个人博客，并添加多语言功能">https://scorevictim.github.io/posts/50817/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Hexo/" rel="tag"># Hexo</a>
+              <a href="/tags/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/" rel="tag"># 个人博客</a>
+              <a href="/tags/%E5%A4%9A%E8%AF%AD%E8%A8%80/" rel="tag"># 多语言</a>
+              <a href="/tags/%E6%95%99%E7%A8%8B/" rel="tag"># 教程</a>
+              <a href="/tags/Github/" rel="tag"># Github</a>
+              <a href="/tags/%E7%BD%91%E7%AB%99%E6%90%AD%E5%BB%BA/" rel="tag"># 网站搭建</a>
+              <a href="/tags/matery/" rel="tag"># matery</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/posts/16107/" rel="prev" title="Hello World">
+                  <i class="fa fa-angle-left"></i> Hello World
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/posts/63805/" rel="next" title="Hexo博客进阶美化设置">
+                  Hexo博客进阶美化设置 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2021 – 
+    <span itemprop="copyrightYear">2023</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">分数受害者</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">195k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">2:57</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  
+
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://scorevictim.github.io/posts/50817/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"scorevictim/blogcomments","issue_term":"title","theme":"github-dark"}</script>
+<script src="/js/third-party/comments/utterances.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.0.0">
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/logo.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/logo.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/logo.png">
+  <link rel="mask-icon" href="/images/logo.png" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha256-CTSx/A06dm1B063156EVh15m6Y67pAjZZaQc89LLSrU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"scorevictim.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":true,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta property="og:type" content="blog">
+<meta property="og:title" content="机器学习基础笔记（一）">
+<meta property="og:url" content="https://scorevictim.github.io/posts/50176/index.html">
+<meta property="og:site_name" content="青崖之间">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://scorevictim.github.io/images/ML1/MLCover.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/50176/Lr1.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/50176/ols.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/50176/regu.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/50176/L1.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/50176/L2.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/50176/lasso.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/50176/ridge.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/50176/elastic.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/50176/kfold.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/50176/nn.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/50176/knn.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/50176/knn1.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/50176/mean.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/50176/knni.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/50176/rfs.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/50176/pca2.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/50176/pca1.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/50176/pca3.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/50176/pca4.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/50176/enc.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/50176/oenc.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/50176/ohenc.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/50176/ohenc1.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/50176/fenc.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/50176/tenc1.png">
+<meta property="article:published_time" content="2022-04-14T21:30:47.000Z">
+<meta property="article:modified_time" content="2023-11-12T02:35:46.685Z">
+<meta property="article:author" content="分数受害者">
+<meta property="article:tag" content="数据分析">
+<meta property="article:tag" content="笔记">
+<meta property="article:tag" content="建模">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="机器学习">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://scorevictim.github.io/images/ML1/MLCover.png">
+
+
+<link rel="canonical" href="https://scorevictim.github.io/posts/50176/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://scorevictim.github.io/posts/50176/","path":"posts/50176/","title":"机器学习基础笔记（一）"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>机器学习基础笔记（一） | 青崖之间</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="青崖之间" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">青崖之间</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">北海虽赊，扶摇可接</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-留言板"><a href="/contact/" rel="section"><i class="fa fa-comment fa-fw"></i>留言板</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-sitemap"><a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a></li><li class="menu-item menu-item-rss"><a href="/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>RSS</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">2.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92%E6%A8%A1%E5%9E%8B-Linear-Regression"><span class="nav-number">3.</span> <span class="nav-text">线性回归模型(Linear Regression)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%80%E5%B0%8F%E4%BA%8C%E4%B9%98%E6%B3%95-Ordinary-Least-Squares"><span class="nav-number">3.1.</span> <span class="nav-text">最小二乘法(Ordinary Least Squares)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A3%E5%88%99%E5%8C%96-Regularization"><span class="nav-number">3.2.</span> <span class="nav-text">正则化(Regularization)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E9%A1%B9%E5%BC%8F%E5%8C%96%E7%89%B9%E5%BE%81-Polynomial-Features"><span class="nav-number">3.3.</span> <span class="nav-text">多项式化特征(Polynomial Features)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E6%94%BE%E7%BC%A9-Scaling"><span class="nav-number">3.4.</span> <span class="nav-text">数据放缩(Scaling)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A5%97%E7%B4%A2%E5%9B%9E%E5%BD%92-LASSO-Regression"><span class="nav-number">3.5.</span> <span class="nav-text">套索回归(LASSO Regression)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B2%AD%E5%9B%9E%E5%BD%92-Ridge-Regression"><span class="nav-number">3.6.</span> <span class="nav-text">岭回归(Ridge Regression)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%B9%E6%80%A7%E7%BD%91%E7%AE%97%E6%B3%95-Elastic-Net"><span class="nav-number">3.7.</span> <span class="nav-text">弹性网算法(Elastic Net)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%91%E7%9D%A3%E5%BC%8F%E5%AD%A6%E4%B9%A0-Supervised-Learning"><span class="nav-number">4.</span> <span class="nav-text">监督式学习(Supervised Learning)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BD%91%E6%A0%BC%E6%90%9C%E7%B4%A2-Grid-Search"><span class="nav-number">4.1.</span> <span class="nav-text">网格搜索(Grid Search)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#K%E6%8A%98%E4%BA%A4%E5%8F%89%E9%AA%8C%E8%AF%81-K-Fold-Cross-Validation"><span class="nav-number">4.2.</span> <span class="nav-text">K折交叉验证(K-Fold Cross-Validation)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%80%E8%BF%91%E9%82%BB%E5%B1%85%E7%AE%97%E6%B3%95-Nearest-Neighbors"><span class="nav-number">4.3.</span> <span class="nav-text">最近邻居算法(Nearest Neighbors)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#K-%E8%BF%91%E9%82%BB%E7%AE%97%E6%B3%95-K-Nearest-Neighbors"><span class="nav-number">4.4.</span> <span class="nav-text">K-近邻算法(K-Nearest Neighbors)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%A1%AB%E8%A1%A5%E5%8F%8A%E7%89%B9%E5%BE%81%E9%80%89%E5%8F%96-Imputation-and-Feature-Selection"><span class="nav-number">5.</span> <span class="nav-text">数据填补及特征选取(Imputation and Feature Selection)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%A1%AB%E8%A1%A5-Imputation"><span class="nav-number">5.1.</span> <span class="nav-text">数据填补(Imputation)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%B9%E5%BE%81%E9%80%89%E5%8F%96-Feature-Selection"><span class="nav-number">5.2.</span> <span class="nav-text">特征选取(Feature Selection)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E9%99%8D%E7%BB%B4-Dimensionality-Reduction"><span class="nav-number">6.</span> <span class="nav-text">数据降维(Dimensionality Reduction)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BB%E6%88%90%E5%88%86%E5%88%86%E6%9E%90-Principal-Component-Analysis"><span class="nav-number">6.1.</span> <span class="nav-text">主成分分析(Principal Component Analysis)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%84%E5%A4%84%E7%90%86%E5%8F%8A%E7%89%B9%E5%BE%81%E5%B7%A5%E7%A8%8B-Preprocessing-and-Feature-Engineering"><span class="nav-number">7.</span> <span class="nav-text">预处理及特征工程(Preprocessing and Feature Engineering)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%84%E5%A4%84%E7%90%86"><span class="nav-number">7.1.</span> <span class="nav-text">预处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E7%B1%BB%E7%89%B9%E5%BE%81%E5%A4%84%E7%90%86-Categorical-Feature"><span class="nav-number">7.2.</span> <span class="nav-text">分类特征处理(Categorical Feature)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%A2%E5%BC%83%E5%88%86%E7%B1%BB%E7%89%B9%E5%BE%81-Drop-Categorical-Feature"><span class="nav-number">7.2.1.</span> <span class="nav-text">丢弃分类特征(Drop Categorical Feature)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BA%8F%E5%8F%B7%E7%BC%96%E7%A0%81-Ordinal-Encoding"><span class="nav-number">7.2.2.</span> <span class="nav-text">序号编码(Ordinal Encoding)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%8B%AC%E7%83%AD%E7%BC%96%E7%A0%81-One-Hot-Encoding"><span class="nav-number">7.2.3.</span> <span class="nav-text">独热编码(One-Hot Encoding)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%A2%91%E7%8E%87%E7%BC%96%E7%A0%81-Frequency-Encoding"><span class="nav-number">7.2.4.</span> <span class="nav-text">频率编码(Frequency Encoding)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87%E7%BC%96%E7%A0%81-Target-Encoding"><span class="nav-number">7.2.5.</span> <span class="nav-text">目标编码(Target Encoding)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%97%E8%BD%AC%E6%8D%A2-Column-Transformer"><span class="nav-number">7.3.</span> <span class="nav-text">列转换(Column Transformer)</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="分数受害者"
+      src="/uploads/avatar.jpg">
+  <p class="site-author-name" itemprop="name">分数受害者</p>
+  <div class="site-description" itemprop="description">人生如痴人说梦，充满着喧哗与骚动，却没有任何意义</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">76</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://blog.vinfall.com/" title="https:&#x2F;&#x2F;blog.vinfall.com&#x2F;" rel="noopener" target="_blank">Vinfall@Geekademy</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://scorevictim.github.io/posts/50176/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+      <meta itemprop="name" content="分数受害者">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="青崖之间">
+      <meta itemprop="description" content="人生如痴人说梦，充满着喧哗与骚动，却没有任何意义">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="机器学习基础笔记（一） | 青崖之间">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          机器学习基础笔记（一）
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-04-14 14:30:47" itemprop="dateCreated datePublished" datetime="2022-04-14T14:30:47-07:00">2022-04-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-11-11 18:35:46" itemprop="dateModified" datetime="2023-11-11T18:35:46-08:00">2023-11-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>15k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>13 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><img src="/images/ML1/MLCover.png" alt="banner"></p>
+<span id="more"></span>
+
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>说起当下时兴的知识，我想机器学习绝对是绕不开的一个话题。近些年来，机器学习可以说渗透到了各个领域，到处都贴满了这个概念，仿佛一个项目不说自己使用了机器学习，就落后于了时代。</p>
+<p>作为一个目前在读金融分析的学渣，坦白来说，本人是并不太认可在金融领域应用机器学习的，原因很简单：时下的各类机器学习模型，数学层面已经相当复杂，因此很多时候，应用机器学习的人自己都未必知道模型该如何解释，常常是先把模型跑出来再说，至于模型是否有道理、为啥有效、何时无效等则不管不顾。当然了，这不局限于金融行业，很多其他行业也是把机器学习当成黑盒，跑出结果就行，至于过程如何，没人关心。反正先把投资人的钱赚了再说。</p>
+<p>然而，本人的意见有些偏激，也不一定合理，自然也微不足道。事实上，机器学习已然在金融行业规模化使用，本人所在实习的公司的部分投组模型也应用了机器学习算法，本学渣也尝试问过老板，在投资上使用黑盒是否合理，不过得到的答复也是说这不是很重要，有结果就行。</p>
+<p>无论如何，笔者也还是跟着潮流，选了机器学习的课程。然而作为一个文科生，这玩意对于本人的负载确实有些大了。事实上，对于许多模型底层的数理推导，本人上完课也只是一知半解，实际掌握的更多的只是调库使用。然而即便仅掌握到如此水平，遗忘速度还是惊人的快，因此有必要进行一些笔记整理，增强下理解，以免期末时痛苦万分。</p>
+<p><del>当然，目前课程还未结束，本文会随着课程进度，同步更新。</del></p>
+<p>由于当前内容已经超出本文目录结构所能承载的极限，故本文完结，后续内容将在<a href="/posts/37094/" title="机器学习基础笔记（二）">[机器学习基础笔记（二）]</a>中继续。</p>
+<hr>
+<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><ul>
+<li><p>什么是机器学习(What is Machine Learning)</p>
+<p>  这部分内容没什么用，就是纯形而上的定义，但是为了文章的结构完整，我还是将其放在这里：</p>
+<blockquote>
+<p>Large amount of structured and unstructured data</p>
+</blockquote>
+<blockquote>
+<p>Machine Learning helps capturing the knowledge from the data to improve the performance of predictive models and make data-driven decisions</p>
+</blockquote>
+<p>  当然也有各类百科上的定义，如维基：</p>
+<blockquote>
+<p>Machine learning (ML) is the study of computer algorithms that can improve automatically through experience and by the use of data. It is seen as a part of artificial intelligence. Machine learning algorithms build a model based on sample data, known as training data, in order to make predictions or decisions without being explicitly programmed to do so. Machine learning algorithms are used in a wide variety of applications, such as in medicine, email filtering, speech recognition, and computer vision, where it is difficult or unfeasible to develop conventional algorithms to perform the needed tasks.</p>
+</blockquote>
+</li>
+<li><p>机器学习的分类(Types of Machine Learning)</p>
+<p>  这部分内容也没什么用，就是概述性质。</p>
+<p>  机器学习主要分为下述三类：</p>
+<ol>
+<li>监督式学习</li>
+<li>非监督式学习</li>
+<li>强化学习</li>
+</ol>
+</li>
+</ul>
+<p>都是非核心内容，不多写了，以后有心情再补。</p>
+<hr>
+<h2 id="线性回归模型-Linear-Regression"><a href="#线性回归模型-Linear-Regression" class="headerlink" title="线性回归模型(Linear Regression)"></a>线性回归模型(Linear Regression)</h2><p>线性回归，可以说是回归模型的核心了，其最简单实现的内容便是拟合出数据的线性函数，如下图：</p>
+<p><img src="/posts/50176/Lr1.png" alt="线性回归"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LinearRegression</span><br><span class="line"></span><br><span class="line">LinearRegression(X_train, y_train)</span><br></pre></td></tr></table></figure>
+
+<h3 id="最小二乘法-Ordinary-Least-Squares"><a href="#最小二乘法-Ordinary-Least-Squares" class="headerlink" title="最小二乘法(Ordinary Least Squares)"></a>最小二乘法(Ordinary Least Squares)</h3><p>为了计算出上述的拟合线，最小二乘法(OLS)是最重要且最基础的算法。</p>
+<p>其核心思想是求预测值减实际值（即残差）的平方和的最小值：</p>
+<img src="/posts/50176/ols.png" class="" title="最小二乘法">
+
+<p>当然，最小二乘法在实际使用中，有很多不足，本人的数学理论水平一般，就不再这深入探讨了，总而言之，由于遇到了模型过拟合问题(Over Fitting)，前人对OLS法进行了正则化，这就引出了下文的两种回归。</p>
+<h3 id="正则化-Regularization"><a href="#正则化-Regularization" class="headerlink" title="正则化(Regularization)"></a>正则化(Regularization)</h3><p>正则化一词，一眼看过去就知道不是中文表述了，事实上，这个词的翻译很难做，毕竟中文中没有很好的对应表述，所以，虽然本人认为“正则化”这个翻译很差劲，但我也没什么其他建议，也只好就这么将就用着。</p>
+<p>从词义来看，其和“正常化”意思很像，而具体实现的也是把“不正常（过拟合）”的模型变“正常”的过程。</p>
+<p>以本学渣的数学水平，是研究不明白正则化的具体算法的，只能记录下其宏观意义所做的事情。简单来说，正则化引入了“惩罚”的概念，具体则是通过一定数学手段，在我们对一个模型引入新的变量时给予”惩罚“。</p>
+<img src="/posts/50176/regu.png" class="" title="正则化">
+
+<p>本人目前学到的正则化主要分为两种：L1正则化以及L2正则化。</p>
+<p>对于L1正则化，其将系数权重的绝对值作为惩罚项。</p>
+<p>L1正则化可以产生稀疏权值矩阵，即产生一个稀疏模型（有许多系数为零的模型），可以用于特征选择。</p>
+<img src="/posts/50176/L1.png" class="" title="L1 正则">
+
+<p>而对于L2正则化，其将系数权重绝对值的平方作为惩罚项。</p>
+<p>L2正则化可以防止模型过拟合（overfitting），当然一定程度上，L1也可以防止过拟合；它不会使系数变为零，只会使不合适的系数无限靠近零；</p>
+<img src="/posts/50176/L2.png" class="" title="L2 正则">
+
+<h3 id="多项式化特征-Polynomial-Features"><a href="#多项式化特征-Polynomial-Features" class="headerlink" title="多项式化特征(Polynomial Features)"></a>多项式化特征(Polynomial Features)</h3><p>很多时候，我们会拿到形状不是一条直线，而是一条曲线的数据，这时，直接使用线性回归便无法很好拟合曲线，于是，我们想到可以对自变量进行变化，加上指数，这便是多项式变化。</p>
+<p>例如对于数据$a,b$，经过二维变换后，便得到$a^2, a, 2ab, b^2, b$三项，此时再进行回归则可得到类二次函数的曲线，而非直线。而同理，我们也可以将多变量进行多维度的变换。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> PolynomialFeatures</span><br><span class="line"></span><br><span class="line">pf = PolynomialFeatures(degree=<span class="number">3</span>)</span><br><span class="line">pd.DataFrame(pf.transform(X_train), </span><br><span class="line">             columns=pf.get_feature_names()).head()</span><br></pre></td></tr></table></figure>
+
+<h3 id="数据放缩-Scaling"><a href="#数据放缩-Scaling" class="headerlink" title="数据放缩(Scaling)"></a>数据放缩(Scaling)</h3><p>这里直接引用比较正式的定义，描述的已经很清晰了：</p>
+<blockquote>
+<p>数据放缩，在统计学中的意思是，通过一定的数学变换方式，将原始数据按照一定的比例进行转换，将数据放到一个小的特定区间内，比如0<del>1或者-1</del>1。目的是消除不同样本之间特性、数量级等特征属性的差异，转化为一个无量纲的相对数值，结果的各个样本特征量数值都处于同一数量级上。</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">### 一般与Pipeline共同使用</span></span><br><span class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> MinMaxScaler</span><br><span class="line"></span><br><span class="line">steps = [(<span class="string">&#x27;poly&#x27;</span>, PolynomialFeatures(degree=<span class="number">2</span>)),</span><br><span class="line">         (<span class="string">&#x27;Rescale&#x27;</span>, MinMaxScaler()),</span><br><span class="line">         (<span class="string">&#x27;lr&#x27;</span>, LinearRegression())]</span><br><span class="line">		 </span><br><span class="line">model = Pipeline(steps)</span><br></pre></td></tr></table></figure>
+
+<h3 id="套索回归-LASSO-Regression"><a href="#套索回归-LASSO-Regression" class="headerlink" title="套索回归(LASSO Regression)"></a>套索回归(LASSO Regression)</h3><p>LASSO，全称为Least Absolute Shrinkage and Selection Operator，由此其实可知，将其翻译为“套索”是不合理且无意义的。然而，查翻译的时候我发现似乎大家已然习惯这么叫了，那我也就沿用这个名字用下去了。</p>
+<p>套索回归本质上就是基础线性模型的L1正则：</p>
+<img src="/posts/50176/lasso.png" class="" title="套索回归">
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">### 一般与Pipeline共同使用</span></span><br><span class="line"><span class="keyword">from</span> sklearn.pipeline <span class="keyword">import</span> Pipeline</span><br><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> Lasso</span><br><span class="line"></span><br><span class="line">steps = [(<span class="string">&#x27;rescale&#x27;</span>, MinMaxScaler()),</span><br><span class="line">         (<span class="string">&#x27;poly&#x27;</span>, PolynomialFeatures()),</span><br><span class="line">         (<span class="string">&#x27;lasso&#x27;</span>, Lasso())]</span><br><span class="line"></span><br><span class="line">model = Pipeline(steps)</span><br></pre></td></tr></table></figure>
+
+<h3 id="岭回归-Ridge-Regression"><a href="#岭回归-Ridge-Regression" class="headerlink" title="岭回归(Ridge Regression)"></a>岭回归(Ridge Regression)</h3><p>岭回归本质上就是基础线性模型的L2正则：</p>
+<img src="/posts/50176/ridge.png" class="" title="岭回归">
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">### 一般与Pipeline共同使用</span></span><br><span class="line"><span class="keyword">from</span> sklearn.pipeline <span class="keyword">import</span> Pipeline</span><br><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> Ridge</span><br><span class="line"></span><br><span class="line">steps = [(<span class="string">&#x27;rescale&#x27;</span>, MinMaxScaler()),</span><br><span class="line">         (<span class="string">&#x27;poly&#x27;</span>, PolynomialFeatures()),</span><br><span class="line">         (<span class="string">&#x27;Ridge&#x27;</span>, Ridge())]</span><br><span class="line"></span><br><span class="line">model = Pipeline(steps)</span><br></pre></td></tr></table></figure>
+
+<h3 id="弹性网算法-Elastic-Net"><a href="#弹性网算法-Elastic-Net" class="headerlink" title="弹性网算法(Elastic Net)"></a>弹性网算法(Elastic Net)</h3><p>弹性网本质上是结合了套索以及岭回归的正则项的算法。</p>
+<img src="/posts/50176/elastic.png" class="" title="弹性网算法">
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> ElasticNet</span><br><span class="line"></span><br><span class="line">ElasticNet(random_state=<span class="number">0</span>).fit(x, y)</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="监督式学习-Supervised-Learning"><a href="#监督式学习-Supervised-Learning" class="headerlink" title="监督式学习(Supervised Learning)"></a>监督式学习(Supervised Learning)</h2><h3 id="网格搜索-Grid-Search"><a href="#网格搜索-Grid-Search" class="headerlink" title="网格搜索(Grid Search)"></a>网格搜索(Grid Search)</h3><p>在前文介绍的几个模型中，都存在超参数(Hyperpramater)，这是在模型开始拟合前，手动输入的一个参数，其直接决定了模型的好坏。</p>
+<p>当然，具体超参是什么，它是如何出现的底层原理本人不想深究，总之只要知道调参这一概念即可。</p>
+<p>而要进行最优的参数选择，很直觉地，我们便考虑输入多次参数，然后观察模型的表现好坏，选表现最好时的超参作为我们的结果，而这实际上就是穷举法。在编程里很好实现，只要写循环语句即可。这种穷举法被称为网格搜索。</p>
+<p>例如我们想用MSE作为模型好坏评估标准，进行网格搜索：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">avalues=<span class="built_in">list</span>(np.logspace(-<span class="number">3</span>, <span class="number">3</span>, <span class="number">130</span>))</span><br><span class="line">mse = []</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> a <span class="keyword">in</span> avalues:</span><br><span class="line">    steps = [(<span class="string">&#x27;poly&#x27;</span>, PolynomialFeatures(degree=<span class="number">3</span>)),</span><br><span class="line">             (<span class="string">&#x27;rescale&#x27;</span>, MinMaxScaler()),</span><br><span class="line">             (<span class="string">&#x27;Ridge&#x27;</span>, Ridge(alpha=a, max_iter=<span class="number">10000</span>))]</span><br><span class="line">    model = Pipeline(steps)</span><br><span class="line">    model = model.fit(X_train, y_train)</span><br><span class="line">    mse.append(mean_squared_error(y_valid, model.predict(X_valid)))</span><br></pre></td></tr></table></figure>
+
+<p>当然，实际使用时我们不去每次都写循环，而是调用GridSearchCV函数：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> GridSearchCV</span><br><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> mean_squared_error, make_scorer</span><br><span class="line"></span><br><span class="line">avalues=<span class="built_in">list</span>(np.logspace(-<span class="number">3</span>, <span class="number">3</span>, <span class="number">15</span>))</span><br><span class="line">tuned_parameters = [&#123;<span class="string">&#x27;poly__degree&#x27;</span>:<span class="built_in">range</span>(<span class="number">1</span>,<span class="number">10</span>), <span class="string">&#x27;Ridge__alpha&#x27;</span>:avalues&#125;]</span><br><span class="line">my_mse = make_scorer(mean_squared_error, greater_is_better=<span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line">steps = [(<span class="string">&#x27;rescale&#x27;</span>, MinMaxScaler()),</span><br><span class="line">         (<span class="string">&#x27;poly&#x27;</span>, PolynomialFeatures()),</span><br><span class="line">         (<span class="string">&#x27;Ridge&#x27;</span>, Ridge(max_iter=<span class="number">100000</span>))]</span><br><span class="line"></span><br><span class="line">model = Pipeline(steps)</span><br><span class="line"></span><br><span class="line"><span class="comment">### I used 20-fold validation to tune</span></span><br><span class="line">lrgrid = GridSearchCV(model, tuned_parameters, scoring=my_mse)</span><br><span class="line">lrgrid.fit(X_train.values, y_train.values)</span><br><span class="line">lrgrid.best_params_</span><br></pre></td></tr></table></figure>
+
+<h3 id="K折交叉验证-K-Fold-Cross-Validation"><a href="#K折交叉验证-K-Fold-Cross-Validation" class="headerlink" title="K折交叉验证(K-Fold Cross-Validation)"></a>K折交叉验证(K-Fold Cross-Validation)</h3><p>在以往的例子中，我们都将数据集分为训练集和测试集，然而这样做的问题在于，只随机取了部分样本，这部分是否能代表整体是不好说的，于是，便出现了交叉验证，其将数据多次分割，确保都参与了建模过程。</p>
+<img src="/posts/50176/kfold.png" class="" title="五折交叉验证">
+
+<p>这K个模型分别在验证集中评估结果，最后的误差MSE加和平均就得到交叉验证误差。我们选取平均误差最低的一项的超参使用。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> KFold</span><br><span class="line"></span><br><span class="line">kf = KFold(n_splits=<span class="number">5</span>, shuffle=<span class="literal">True</span>, random_state=<span class="number">2022</span>)</span><br><span class="line">kf.split(X,y)</span><br><span class="line"></span><br><span class="line">avalues=<span class="built_in">list</span>(np.logspace(-<span class="number">3</span>, <span class="number">3</span>, <span class="number">130</span>))</span><br><span class="line">mse_kfold = []</span><br><span class="line">mse = []</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> a <span class="keyword">in</span> avalues:</span><br><span class="line">  steps = [(<span class="string">&#x27;poly&#x27;</span>, PolynomialFeatures(degree=<span class="number">3</span>)),</span><br><span class="line">           (<span class="string">&#x27;rescale&#x27;</span>, MinMaxScaler()),</span><br><span class="line">           (<span class="string">&#x27;Ridge&#x27;</span>, Ridge(alpha=a, max_iter=<span class="number">100000</span>))]</span><br><span class="line">  model = Pipeline(steps)</span><br><span class="line">  <span class="keyword">for</span> train_index, valid_index <span class="keyword">in</span> kf.split(X,y):</span><br><span class="line">    X_train, X_valid = X.iloc[train_index], X.iloc[valid_index]</span><br><span class="line">    y_train, y_valid = y.iloc[train_index], y.iloc[valid_index]</span><br><span class="line">    model = model.fit(X_train.values, y_train.values)</span><br><span class="line">    mse.append(mean_squared_error(y_valid.values, model.predict(X_valid.values)))</span><br><span class="line">  mse = <span class="built_in">sum</span>(mse) / <span class="built_in">len</span>(mse)</span><br><span class="line">  mse_kfold.append(mse)</span><br><span class="line">  mse = []</span><br></pre></td></tr></table></figure>
+
+<h3 id="最近邻居算法-Nearest-Neighbors"><a href="#最近邻居算法-Nearest-Neighbors" class="headerlink" title="最近邻居算法(Nearest Neighbors)"></a>最近邻居算法(Nearest Neighbors)</h3><p>很好理解，简单来说，该算法是用来分类的，未知点的类型判断为与离它最近的点的类型。</p>
+<img src="/posts/50176/nn.png" class="" title="近邻算法">
+
+<h3 id="K-近邻算法-K-Nearest-Neighbors"><a href="#K-近邻算法-K-Nearest-Neighbors" class="headerlink" title="K-近邻算法(K-Nearest Neighbors)"></a>K-近邻算法(K-Nearest Neighbors)</h3><p>也叫KNN算法，与近邻本质相同，不过将邻居数扩大至K个，然后再“民主投票”决定结果。</p>
+<img src="/posts/50176/knn.png" class="" title="K-近邻算法">
+
+<p>邻居数的影响：</p>
+<img src="/posts/50176/knn1.png" class="">
+
+<p>利用训练、验证、测试集进行KNN：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">X_trainval, X_test, y_trainval, y_test = train_test_split(X, y)</span><br><span class="line">X_train, X_val, y_train, y_val = train_test_split(X_trainval, y_trainval)</span><br><span class="line">val_scores = []</span><br><span class="line">neighbors = np.arange(<span class="number">1</span>, <span class="number">15</span>, <span class="number">2</span>)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> neighbors:</span><br><span class="line">	knn = KNeighborsClassifier(n_neighbors=i)</span><br><span class="line">	knn.fit(X_train, y_train)</span><br><span class="line">	val_scores.append(knn.score(X_val, y_val))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;best validation score: &#123;:.3f&#125;&quot;</span>.<span class="built_in">format</span>(np.<span class="built_in">max</span>(val_scores)))</span><br><span class="line">best_n_neighbors = neighbors[np.argmax(val_scores)]</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;best n_neighbors: &#123;&#125;&quot;</span>.<span class="built_in">format</span>(best_n_neighbors))</span><br><span class="line">knn = KNeighborsClassifier(n_neighbors=best_n_neighbors)</span><br><span class="line">knn.fit(X_trainval, y_trainval)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;test-set score: &#123;:.3f&#125;&quot;</span>.<span class="built_in">format</span>(knn.score(X_test, y_test)))</span><br></pre></td></tr></table></figure>
+
+<p>当然，上述过程也可以使用网格搜索方程实现：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> GridSearchCV</span><br><span class="line">X_train, X_test, y_train, y_test = train_test_split(X, y, stratify=y)</span><br><span class="line">param_grid = &#123;<span class="string">&#x27;n_neighbors&#x27;</span>: np.arange(<span class="number">1</span>, <span class="number">15</span>, <span class="number">2</span>)&#125;</span><br><span class="line">grid = GridSearchCV(KNeighborsClassifier(), param_grid=param_grid, cv=<span class="number">10</span>)</span><br><span class="line">grid.fit(X_train, y_train)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;best mean cross-validation score: &#123;:.3f&#125;&quot;</span>.<span class="built_in">format</span>(grid.best_score_))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;best parameters: &#123;&#125;&quot;</span>.<span class="built_in">format</span>(grid.best_params_))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;test-set score: &#123;:.3f&#125;&quot;</span>.<span class="built_in">format</span>(grid.score(X_test, y_test)))</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="数据填补及特征选取-Imputation-and-Feature-Selection"><a href="#数据填补及特征选取-Imputation-and-Feature-Selection" class="headerlink" title="数据填补及特征选取(Imputation and Feature Selection)"></a>数据填补及特征选取(Imputation and Feature Selection)</h2><h3 id="数据填补-Imputation"><a href="#数据填补-Imputation" class="headerlink" title="数据填补(Imputation)"></a>数据填补(Imputation)</h3><p>在数据分析中，可以说我们拿到的绝大部分原数据都是存在相当多缺陷的，其中，以数据缺失为代表。</p>
+<p>当数据缺失时，不仅会影响到最终的模型结果，有时甚至会让整个数据处理无法进行，因此有必要将缺失数据进行填补，主要方法有：</p>
+<ul>
+<li><p>数据丢弃</p>
+<p>  这一方式最简单直接，当数据有缺失时，直接丢弃全部的列</p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.pipeline <span class="keyword">import</span> make_pipeline</span><br><span class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> StandardScaler</span><br><span class="line">nan_columns = np.<span class="built_in">any</span>(np.isnan(X_train), axis=<span class="number">0</span>)</span><br><span class="line">X_drop_columns = X_train[:, ~nan_columns]</span><br><span class="line">logreg = make_pipeline(StandardScaler(), LogisticRegression(solver=<span class="string">&#x27;lbfgs&#x27;</span>,multi_class=<span class="string">&#x27;multinomial&#x27;</span>))</span><br><span class="line">scores = cross_val_score(logreg, X_drop_columns, y_train, cv=<span class="number">10</span>)</span><br><span class="line">np.mean(scores)</span><br></pre></td></tr></table></figure>
+<p>  当然，这种方式并不合理，仅仅作为最终手段使用。</p>
+</li>
+<li><p>均值&#x2F;中位数</p>
+<p>  顾名思义，我们可以利用均值或中位数填补缺失值：</p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> Imputer</span><br><span class="line">imp = Imputer(strategy=<span class="string">&#x27;mean&#x27;</span>).fit(X_train)</span><br><span class="line">imp.transform(X_train)[-<span class="number">30</span>:]</span><br></pre></td></tr></table></figure>
+<p>  得到的数据分布如：</p>
+  <img src="/posts/50176/mean.png" class="">
+</li>
+<li><p>KNN</p>
+<p>  K近邻法为：找寻K个最近的非空数据，将其均值赋予空数据</p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">distances = np.zeros((X_train.shape[<span class="number">0</span>], X_train.shape[<span class="number">0</span>]))</span><br><span class="line"><span class="keyword">for</span> i, x1 <span class="keyword">in</span> <span class="built_in">enumerate</span>(X_train):</span><br><span class="line">	<span class="keyword">for</span> j, x2 <span class="keyword">in</span> <span class="built_in">enumerate</span>(X_train):</span><br><span class="line">		dist = (x1 - x2) ** <span class="number">2</span></span><br><span class="line">		nan_mask = np.isnan(dist)</span><br><span class="line">		distances[i, j] = dist[~nan_mask].mean() * X_train.shape[<span class="number">1</span>]</span><br><span class="line">neighbors = np.argsort(distances, axis=<span class="number">1</span>)[:, <span class="number">1</span>:]</span><br><span class="line">n_neighbors = <span class="number">3</span></span><br><span class="line">X_train_knn = X_train.copy()</span><br><span class="line"><span class="keyword">for</span> feature <span class="keyword">in</span> <span class="built_in">range</span>(X_train.shape[<span class="number">1</span>]):</span><br><span class="line">	has_missing_value = np.isnan(X_train[:, feature])</span><br><span class="line">	<span class="keyword">for</span> row <span class="keyword">in</span> np.where(has_missing_value)[<span class="number">0</span>]:</span><br><span class="line">		neighbor_features = X_train[neighbors[row], feature]</span><br><span class="line">		non_nan_neighbors = neighbor_features[~np.isnan(neighbor_features)]</span><br><span class="line">		X_train_knn[row, feature] = non_nan_neighbors[:n_neighbors].mean()</span><br></pre></td></tr></table></figure>
+  <img src="/posts/50176/knni.png" class="">
+</li>
+<li><p>建模法<br>  建模法指利用已有数据建模，来预测缺失数据，如随机森林填补：</p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">rf = RandomForestRegressor(n_estimators=<span class="number">100</span>)</span><br><span class="line">X_imputed = X_train.copy()</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">10</span>):</span><br><span class="line">	last = X_imputed.copy()</span><br><span class="line">	<span class="keyword">for</span> feature <span class="keyword">in</span> <span class="built_in">range</span>(X_train.shape[<span class="number">1</span>]):</span><br><span class="line">		inds_not_f = np.arange(X_train.shape[<span class="number">1</span>])</span><br><span class="line">		inds_not_f = inds_not_f[inds_not_f != feature]</span><br><span class="line">		f_missing = np.isnan(X_train[:, feature])</span><br><span class="line">		rf.fit(X_imputed[~f_missing][:, inds_not_f], X_train[~f_missing, feature])</span><br><span class="line">		X_imputed[f_missing, feature] = rf.predict(</span><br><span class="line">		X_imputed[f_missing][:, inds_not_f])</span><br><span class="line">	<span class="keyword">if</span> (np.linalg.norm(last - X_imputed)) &lt; <span class="number">.5</span>:</span><br><span class="line">		<span class="keyword">break</span></span><br><span class="line">scores = cross_val_score(logreg, X_imputed, y_train, cv=<span class="number">10</span>)</span><br><span class="line">np.mean(scores)</span><br></pre></td></tr></table></figure>
+  <img src="/posts/50176/rfs.png" class=""></li>
+</ul>
+<h3 id="特征选取-Feature-Selection"><a href="#特征选取-Feature-Selection" class="headerlink" title="特征选取(Feature Selection)"></a>特征选取(Feature Selection)</h3><p>为什么要进行特征选取，而不是尽可能多的塞特征？</p>
+<ol>
+<li>优化模型计算速度</li>
+<li>优化储存空间</li>
+<li>增加模型解释性</li>
+</ol>
+<hr>
+<h2 id="数据降维-Dimensionality-Reduction"><a href="#数据降维-Dimensionality-Reduction" class="headerlink" title="数据降维(Dimensionality Reduction)"></a>数据降维(Dimensionality Reduction)</h2><h3 id="主成分分析-Principal-Component-Analysis"><a href="#主成分分析-Principal-Component-Analysis" class="headerlink" title="主成分分析(Principal Component Analysis)"></a>主成分分析(Principal Component Analysis)</h3><p>主成分分析，简称PCA，是一个主要用作数据降维的手段。数学上即为将一组变量通过正交变换转变成另一组线性不相关变量的分析方法，其中这些不相关变量称为主成分(Principal Component)</p>
+<p>具体的数学推导对于本人来说难以理解，且即便看懂了，一天后就会忘记，故不在此进行记录，网上资料多的是，这里主要记录作业中的一些代码实现。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># import PCA from sklearn.</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> sklearn.decomposition <span class="keyword">import</span> PCA</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Transform X_train using PCA. Assign the output to a variable X_train_pca.</span></span><br><span class="line"></span><br><span class="line">pca = PCA(n_components=<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">X_train_pca = pca.fit_transform(X_train)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Plot explained_variance_ratio_ in a bar chart.</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> matplotlib.pylab <span class="keyword">as</span> plt</span><br><span class="line">%matplotlib inline</span><br><span class="line"></span><br><span class="line">expVRatio = pca.explained_variance_ratio_</span><br><span class="line"></span><br><span class="line">plt.bar([<span class="string">&#x27;C1&#x27;</span>, <span class="string">&#x27;C2&#x27;</span>], expVRatio)</span><br></pre></td></tr></table></figure>
+
+<img src="/posts/50176/pca2.png" class="">
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># How do the original features contribute to the first components = pca.components_</span></span><br><span class="line"></span><br><span class="line">plt.imshow(components.T)</span><br><span class="line">plt.yticks(<span class="built_in">range</span>(<span class="built_in">len</span>(X_train.columns)), X_train.columns)</span><br><span class="line">plt.xticks(np.arange(<span class="number">0</span>,<span class="number">2</span>, step=<span class="number">1</span>))</span><br><span class="line">plt.colorbar()</span><br></pre></td></tr></table></figure>
+
+<img src="/posts/50176/pca1.png" class="">
+
+<p>这里我们发现，直接对原数据进行PCA，得到的结果并不好，只有一个主成分显著，且只有一个原特征参与了主成分1的构建。</p>
+<p>这种情况是由于我们没有对数据进行无量纲化处理，于是引入数据放缩库：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.pipeline <span class="keyword">import</span> make_pipeline</span><br><span class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> StandardScaler</span><br><span class="line"></span><br><span class="line">pca_scaled = make_pipeline(StandardScaler(), PCA(n_components=<span class="number">2</span>))</span><br><span class="line"></span><br><span class="line">X_pca_scaled = pca_scaled.fit_transform(X_train)</span><br><span class="line"></span><br><span class="line">expVRatio = pca_scaled.named_steps[<span class="string">&#x27;pca&#x27;</span>].explained_variance_ratio_</span><br><span class="line"></span><br><span class="line">plt.bar([<span class="string">&#x27;C1&#x27;</span>, <span class="string">&#x27;C2&#x27;</span>], expVRatio)</span><br></pre></td></tr></table></figure>
+
+<img src="/posts/50176/pca3.png" class="">
+
+<p>可见数据放缩后，各主成分都起到了解释方差的作用。</p>
+<p>绘制不同的主成分数对于整体数据的解释力：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">pca_scaled = make_pipeline(StandardScaler(), PCA(n_components=<span class="number">12</span>))</span><br><span class="line"></span><br><span class="line">X_pca_scaled = pca_scaled.fit_transform(X_train)</span><br><span class="line"></span><br><span class="line">xi = np.arange(<span class="number">1</span>, <span class="number">13</span>, step=<span class="number">1</span>)</span><br><span class="line">y = np.cumsum(pca_scaled.named_steps[<span class="string">&#x27;pca&#x27;</span>].explained_variance_ratio_)</span><br><span class="line"></span><br><span class="line">plt.rcParams[<span class="string">&quot;figure.figsize&quot;</span>] = (<span class="number">15</span>,<span class="number">9</span>)</span><br><span class="line">fig, ax = plt.subplots()</span><br><span class="line"></span><br><span class="line">plt.plot(xi, y, marker=<span class="string">&#x27;o&#x27;</span>, linestyle=<span class="string">&#x27;--&#x27;</span>, color=<span class="string">&#x27;b&#x27;</span>)</span><br><span class="line">plt.xlabel(<span class="string">&#x27;Number of Components&#x27;</span>)</span><br><span class="line">plt.xticks(np.arange(<span class="number">0</span>, <span class="number">13</span>, step=<span class="number">1</span>))</span><br><span class="line">plt.ylabel(<span class="string">&#x27;Cumulative variance (%)&#x27;</span>)</span><br><span class="line">plt.title(<span class="string">&#x27;The number of components needed to explain variance&#x27;</span>)</span><br><span class="line"></span><br><span class="line">plt.axhline(y=<span class="number">0.95</span>, color=<span class="string">&#x27;r&#x27;</span>, linestyle=<span class="string">&#x27;-&#x27;</span>)</span><br><span class="line">plt.text(<span class="number">0.5</span>, <span class="number">0.85</span>, <span class="string">&#x27;95% cut-off threshold&#x27;</span>, color = <span class="string">&#x27;red&#x27;</span>, fontsize=<span class="number">16</span>)</span><br><span class="line"></span><br><span class="line">ax.grid(axis=<span class="string">&#x27;x&#x27;</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+<img src="/posts/50176/pca4.png" class="">
+
+<p>可以看出，当主成分为8时，即可解释原数据的95%的方差，这时我们便实现了将原有的12维数据降至8维。</p>
+<hr>
+<h2 id="预处理及特征工程-Preprocessing-and-Feature-Engineering"><a href="#预处理及特征工程-Preprocessing-and-Feature-Engineering" class="headerlink" title="预处理及特征工程(Preprocessing and Feature Engineering)"></a>预处理及特征工程(Preprocessing and Feature Engineering)</h2><h3 id="预处理"><a href="#预处理" class="headerlink" title="预处理"></a>预处理</h3><p>这里主要介绍了不同的数据放缩方法，前文有涉及，故在此不多赘述。</p>
+<h3 id="分类特征处理-Categorical-Feature"><a href="#分类特征处理-Categorical-Feature" class="headerlink" title="分类特征处理(Categorical Feature)"></a>分类特征处理(Categorical Feature)</h3><p>对于机器学习建模，我们最常见的当然是数字类型的特征(Numerical Data)，然而，直觉地，我们也会想去考虑类别这一影响因素，如性别、地名等，而这一类的特征原数据并非数字，因此无法直接纳入模型中，分类特征处理便是为了解决如何将这些特征数字化，使其可以被模型计算。</p>
+<h4 id="丢弃分类特征-Drop-Categorical-Feature"><a href="#丢弃分类特征-Drop-Categorical-Feature" class="headerlink" title="丢弃分类特征(Drop Categorical Feature)"></a>丢弃分类特征(Drop Categorical Feature)</h4><p>顾名思义，这一方法说的是当我们遇到分类特征时，直接丢弃。实则是当鸵鸟逃避问题，没什么用，这里不再赘述。</p>
+<h4 id="序号编码-Ordinal-Encoding"><a href="#序号编码-Ordinal-Encoding" class="headerlink" title="序号编码(Ordinal Encoding)"></a>序号编码(Ordinal Encoding)</h4><p>这一方法说的是将分类特征转换为0~N-1的数。</p>
+<p>假设我们有以下数据：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line">df = pd.DataFrame(&#123;</span><br><span class="line"> <span class="string">&#x27;boro&#x27;</span>: [<span class="string">&#x27;Manhattan&#x27;</span>, <span class="string">&#x27;Queens&#x27;</span>, <span class="string">&#x27;Manhattan&#x27;</span>, <span class="string">&#x27;Brooklyn&#x27;</span>, <span class="string">&#x27;Brooklyn&#x27;</span>, <span class="string">&#x27;Bronx&#x27;</span>],</span><br><span class="line"> <span class="string">&#x27;salary&#x27;</span>: [<span class="number">103</span>, <span class="number">89</span>, <span class="number">142</span>, <span class="number">54</span>, <span class="number">63</span>, <span class="number">219</span>],</span><br><span class="line"> <span class="string">&#x27;vegan&#x27;</span>: [<span class="string">&#x27;No&#x27;</span>, <span class="string">&#x27;No&#x27;</span>,<span class="string">&#x27;No&#x27;</span>,<span class="string">&#x27;Yes&#x27;</span>, <span class="string">&#x27;Yes&#x27;</span>, <span class="string">&#x27;No&#x27;</span>]&#125;)</span><br></pre></td></tr></table></figure>
+
+<img src="/posts/50176/enc.png" class="">
+
+<p>我们对boro一列进行序号编码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">df[<span class="string">&#x27;boro_ordinal&#x27;</span>] = df.boro.astype(<span class="string">&quot;category&quot;</span>).cat.codes</span><br><span class="line">df</span><br></pre></td></tr></table></figure>
+
+<img src="/posts/50176/oenc.png" class="">
+
+<p>这里可以看出，序号编码虽然给每个分类都赋了值，然而其数字意义不明，对于模型的可读及可解释性负面影响很大，于是便有了接下来的独热编码。</p>
+<h4 id="独热编码-One-Hot-Encoding"><a href="#独热编码-One-Hot-Encoding" class="headerlink" title="独热编码(One-Hot Encoding)"></a>独热编码(One-Hot Encoding)</h4><p>独热编码相较序号编码，增加了N列，每列代表原列的一个分类，用1和0表示是否属于这个类别：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pd.get_dummies(df.columns=[<span class="string">&#x27;boro&#x27;</span>])</span><br></pre></td></tr></table></figure>
+
+<img src="/posts/50176/ohenc.png" class="">
+
+<p>当然，也可以自定义想要的类名，如果原数据本身没有这一类：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">df = pd.DataFrame(&#123;</span><br><span class="line"> <span class="string">&#x27;boro&#x27;</span>: [<span class="string">&#x27;Manhattan&#x27;</span>, <span class="string">&#x27;Queens&#x27;</span>, <span class="string">&#x27;Manhattan&#x27;</span>, <span class="string">&#x27;Brooklyn&#x27;</span>, <span class="string">&#x27;Brooklyn&#x27;</span>, <span class="string">&#x27;Bronx&#x27;</span>],</span><br><span class="line"> <span class="string">&#x27;salary&#x27;</span>: [<span class="number">103</span>, <span class="number">89</span>, <span class="number">142</span>, <span class="number">54</span>, <span class="number">63</span>, <span class="number">219</span>],</span><br><span class="line"> <span class="string">&#x27;vegan&#x27;</span>: [<span class="string">&#x27;No&#x27;</span>, <span class="string">&#x27;No&#x27;</span>,<span class="string">&#x27;No&#x27;</span>,<span class="string">&#x27;Yes&#x27;</span>, <span class="string">&#x27;Yes&#x27;</span>, <span class="string">&#x27;No&#x27;</span>]&#125;)</span><br><span class="line">df[<span class="string">&#x27;boro&#x27;</span>] = pd.Categorical(df.boro,</span><br><span class="line"> categories=[<span class="string">&#x27;Manhattan&#x27;</span>, <span class="string">&#x27;Queens&#x27;</span>, <span class="string">&#x27;Brooklyn&#x27;</span>,</span><br><span class="line"> <span class="string">&#x27;Bronx&#x27;</span>, <span class="string">&#x27;Staten Island&#x27;</span>])</span><br><span class="line">pd.get_dummies(df, columns=[<span class="string">&#x27;boro&#x27;</span>])</span><br></pre></td></tr></table></figure>
+
+<img src="/posts/50176/ohenc1.png" class="">
+
+<p>对于独热编码来说，虽然其容易实现，然而问题也是很明显的：</p>
+<p>首先，其增加了新的特征列，尤其是用人名等分类多的特征做独热处理时，很容易使我们的数据维度变得极大，这对机器学习十分不利。</p>
+<p>另外，独热编码会使数据集出现非常多的0，让机器学习模型难以处理。</p>
+<p>同时，其数据存在冗余资讯、多重共线性等等问题，并不是一个很好的处理手段。</p>
+<h4 id="频率编码-Frequency-Encoding"><a href="#频率编码-Frequency-Encoding" class="headerlink" title="频率编码(Frequency Encoding)"></a>频率编码(Frequency Encoding)</h4><p>频率编码指将某个分类出现的频率数量作为其数值。</p>
+<img src="/posts/50176/fenc.png" class="">
+
+<p>这种方式的问题在于，如果有类别出现频数一致，那么模型会误认为其为同一个类别。</p>
+<h4 id="目标编码-Target-Encoding"><a href="#目标编码-Target-Encoding" class="headerlink" title="目标编码(Target Encoding)"></a>目标编码(Target Encoding)</h4><p>目标编码指把同样类别的数据对应的「目标值」全部拿到，并且将这些值做平均，用作新编码的值。</p>
+<p>效果：</p>
+<img src="/posts/50176/tenc1.png" class="">
+
+<p>使用：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">pip install category_encoders</span><br><span class="line"><span class="keyword">or</span></span><br><span class="line">conda install -c conda-forge category_encoders</span><br><span class="line"></span><br><span class="line"><span class="comment"># use target encoding to encode two categorical features</span></span><br><span class="line">enc = TargetEncoder(cols=[<span class="string">&#x27;CHAS&#x27;</span>, <span class="string">&#x27;RAD&#x27;</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># transform the datasets</span></span><br><span class="line">training_numeric_dataset = enc.fit_transform(X_train, y_train)</span><br><span class="line">testing_numeric_dataset = enc.transform(X_test)</span><br></pre></td></tr></table></figure>
+
+<p>当然，这种方式也有不足，如利用了目标值来做编码，某种程度上可以理解为用目标值的一部分来预测目标值，而这会引发过拟合问题；同时，在使用这种方式时，还要注意处理异常值，因为异常值会对均值有较大影响。</p>
+<h3 id="列转换-Column-Transformer"><a href="#列转换-Column-Transformer" class="headerlink" title="列转换(Column Transformer)"></a>列转换(Column Transformer)</h3><p>我们可以将上述编码方式装入列转换方法，然后封装到pipeline中：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">categorical = df.dtypes == <span class="built_in">object</span></span><br><span class="line">preprocess = make_column_transformer(</span><br><span class="line"> (StandardScaler(), ~categorical),</span><br><span class="line"> (OneHotEncoder(), categorical))</span><br><span class="line">model = make_pipeline(preprocess, LogisticRegression())</span><br></pre></td></tr></table></figure>
+
+<p>如果我们想对于类别特征以及数字特征分别进行编码和放缩，则可以使用pipeline嵌套在ColumnTransformer中的方式：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">model = Pipeline(steps=[(<span class="string">&#x27;preprocessor&#x27;</span>,</span><br><span class="line">                         ColumnTransformer(transformers=[(<span class="string">&#x27;num&#x27;</span>,</span><br><span class="line">                                                          Pipeline(steps=[(<span class="string">&#x27;imputer1&#x27;</span>,</span><br><span class="line">                                                                           SimpleImputer(strategy=<span class="string">&#x27;median&#x27;</span>)),</span><br><span class="line">                                                                          (<span class="string">&#x27;scaler1&#x27;</span>,</span><br><span class="line">                                                                           StandardScaler())]),</span><br><span class="line">                                                          num_features),</span><br><span class="line">                                                         (<span class="string">&#x27;cat&#x27;</span>,</span><br><span class="line">                                                          Pipeline(steps=[(<span class="string">&#x27;imputer&#x27;</span>,</span><br><span class="line">                                                                           SimpleImputer(strategy=<span class="string">&#x27;most_frequent&#x27;</span>, missing_values=<span class="string">&#x27;nan&#x27;</span>)),</span><br><span class="line">                                                                          (<span class="string">&#x27;scaler&#x27;</span>,</span><br><span class="line">                                                                           OneHotEncoder(handle_unknown=<span class="string">&#x27;ignore&#x27;</span>))]),</span><br><span class="line">                                                          cat_features)])),</span><br><span class="line">                        (<span class="string">&#x27;classifier&#x27;</span>, LinearRegression())])</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p><del><strong>未完待续…</strong></del></p>
+<p>由于当前内容已经超出本文目录结构所能承载的极限，故本文完结，后续内容将在 <a href="/posts/37094/" title="机器学习基础笔记（二）">[机器学习基础笔记（二）]</a> 中继续。</p>
+<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>请我一杯咖啡吧！</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/Sponsor/wechat.png" alt="分数受害者 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/Sponsor/alipay.jpg" alt="分数受害者 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>原作者： </strong>分数受害者
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://scorevictim.github.io/posts/50176/" title="机器学习基础笔记（一）">https://scorevictim.github.io/posts/50176/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/" rel="tag"># 数据分析</a>
+              <a href="/tags/%E7%AC%94%E8%AE%B0/" rel="tag"># 笔记</a>
+              <a href="/tags/%E5%BB%BA%E6%A8%A1/" rel="tag"># 建模</a>
+              <a href="/tags/python/" rel="tag"># python</a>
+              <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag"># 机器学习</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/posts/11531/" rel="prev" title="时序分析学习笔记（二）">
+                  <i class="fa fa-angle-left"></i> 时序分析学习笔记（二）
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/posts/37094/" rel="next" title="机器学习基础笔记（二）">
+                  机器学习基础笔记（二） <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2021 – 
+    <span itemprop="copyrightYear">2023</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">分数受害者</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">195k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">2:57</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  
+
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://scorevictim.github.io/posts/50176/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"scorevictim/blogcomments","issue_term":"title","theme":"github-dark"}</script>
+<script src="/js/third-party/comments/utterances.js"></script>
+
+</body>
+</html>

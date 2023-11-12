@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.0.0">
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/logo.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/logo.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/logo.png">
+  <link rel="mask-icon" href="/images/logo.png" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha256-CTSx/A06dm1B063156EVh15m6Y67pAjZZaQc89LLSrU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"scorevictim.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":true,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta property="og:type" content="blog">
+<meta property="og:title" content="机器学习基础笔记（二）">
+<meta property="og:url" content="https://scorevictim.github.io/posts/37094/index.html">
+<meta property="og:site_name" content="青崖之间">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://scorevictim.github.io/images/ML2/MLCover.jpg">
+<meta property="og:image" content="https://scorevictim.github.io/posts/37094/fi1.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/37094/fi2.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/37094/fi3.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/37094/kernel.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/37094/svm.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/37094/svm2.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/37094/conf.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/37094/pr.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/37094/roc.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/37094/kmeans.gif">
+<meta property="og:image" content="https://scorevictim.github.io/posts/37094/kmeans2.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/37094/kmeans3.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/37094/kmeans4.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/37094/kmeans5.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/37094/hierarch.gif">
+<meta property="og:image" content="https://scorevictim.github.io/posts/37094/linkage.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/37094/DBSCAN_search.gif">
+<meta property="og:image" content="https://scorevictim.github.io/posts/37094/DBSCAN.png">
+<meta property="article:published_time" content="2022-04-27T00:07:03.000Z">
+<meta property="article:modified_time" content="2023-11-12T02:43:43.465Z">
+<meta property="article:author" content="分数受害者">
+<meta property="article:tag" content="数据分析">
+<meta property="article:tag" content="笔记">
+<meta property="article:tag" content="建模">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="机器学习">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://scorevictim.github.io/images/ML2/MLCover.jpg">
+
+
+<link rel="canonical" href="https://scorevictim.github.io/posts/37094/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://scorevictim.github.io/posts/37094/","path":"posts/37094/","title":"机器学习基础笔记（二）"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>机器学习基础笔记（二） | 青崖之间</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="青崖之间" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">青崖之间</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">北海虽赊，扶摇可接</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-留言板"><a href="/contact/" rel="section"><i class="fa fa-comment fa-fw"></i>留言板</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-sitemap"><a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a></li><li class="menu-item menu-item-rss"><a href="/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>RSS</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%91%EF%BC%8C%E6%A3%AE%E6%9E%97%EF%BC%8C%E4%B8%8E%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0-Trees-Forests-Ensembles"><span class="nav-number">2.</span> <span class="nav-text">树，森林，与集成学习(Trees, Forests &amp; Ensembles)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%91%E6%A8%A1%E5%9E%8B-Tree-Models"><span class="nav-number">2.1.</span> <span class="nav-text">树模型(Tree Models)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0-Ensemble-Learning"><span class="nav-number">2.2.</span> <span class="nav-text">集成学习(Ensemble Learning)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%9A%8F%E6%9C%BA%E6%A3%AE%E6%9E%97%E6%A8%A1%E5%9E%8B-Random-Forests"><span class="nav-number">2.2.1.</span> <span class="nav-text">随机森林模型(Random Forests)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A2%AF%E5%BA%A6%E4%B8%8A%E5%8D%87%E6%A8%A1%E5%9E%8B-Gradient-Boosting-Trees"><span class="nav-number">2.2.2.</span> <span class="nav-text">梯度上升模型(Gradient Boosting Trees)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A9%B6%E6%9E%81%E6%A2%AF%E5%BA%A6%E4%B8%8A%E5%8D%87-XGBoost"><span class="nav-number">2.2.3.</span> <span class="nav-text">究极梯度上升(XGBoost)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BA%BF%E6%80%A7%E5%88%86%E7%B1%BB%E6%A8%A1%E5%9E%8B-Linear-Models-for-Classification"><span class="nav-number">3.</span> <span class="nav-text">线性分类模型(Linear Models for Classification)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92-Logistic-Regression"><span class="nav-number">3.1.</span> <span class="nav-text">逻辑回归(Logistic Regression)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA-Support-Vactor-Machine"><span class="nav-number">3.2.</span> <span class="nav-text">支持向量机(Support Vactor Machine)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BE%B9%E7%95%8C-Margin"><span class="nav-number">3.2.1.</span> <span class="nav-text">边界(Margin)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A0%B8%E5%87%BD%E6%95%B0-Kernel"><span class="nav-number">3.2.2.</span> <span class="nav-text">核函数(Kernel )</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E8%AF%84%E4%BC%B0-Model-evaluation"><span class="nav-number">4.</span> <span class="nav-text">模型评估(Model evaluation)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B7%B7%E6%B7%86%E7%9F%A9%E9%98%B5-Confusion-Matrix"><span class="nav-number">4.1.</span> <span class="nav-text">混淆矩阵(Confusion Matrix)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B2%BE%E5%BA%A6%E5%8F%AC%E5%9B%9E%E6%9B%B2%E7%BA%BF-Precision-Recall-Curve"><span class="nav-number">4.2.</span> <span class="nav-text">精度召回曲线(Precision-Recall Curve)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%97%E8%AF%95%E8%80%85%E5%B7%A5%E4%BD%9C%E7%89%B9%E5%BE%81%E6%9B%B2%E7%BA%BF-Receiver-Operating-Characteristic-Curve"><span class="nav-number">4.3.</span> <span class="nav-text">受试者工作特征曲线(Receiver Operating Characteristic Curve)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9D%9E%E5%9D%87%E8%A1%A1%E6%95%B0%E6%8D%AE-Imbalanced-Data"><span class="nav-number">5.</span> <span class="nav-text">非均衡数据(Imbalanced Data)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%81%9A%E7%B1%BB%E6%A8%A1%E5%9E%8B-Clustering-Models"><span class="nav-number">6.</span> <span class="nav-text">聚类模型(Clustering Models)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#K%E5%9D%87%E5%80%BC%E7%AE%97%E6%B3%95-K-Means"><span class="nav-number">6.1.</span> <span class="nav-text">K均值算法(K-Means)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%81%9A%E5%90%88%E8%81%9A%E7%B1%BB-Agglomerative-Clustering"><span class="nav-number">6.2.</span> <span class="nav-text">聚合聚类(Agglomerative Clustering)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E5%AF%86%E5%BA%A6%E7%9A%84%E5%99%AA%E7%82%B9%E7%A9%BA%E9%97%B4%E8%81%9A%E7%B1%BB-Density-Based-Spatial-Clustering-of-Applications-with-Noise"><span class="nav-number">6.3.</span> <span class="nav-text">基于密度的噪点空间聚类(Density-Based Spatial Clustering of Applications with Noise)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%81%9A%E7%B1%BB%E7%89%B9%E5%BE%81%E6%8F%90%E5%8F%96-Feature-Extraction"><span class="nav-number">6.4.</span> <span class="nav-text">聚类特征提取(Feature Extraction)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%81%9A%E7%B1%BB%E6%A8%A1%E5%9E%8B%E8%AF%84%E4%BC%B0-Clustering-Evaluation"><span class="nav-number">7.</span> <span class="nav-text">聚类模型评估(Clustering Evaluation)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BD%AE%E5%BB%93%E7%B3%BB%E6%95%B0-Silhouette-Score"><span class="nav-number">7.1.</span> <span class="nav-text">轮廓系数(Silhouette Score)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B0%83%E6%95%B4%E5%85%B0%E5%BE%B7%E6%8C%87%E6%95%B0-Adjusted-Rand-Index"><span class="nav-number">7.2.</span> <span class="nav-text">调整兰德指数(Adjusted Rand Index)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%B5%8B%E6%B3%95"><span class="nav-number">7.3.</span> <span class="nav-text">目测法</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="分数受害者"
+      src="/uploads/avatar.jpg">
+  <p class="site-author-name" itemprop="name">分数受害者</p>
+  <div class="site-description" itemprop="description">人生如痴人说梦，充满着喧哗与骚动，却没有任何意义</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">76</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://blog.vinfall.com/" title="https:&#x2F;&#x2F;blog.vinfall.com&#x2F;" rel="noopener" target="_blank">Vinfall@Geekademy</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://scorevictim.github.io/posts/37094/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+      <meta itemprop="name" content="分数受害者">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="青崖之间">
+      <meta itemprop="description" content="人生如痴人说梦，充满着喧哗与骚动，却没有任何意义">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="机器学习基础笔记（二） | 青崖之间">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          机器学习基础笔记（二）
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-04-26 17:07:03" itemprop="dateCreated datePublished" datetime="2022-04-26T17:07:03-07:00">2022-04-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-11-11 18:43:43" itemprop="dateModified" datetime="2023-11-11T18:43:43-08:00">2023-11-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>12k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>11 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><img src="/images/ML2/MLCover.jpg" alt="banner"></p>
+<span id="more"></span>
+
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在上一篇文章<a href="/posts/50176/" title="机器学习基础笔记（一）">[机器学习基础笔记（一）]</a>中，笔者整理了机器学习这门课上半节的课程内容，由于博客目录存在容量上限，之后的内容目录会无法显示，因此为了美观起见，在此重开一篇文章，作为该系列的第二部分</p>
+<p><del>当然，目前课程还未结束，本文会随着课程进度，同步更新。</del></p>
+<p>由于当前内容已经超出本文目录结构所能承载的极限，故本文完结，后续内容将在<a href="/posts/40095/" title="机器学习基础笔记（三）">[机器学习基础笔记（三）]</a>中继续。</p>
+<hr>
+<h2 id="树，森林，与集成学习-Trees-Forests-Ensembles"><a href="#树，森林，与集成学习-Trees-Forests-Ensembles" class="headerlink" title="树，森林，与集成学习(Trees, Forests &amp; Ensembles)"></a>树，森林，与集成学习(Trees, Forests &amp; Ensembles)</h2><p>这个标题看着竟然有些文艺。</p>
+<h3 id="树模型-Tree-Models"><a href="#树模型-Tree-Models" class="headerlink" title="树模型(Tree Models)"></a>树模型(Tree Models)</h3><p>简介是网上复制来的：</p>
+<p>决策树(Decision Tree)是树模型中最简单的一个模型，也是后面将要介绍到的随机深林与梯度提升决策树两个模型的基础。利用决策树算法，在历史数据集上，我们可以画出这样一个树，这颗树上的叶子节点表示结论，非叶子节点表示依据。一个样本根据自身特征，从根节点开始，根据不同依据决策，拆分成子节点，直到只包含一种类别(即一种结论)的叶子节点为止。</p>
+<p>代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.tree <span class="keyword">import</span> DecisionTreeRegressor</span><br><span class="line"></span><br><span class="line">tree = DecisionTreeRegressor()</span><br><span class="line">tree.fit(X_train, y_train)</span><br></pre></td></tr></table></figure>
+
+<p>可以用这个代码可视化：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.tree <span class="keyword">import</span> plot_tree</span><br><span class="line">%matplotlib inline</span><br><span class="line">fig = plt.figure(figsize=(<span class="number">25</span>,<span class="number">20</span>))</span><br><span class="line">_ = plot_tree(tree, </span><br><span class="line">                   filled=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+
+<p>特征重要性：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">plt.barh(cols, tree.feature_importances_)</span><br></pre></td></tr></table></figure>
+
+<img src="/posts/37094/fi1.png" class="" title="Feature Importance">
+
+<p>当然，单一树模型不调参会有过拟合问题，因此进行网格搜索调参：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">regtree = DecisionTreeRegressor()</span><br><span class="line"></span><br><span class="line">parameters=&#123;<span class="string">&quot;splitter&quot;</span>:[<span class="string">&quot;best&quot;</span>,<span class="string">&quot;random&quot;</span>],</span><br><span class="line">            <span class="string">&quot;max_depth&quot;</span> : [<span class="number">1</span>,<span class="number">3</span>,<span class="number">5</span>],</span><br><span class="line">           <span class="string">&quot;min_samples_leaf&quot;</span>:[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>],</span><br><span class="line">           <span class="string">&quot;min_weight_fraction_leaf&quot;</span>:[<span class="number">0.1</span>,<span class="number">0.2</span>,<span class="number">0.3</span>],</span><br><span class="line">           <span class="string">&quot;max_features&quot;</span>:[<span class="string">&quot;auto&quot;</span>,<span class="string">&quot;log2&quot;</span>,<span class="string">&quot;sqrt&quot;</span>,<span class="literal">None</span>],</span><br><span class="line">           <span class="string">&quot;max_leaf_nodes&quot;</span>:[<span class="literal">None</span>,<span class="number">10</span>,<span class="number">20</span>] &#125;</span><br><span class="line">		   </span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> GridSearchCV</span><br><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> mean_squared_error, make_scorer</span><br><span class="line"></span><br><span class="line">my_mse = make_scorer(mean_squared_error, greater_is_better=<span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line">tuning_model = GridSearchCV(regtree, </span><br><span class="line">                            param_grid=parameters,</span><br><span class="line">                            scoring=my_mse,</span><br><span class="line">                            cv=<span class="number">3</span>,)</span><br><span class="line"></span><br><span class="line">tuning_model.fit(X_train, y_train)</span><br><span class="line"></span><br><span class="line">tuning_model.best_params_</span><br></pre></td></tr></table></figure>
+
+<p>得到：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="string">&#x27;max_depth&#x27;</span>: <span class="number">5</span>,</span><br><span class="line"> <span class="string">&#x27;max_features&#x27;</span>: <span class="string">&#x27;log2&#x27;</span>,</span><br><span class="line"> <span class="string">&#x27;max_leaf_nodes&#x27;</span>: <span class="number">20</span>,</span><br><span class="line"> <span class="string">&#x27;min_samples_leaf&#x27;</span>: <span class="number">4</span>,</span><br><span class="line"> <span class="string">&#x27;min_weight_fraction_leaf&#x27;</span>: <span class="number">0.1</span>,</span><br><span class="line"> <span class="string">&#x27;splitter&#x27;</span>: <span class="string">&#x27;best&#x27;</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="集成学习-Ensemble-Learning"><a href="#集成学习-Ensemble-Learning" class="headerlink" title="集成学习(Ensemble Learning)"></a>集成学习(Ensemble Learning)</h3><p>定义是网上复制来的：</p>
+<p>集成学习(Ensemble Learning)算法的基本思想就是将多个分类器组合，从而实现一个预测效果更好的集成分类器。</p>
+<h4 id="随机森林模型-Random-Forests"><a href="#随机森林模型-Random-Forests" class="headerlink" title="随机森林模型(Random Forests)"></a>随机森林模型(Random Forests)</h4><p>定义是网上复制来的：</p>
+<p>随机森林，顾名思义，是用随机的方式建立一个森林，森林里面有很多的树模型，随机森林的每一棵树之间是没有关联的。 在得到森林之后，当有一个新的输入样本进入的时候，就让森林中的每一棵树分别进行一下判断，看看这个样本应该属于哪一类（对于分类算法），然后看看哪一类被选择最多，就预测这个样本为那一类。</p>
+<p>代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.ensemble <span class="keyword">import</span> RandomForestRegressor</span><br><span class="line"></span><br><span class="line">for1 = RandomForestRegressor()</span><br><span class="line">for1_fit = for1.fit(X_train, y_train)</span><br></pre></td></tr></table></figure>
+
+<p>特征重要性：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">plt.barh(cols, for1.feature_importances_)</span><br></pre></td></tr></table></figure>
+
+<img src="/posts/37094/fi2.png" class="" title="Feature Importance">
+
+<p>调参：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">rantree = RandomForestRegressor()</span><br><span class="line"></span><br><span class="line">parameters=&#123;<span class="string">&#x27;bootstrap&#x27;</span>: [<span class="literal">True</span>],</span><br><span class="line">            <span class="string">&#x27;max_depth&#x27;</span>: [<span class="number">80</span>, <span class="number">90</span>, <span class="number">100</span>],</span><br><span class="line">            <span class="string">&#x27;max_features&#x27;</span>: [<span class="string">&#x27;auto&#x27;</span>, <span class="string">&#x27;sqrt&#x27;</span>],</span><br><span class="line">            <span class="string">&#x27;min_samples_leaf&#x27;</span>: [<span class="number">2</span>, <span class="number">3</span>],</span><br><span class="line">            <span class="string">&#x27;min_samples_split&#x27;</span>: [<span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>],</span><br><span class="line">            <span class="string">&#x27;n_estimators&#x27;</span>: [<span class="number">200</span>, <span class="number">400</span>]&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> GridSearchCV</span><br><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> mean_squared_error, make_scorer</span><br><span class="line"></span><br><span class="line">my_mse = make_scorer(mean_squared_error, greater_is_better=<span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line">tuning_model = GridSearchCV(rantree, </span><br><span class="line">                            param_grid=parameters,</span><br><span class="line">                            scoring=my_mse,</span><br><span class="line">                            cv=<span class="number">3</span>,</span><br><span class="line">                            n_jobs = -<span class="number">1</span>, </span><br><span class="line">                            verbose = <span class="number">2</span>)</span><br><span class="line">							</span><br><span class="line">tuning_model.fit(X_train, y_train)</span><br><span class="line"></span><br><span class="line">tuning_model.best_params_</span><br></pre></td></tr></table></figure>
+
+<p>得到：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="string">&#x27;bootstrap&#x27;</span>: <span class="literal">True</span>,</span><br><span class="line"> <span class="string">&#x27;max_depth&#x27;</span>: <span class="number">80</span>,</span><br><span class="line"> <span class="string">&#x27;max_features&#x27;</span>: <span class="string">&#x27;sqrt&#x27;</span>,</span><br><span class="line"> <span class="string">&#x27;min_samples_leaf&#x27;</span>: <span class="number">2</span>,</span><br><span class="line"> <span class="string">&#x27;min_samples_split&#x27;</span>: <span class="number">3</span>,</span><br><span class="line"> <span class="string">&#x27;n_estimators&#x27;</span>: <span class="number">200</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="梯度上升模型-Gradient-Boosting-Trees"><a href="#梯度上升模型-Gradient-Boosting-Trees" class="headerlink" title="梯度上升模型(Gradient Boosting Trees)"></a>梯度上升模型(Gradient Boosting Trees)</h4><p>不介绍定义以及数学原理了，需要的时候搜索一下就行，主要记录下一些代码实现。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.ensemble <span class="keyword">import</span> GradientBoostingRegressor</span><br><span class="line"></span><br><span class="line">for2 = GradientBoostingRegressor()</span><br><span class="line">for2_fit = for2.fit(X_train, y_train)</span><br></pre></td></tr></table></figure>
+
+<p>特征重要性：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">plt.barh(cols, for2.feature_importances_)</span><br></pre></td></tr></table></figure>
+
+<img src="/posts/37094/fi3.png" class="" title="Feature Importance">
+
+<p>调参：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">gratree = GradientBoostingRegressor()</span><br><span class="line"></span><br><span class="line">parameters=&#123;<span class="string">&#x27;max_depth&#x27;</span>: [<span class="number">80</span>, <span class="number">90</span>, <span class="number">100</span>],</span><br><span class="line">            <span class="string">&#x27;max_features&#x27;</span>: [<span class="string">&#x27;auto&#x27;</span>, <span class="string">&#x27;sqrt&#x27;</span>],</span><br><span class="line">            <span class="string">&#x27;min_samples_leaf&#x27;</span>: [<span class="number">2</span>, <span class="number">3</span>],</span><br><span class="line">            <span class="string">&#x27;min_samples_split&#x27;</span>: [<span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>],</span><br><span class="line">            <span class="string">&#x27;n_estimators&#x27;</span>: [<span class="number">200</span>, <span class="number">400</span>]&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> GridSearchCV</span><br><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> mean_squared_error, make_scorer</span><br><span class="line"></span><br><span class="line">my_mse = make_scorer(mean_squared_error, greater_is_better=<span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line">tuning_model2 = GridSearchCV(gratree, </span><br><span class="line">                            param_grid=parameters,</span><br><span class="line">                            scoring=my_mse,</span><br><span class="line">                            cv=<span class="number">3</span>,</span><br><span class="line">                            n_jobs = -<span class="number">1</span>, </span><br><span class="line">                            verbose = <span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">tuning_model2_fit = tuning_model2.fit(X_train, y_train)</span><br><span class="line">tuning_model2_fit.best_params_</span><br></pre></td></tr></table></figure>
+
+<h4 id="究极梯度上升-XGBoost"><a href="#究极梯度上升-XGBoost" class="headerlink" title="究极梯度上升(XGBoost)"></a>究极梯度上升(XGBoost)</h4><p>其实这个中文翻译大家都是叫极限梯度上升的，但本人图一乐，觉得“究极”这词看起来有趣一些，就在本文里这么叫了，大佬轻喷。</p>
+<p>这部分不仔细写了，和上述三个是大同小异的。</p>
+<hr>
+<h2 id="线性分类模型-Linear-Models-for-Classification"><a href="#线性分类模型-Linear-Models-for-Classification" class="headerlink" title="线性分类模型(Linear Models for Classification)"></a>线性分类模型(Linear Models for Classification)</h2><h3 id="逻辑回归-Logistic-Regression"><a href="#逻辑回归-Logistic-Regression" class="headerlink" title="逻辑回归(Logistic Regression)"></a>逻辑回归(Logistic Regression)</h3><p>逻辑回归，是用来做分类的一种线性模型。由于本学渣的数学知识储备不足以理解明白这模型的底层实现原理，这里就不多写了。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.pipeline <span class="keyword">import</span> Pipeline</span><br><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LogisticRegression</span><br><span class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> RobustScaler</span><br><span class="line"></span><br><span class="line">steps = [(<span class="string">&#x27;Rescale&#x27;</span>, RobustScaler()),</span><br><span class="line">         (<span class="string">&#x27;lr&#x27;</span>, LogisticRegression())]</span><br><span class="line">		 </span><br><span class="line">model = Pipeline(steps)</span><br></pre></td></tr></table></figure>
+
+<h3 id="支持向量机-Support-Vactor-Machine"><a href="#支持向量机-Support-Vactor-Machine" class="headerlink" title="支持向量机(Support Vactor Machine)"></a>支持向量机(Support Vactor Machine)</h3><p>支持向量机，简称SVM，是一种分类器算法。</p>
+<p>具体数学原理超出本人能力，就不在这里描述了。</p>
+<h4 id="边界-Margin"><a href="#边界-Margin" class="headerlink" title="边界(Margin)"></a>边界(Margin)</h4><p>当数据集可以严格二分时，设置硬边界(Hard Margin)，否则设置软边界(Soft Margin)。</p>
+<h4 id="核函数-Kernel"><a href="#核函数-Kernel" class="headerlink" title="核函数(Kernel )"></a>核函数(Kernel )</h4><p>当数据不可线性分割时，通过设置核函数(Kernel Fuction)升维，然后在高维数据中获取超平面(HyperPlane)，再将超平面降维得到边界函数。</p>
+<img src="/posts/37094/kernel.png" class="" title="Kernel">
+
+<p>用于升维的核函数有很多，如RBF核、多项式核、Sigmoid核等等。一般RBF可以作为一切数据的核函数，当然容易会有过拟合问题。</p>
+<p>要调的参数为<code>C</code>和<code>gamma</code>，调节前需要对数据放缩。</p>
+<p>网格搜索调参：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">param_grid = &#123;<span class="string">&#x27;svc__C&#x27;</span>: np.logspace(-<span class="number">3</span>, <span class="number">2</span>, <span class="number">6</span>),</span><br><span class="line">			  <span class="string">&#x27;svc__gamma&#x27;</span>: np.logspace(-<span class="number">3</span>, <span class="number">2</span>, <span class="number">6</span>) / X_train.shape[<span class="number">1</span>]&#125;</span><br><span class="line"></span><br><span class="line">grid = GridSearchCV(scaled_svc, param_grid=param_grid, cv=<span class="number">10</span>)</span><br><span class="line">grid.fit(X_train, y_train)</span><br></pre></td></tr></table></figure>
+
+<p>搭建一个简单的Pipeline并对支持向量可视化：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.svm <span class="keyword">import</span> SVC</span><br><span class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> StandardScaler</span><br><span class="line"><span class="keyword">from</span> sklearn.pipeline <span class="keyword">import</span> make_pipeline</span><br><span class="line"><span class="keyword">from</span> sklearn.pipeline <span class="keyword">import</span> Pipeline</span><br><span class="line"></span><br><span class="line">scaler = StandardScaler()</span><br><span class="line">model = Pipeline([(<span class="string">&#x27;scaler&#x27;</span>, scaler), (<span class="string">&#x27;svc&#x27;</span>, SVC(kernel=<span class="string">&#x27;linear&#x27;</span>))])</span><br><span class="line"></span><br><span class="line">model.fit(X.values, y)</span><br><span class="line"></span><br><span class="line"><span class="comment">### sample code for plotting decision boundaries ###</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line">%matplotlib inline</span><br><span class="line"></span><br><span class="line"><span class="comment"># create a grid</span></span><br><span class="line">x_min, x_max = df.iloc[:, <span class="number">0</span>].<span class="built_in">min</span>() - <span class="number">0.3</span>, df.iloc[:, <span class="number">0</span>].<span class="built_in">max</span>() + <span class="number">0.3</span></span><br><span class="line">y_min, y_max = df.iloc[:, <span class="number">1</span>].<span class="built_in">min</span>() - <span class="number">0.3</span>, df.iloc[:, <span class="number">1</span>].<span class="built_in">max</span>() + <span class="number">0.3</span></span><br><span class="line">xx, yy = np.meshgrid(np.arange(x_min, x_max, <span class="number">0.02</span>), np.arange(y_min, y_max, <span class="number">0.02</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># get model predictions for all points on the grid</span></span><br><span class="line">Z = model.predict(np.c_[xx.ravel(), yy.ravel()])</span><br><span class="line"></span><br><span class="line"><span class="comment"># plot decision regions and boundaries</span></span><br><span class="line">Z = Z.reshape(xx.shape)</span><br><span class="line">plt.contourf(xx, yy, Z, cmap=plt.cm.coolwarm, alpha=<span class="number">0.8</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># plot original data points</span></span><br><span class="line">plt.scatter(df[df.label == <span class="number">0</span>].x, df[df.label == <span class="number">0</span>].y, marker = <span class="string">&#x27;o&#x27;</span>, color = <span class="string">&#x27;blue&#x27;</span>, </span><br><span class="line">            alpha = <span class="number">0.5</span>, label = <span class="string">&#x27;label = 0&#x27;</span>)</span><br><span class="line">plt.scatter(df[df.label == <span class="number">1</span>].x, df[df.label == <span class="number">1</span>].y, marker = <span class="string">&#x27;o&#x27;</span>, color = <span class="string">&#x27;green&#x27;</span>, </span><br><span class="line">            alpha = <span class="number">0.5</span>, label = <span class="string">&#x27;label = 1&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">########### add your code here to plot support vectors ##############</span></span><br><span class="line">support_vectors = scaler.inverse_transform(model[<span class="number">1</span>].support_vectors_)</span><br><span class="line">plt.scatter(</span><br><span class="line">    support_vectors[:, <span class="number">0</span>],</span><br><span class="line">    support_vectors[:, <span class="number">1</span>],</span><br><span class="line">    s=<span class="number">100</span>,</span><br><span class="line">    linewidth=<span class="number">1</span>,</span><br><span class="line">    facecolors=<span class="string">&quot;none&quot;</span>,</span><br><span class="line">    edgecolors=<span class="string">&quot;k&quot;</span>,</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<img src="/posts/37094/svm.png" class="">
+
+<p>为支持向量机加核函数：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">model = Pipeline([(<span class="string">&#x27;scaler&#x27;</span>, scaler), (<span class="string">&#x27;svc&#x27;</span>, SVC(gamma=<span class="string">&#x27;auto&#x27;</span>, kernel=<span class="string">&#x27;rbf&#x27;</span>, C=<span class="number">1</span>, class_weight=<span class="string">&#x27;balanced&#x27;</span>))])</span><br><span class="line">model.fit(X.values, y)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">### sample code for plotting decision boundaries ###</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line">%matplotlib inline</span><br><span class="line"></span><br><span class="line"><span class="comment"># create a grid</span></span><br><span class="line">x_min, x_max = df.iloc[:, <span class="number">0</span>].<span class="built_in">min</span>() - <span class="number">0.3</span>, df.iloc[:, <span class="number">0</span>].<span class="built_in">max</span>() + <span class="number">0.3</span></span><br><span class="line">y_min, y_max = df.iloc[:, <span class="number">1</span>].<span class="built_in">min</span>() - <span class="number">0.3</span>, df.iloc[:, <span class="number">1</span>].<span class="built_in">max</span>() + <span class="number">0.3</span></span><br><span class="line">xx, yy = np.meshgrid(np.arange(x_min, x_max, <span class="number">0.02</span>), np.arange(y_min, y_max, <span class="number">0.02</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># get model predictions for all points on the grid</span></span><br><span class="line">Z = model.predict(np.c_[xx.ravel(), yy.ravel()])</span><br><span class="line"></span><br><span class="line"><span class="comment"># plot decision regions and boundaries</span></span><br><span class="line">Z = Z.reshape(xx.shape)</span><br><span class="line">plt.contourf(xx, yy, Z, cmap=plt.cm.coolwarm, alpha=<span class="number">0.8</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># plot original data points</span></span><br><span class="line">plt.scatter(df[df.label == <span class="number">0</span>].x, df[df.label == <span class="number">0</span>].y, marker = <span class="string">&#x27;o&#x27;</span>, color = <span class="string">&#x27;blue&#x27;</span>, </span><br><span class="line">            alpha = <span class="number">0.5</span>, label = <span class="string">&#x27;label = 0&#x27;</span>)</span><br><span class="line">plt.scatter(df[df.label == <span class="number">1</span>].x, df[df.label == <span class="number">1</span>].y, marker = <span class="string">&#x27;o&#x27;</span>, color = <span class="string">&#x27;green&#x27;</span>, </span><br><span class="line">            alpha = <span class="number">0.5</span>, label = <span class="string">&#x27;label = 1&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">########### add your code here to plot support vectors ##############</span></span><br><span class="line">support_vectors = scaler.inverse_transform(model[<span class="number">1</span>].support_vectors_)</span><br><span class="line">plt.scatter(</span><br><span class="line">    support_vectors[:, <span class="number">0</span>],</span><br><span class="line">    support_vectors[:, <span class="number">1</span>],</span><br><span class="line">    s=<span class="number">100</span>,</span><br><span class="line">    linewidth=<span class="number">1</span>,</span><br><span class="line">    facecolors=<span class="string">&quot;none&quot;</span>,</span><br><span class="line">    edgecolors=<span class="string">&quot;k&quot;</span>,</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<img src="/posts/37094/svm2.png" class="">
+
+<hr>
+<h2 id="模型评估-Model-evaluation"><a href="#模型评估-Model-evaluation" class="headerlink" title="模型评估(Model evaluation)"></a>模型评估(Model evaluation)</h2><p>当我们基于各种算法，得到了一个分类器后，我们自然地就想知道，手头的这个分类器的性能如何。然而，什么是“性能好”，什么是“性能坏”呢？这里的量度该如何确定呢？</p>
+<p>可能直觉上，我们会将测试数据输入模型，得到预测结果，用预测结果与实际数据对比，如果预测的正确率越高，同时错误率越低，则我们认为模型越好。</p>
+<p>然而，用这样的量度训练模型，则会出现一些问题，如：</p>
+<ul>
+<li><p>例1：恐怖分子识别任务。这是一个二分问题，恐怖分子计为正，非恐怖分子记为负。</p>
+<p>  这个任务的特点是：正例负例分布非常不平均，因为恐怖分子的数量远远小于非恐怖分子的数量。假设一个数据集内的恐怖分子与非恐怖分子数量比例为1:999999999，此时我们引入一个二分类判别模型，它的行为是将所有样例都识别为负例（非恐怖分子），那么在这个数据集上该模型的准确率高达99.9999999%（因为大部分都不是恐怖分子），但恐怕没有任何一家航空公司会为这个模型买单，因为它永远不会识别出恐怖分子，航空公司更关注有多少恐怖分子被识别了出来。</p>
+</li>
+</ul>
+<p>现实中这样的例子还有很多，在一背景下，我们需要一些新量度，来多方位的评判模型。</p>
+<h3 id="混淆矩阵-Confusion-Matrix"><a href="#混淆矩阵-Confusion-Matrix" class="headerlink" title="混淆矩阵(Confusion Matrix)"></a>混淆矩阵(Confusion Matrix)</h3><p>混淆矩阵是将一些模型评估量度可视化的一种方法，其记录真阳性(True Positive)、假阳性(False Positive)、真阴性(True Negative)、假阴性(True Negative)四个数据，这几个量度内容如下图，很生动了，本人就不再赘述。</p>
+<img src="/posts/37094/conf.png" class="" title="Confusion!">
+
+<p>将混淆矩阵中的量度进行一些计算，则可以得到新的指标：</p>
+<p>精确率(Precision):</p>
+<p>$Precision &#x3D; \frac{TP}{TP+FP}$</p>
+<p>Precision描述了正例结果中有多少是真实正例，即该二分类器预测的正例有多少是准确的</p>
+<p>召回率(Recall)</p>
+<p>$Recall &#x3D; \frac{TP}{TP+FN}$</p>
+<p>Recall描述了模型找到正例的能力</p>
+<p>F值(F-Score)</p>
+<p>$F &#x3D; \frac{2Precision*Recall}{Precision + Recall}$</p>
+<p>通过更改阈值(Threshold)可以得到不同的结果：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">data = load_breast_cancer()</span><br><span class="line">X_train, X_test, y_train, y_test = train_test_split(</span><br><span class="line"> data.data, data.target, stratify=data.target, random_state=<span class="number">0</span>)</span><br><span class="line">lr = LogisticRegression().fit(X_train, y_train)</span><br><span class="line">y_pred = lr.predict(X_test)</span><br><span class="line"><span class="built_in">print</span>(classification_report(y_test, y_pred))</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th>precision</th>
+<th>recall</th>
+<th>f1-score</th>
+<th>support</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>0.91</td>
+<td>0.92</td>
+<td>0.92</td>
+<td>53</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0.96</td>
+<td>0.94</td>
+<td>0.95</td>
+<td>90</td>
+</tr>
+<tr>
+<td>avg&#x2F;total</td>
+<td>0.94</td>
+<td>0.94</td>
+<td>0.94</td>
+<td>143</td>
+</tr>
+</tbody></table>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">y_pred = lr.predict_proba(X_test)[:, <span class="number">1</span>] &gt; <span class="number">.85</span></span><br><span class="line"><span class="built_in">print</span>(classification_report(y_test, y_pred))</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th>precision</th>
+<th>recall</th>
+<th>f1-score</th>
+<th>support</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>0.84</td>
+<td>1.00</td>
+<td>0.91</td>
+<td>53</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1.00</td>
+<td>0.89</td>
+<td>0.94</td>
+<td>90</td>
+</tr>
+<tr>
+<td>avg&#x2F;total</td>
+<td>0.94</td>
+<td>0.93</td>
+<td>0.93</td>
+<td>143</td>
+</tr>
+</tbody></table>
+<h3 id="精度召回曲线-Precision-Recall-Curve"><a href="#精度召回曲线-Precision-Recall-Curve" class="headerlink" title="精度召回曲线(Precision-Recall Curve)"></a>精度召回曲线(Precision-Recall Curve)</h3><p>可以看到，当阈值变化时，上述指标都会变化，且Precision和Recall呈负相关，那么这两个指标的综合性能该如何体现？这时我们可以绘制Precision-Recall曲线(简称PRC)图：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">X, y = make_blobs(n_samples=(<span class="number">2500</span>, <span class="number">500</span>), cluster_std=[<span class="number">7.0</span>, <span class="number">2</span>],</span><br><span class="line"> random_state=<span class="number">22</span>)</span><br><span class="line">X_train, X_test, y_train, y_test = train_test_split(X, y)</span><br><span class="line">svc = SVC(gamma=<span class="number">.05</span>).fit(X_train, y_train)</span><br><span class="line">precision, recall, thresholds = precision_recall_curve(</span><br><span class="line"> y_test, svc.decision_function(X_test))</span><br></pre></td></tr></table></figure>
+
+<img src="/posts/37094/pr.png" class="" title="PRC">
+
+<h3 id="受试者工作特征曲线-Receiver-Operating-Characteristic-Curve"><a href="#受试者工作特征曲线-Receiver-Operating-Characteristic-Curve" class="headerlink" title="受试者工作特征曲线(Receiver Operating Characteristic Curve)"></a>受试者工作特征曲线(Receiver Operating Characteristic Curve)</h3><p>简称ROC。</p>
+<p>与PRC相似，ROC曲线是一种评定模型对正类预测效果的曲线图。其x轴是假阳率(False Positive Rate, FPR)，y轴是真阳率(True Positive Rate, TPR)</p>
+<p>一般我们用AUC，即曲线下方面积(Area Under Curve)作为评估。</p>
+<img src="/posts/37094/roc.png" class="" title="ROC">
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> roc_auc_score</span><br><span class="line">rf_auc = roc_auc_score(y_test, rf.predict_proba(X_test)[:,<span class="number">1</span>])</span><br><span class="line">svc_auc = roc_auc_score(y_test, svc.decision_function(X_test))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;AUC for random forest: &#123;:, .3f&#125;&quot;</span>.<span class="built_in">format</span>(rf_auc))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;AUC for SVC: &#123;:, .3f&#125;&quot;</span>.<span class="built_in">format</span>(svc_auc))</span><br></pre></td></tr></table></figure>
+<p>AUC for random forest: 0.937<br>AUC for SVC: 0.916</p>
+<hr>
+<h2 id="非均衡数据-Imbalanced-Data"><a href="#非均衡数据-Imbalanced-Data" class="headerlink" title="非均衡数据(Imbalanced Data)"></a>非均衡数据(Imbalanced Data)</h2><hr>
+<h2 id="聚类模型-Clustering-Models"><a href="#聚类模型-Clustering-Models" class="headerlink" title="聚类模型(Clustering Models)"></a>聚类模型(Clustering Models)</h2><p>从这一章开始，我们正式进入了非监督学习的内容，而首先我们从聚类模型学起。</p>
+<p>其实简单看来，聚类和分类很像，不同点在于我们是否预先知道数据会分为几类。</p>
+<h3 id="K均值算法-K-Means"><a href="#K均值算法-K-Means" class="headerlink" title="K均值算法(K-Means)"></a>K均值算法(K-Means)</h3><p>K均值算法的思路很有趣，但一两句话也讲不明白，总之是一个很动态的算法。</p>
+<img src="/posts/37094/kmeans.gif" class="" title="K-Means">
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">X, y = make_blobs(centers=<span class="number">4</span>, random_state=<span class="number">1</span>)</span><br><span class="line">km = KMeans(n_clusters=<span class="number">5</span>, random_state=<span class="number">0</span>)</span><br><span class="line">km.fit(X)</span><br><span class="line"><span class="built_in">print</span>(km.cluster_centers_.shape)</span><br><span class="line"><span class="built_in">print</span>(km.labels_.shape)</span><br><span class="line"><span class="comment"># predict is the same as labels_ on training data</span></span><br><span class="line"><span class="comment"># but can be applied to new data</span></span><br><span class="line"><span class="built_in">print</span>(km.predict(X).shape)</span><br><span class="line">plt.scatter(X[:, <span class="number">0</span>], X[:, <span class="number">1</span>], c=km.labels_)</span><br></pre></td></tr></table></figure>
+
+<p>该算法的特点是每一个类的边界都在类中点的垂直平分线上(Clusters are Voronoi-diagrams of centers<br>)</p>
+<img src="/posts/37094/kmeans2.png" class="" title="Voronoi-diagrams">
+
+<p>K均值的局限性在于对于这类的数据拟合力较弱：</p>
+<img src="/posts/37094/kmeans3.png" class="">
+
+<p>对于这样的数据集进行Kmeans：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line">df = pd.read_csv(<span class="string">&quot;cluster_data.csv&quot;</span>)</span><br><span class="line">X = df[[<span class="string">&#x27;x&#x27;</span>]]</span><br><span class="line">y = df.y</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> seaborn <span class="keyword">as</span> sns</span><br><span class="line">sns.scatterplot(x=<span class="string">&quot;x&quot;</span>, y=<span class="string">&quot;y&quot;</span>, data=df)</span><br></pre></td></tr></table></figure>
+
+<img src="/posts/37094/kmeans4.png" class="">
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.cluster <span class="keyword">import</span> KMeans</span><br><span class="line">model = KMeans(n_clusters=<span class="number">5</span>, random_state=<span class="number">0</span>)</span><br><span class="line">model.fit(X, y)</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line">plt.scatter(x = X, y = y, c=model.labels_)</span><br></pre></td></tr></table></figure>
+
+<img src="/posts/37094/kmeans5.png" class="">
+
+<p>可以看出其局限性。</p>
+<h3 id="聚合聚类-Agglomerative-Clustering"><a href="#聚合聚类-Agglomerative-Clustering" class="headerlink" title="聚合聚类(Agglomerative Clustering)"></a>聚合聚类(Agglomerative Clustering)</h3><p>聚合聚类，或者叫层次聚类(Hierarchical Clustering)，与K均值不同，此方法无需预先指定想得到的分类数量。用户在结果中选取即可：</p>
+<img src="/posts/37094/hierarch.gif" class="">
+
+<p>对于这种方法，需要选取不同的连接标准(Merging(Linkage) Criteria)</p>
+<img src="/posts/37094/linkage.png" class="">
+
+<p>可以看出这类算法的局限性：连接标准的选取对于模型影响极大。</p>
+<p>用法：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.cluster <span class="keyword">import</span> AgglomerativeClustering</span><br><span class="line"><span class="keyword">from</span> sklearn.pipeline <span class="keyword">import</span> Pipeline</span><br><span class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> MinMaxScaler</span><br><span class="line">scaler = MinMaxScaler()</span><br><span class="line">model = Pipeline([(<span class="string">&#x27;scaler&#x27;</span>, scaler), (<span class="string">&#x27;Agglo&#x27;</span>, AgglomerativeClustering())])</span><br><span class="line">model.fit(df)</span><br></pre></td></tr></table></figure>
+
+<h3 id="基于密度的噪点空间聚类-Density-Based-Spatial-Clustering-of-Applications-with-Noise"><a href="#基于密度的噪点空间聚类-Density-Based-Spatial-Clustering-of-Applications-with-Noise" class="headerlink" title="基于密度的噪点空间聚类(Density-Based Spatial Clustering of Applications with Noise)"></a>基于密度的噪点空间聚类(Density-Based Spatial Clustering of Applications with Noise)</h3><p>Density-Based Spatial Clustering of Applications with Noise，简称DBSCAN。其核心思想是将密度高的点划分到统一簇中。</p>
+<img src="/posts/37094/DBSCAN_search.gif" class="" title="DBSCAN">
+
+<p>需要调节的参数有：</p>
+<p>$(\epsilon,MinPt)$</p>
+<p>对于前文提到的数据集，采取DBSCAN：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> MinMaxScaler</span><br><span class="line">scaler = MinMaxScaler()</span><br><span class="line">model = Pipeline([(<span class="string">&#x27;scaler&#x27;</span>, scaler), (<span class="string">&#x27;DBSCAN&#x27;</span>, DBSCAN(eps=<span class="number">0.1</span>, min_samples=<span class="number">4</span>))])</span><br><span class="line">model.fit(df)</span><br><span class="line"></span><br><span class="line">plt.scatter(x = X, y = y, c=model[<span class="number">1</span>].labels_)</span><br></pre></td></tr></table></figure>
+
+<img src="/posts/37094/DBSCAN.png" class="">
+
+<p>可见在参数调整好后，效果还是可以的。</p>
+<h3 id="聚类特征提取-Feature-Extraction"><a href="#聚类特征提取-Feature-Extraction" class="headerlink" title="聚类特征提取(Feature Extraction)"></a>聚类特征提取(Feature Extraction)</h3><p>有些时候，我们可以用聚类算法提取特征数据。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LogisticRegression</span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> GridSearchCV</span><br><span class="line">km = KMeans(n_init=<span class="number">1</span>, init=<span class="string">&quot;random&quot;</span>)</span><br><span class="line">pipe = make_pipeline(km, LogisticRegression())</span><br><span class="line">param_grid = &#123;<span class="string">&#x27;kmeans__n_clusters&#x27;</span>: [<span class="number">10</span>, <span class="number">50</span>, <span class="number">100</span>, <span class="number">200</span>, <span class="number">500</span>]&#125;</span><br><span class="line">grid = GridSearchCV(pipe, param_grid, cv=<span class="number">5</span>, verbose=<span class="literal">True</span>)</span><br><span class="line">grid.fit(X, y_people)</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="聚类模型评估-Clustering-Evaluation"><a href="#聚类模型评估-Clustering-Evaluation" class="headerlink" title="聚类模型评估(Clustering Evaluation)"></a>聚类模型评估(Clustering Evaluation)</h2><h3 id="轮廓系数-Silhouette-Score"><a href="#轮廓系数-Silhouette-Score" class="headerlink" title="轮廓系数(Silhouette Score)"></a>轮廓系数(Silhouette Score)</h3><p>一个反应聚类结果一致性的标准，可以用于评估聚类后簇与簇之间的离散程度。取值为负一到一，越大越好。</p>
+<h3 id="调整兰德指数-Adjusted-Rand-Index"><a href="#调整兰德指数-Adjusted-Rand-Index" class="headerlink" title="调整兰德指数(Adjusted Rand Index)"></a>调整兰德指数(Adjusted Rand Index)</h3><p>简称ARI，也是一个评价指标。数学计算这里略过，本人不搞理论研究，没什么参考必要。</p>
+<h3 id="目测法"><a href="#目测法" class="headerlink" title="目测法"></a>目测法</h3><p>字面意思，看起来是好的就是好的。</p>
+<hr>
+<p><del><strong>未完待续…</strong></del></p>
+<p>由于当前内容已经超出本文目录结构所能承载的极限，故本文完结，后续内容将在<a href="/posts/40095/" title="机器学习基础笔记（三）">[机器学习基础笔记（三）]</a>中继续。</p>
+<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>请我一杯咖啡吧！</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/Sponsor/wechat.png" alt="分数受害者 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/Sponsor/alipay.jpg" alt="分数受害者 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>原作者： </strong>分数受害者
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://scorevictim.github.io/posts/37094/" title="机器学习基础笔记（二）">https://scorevictim.github.io/posts/37094/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/" rel="tag"># 数据分析</a>
+              <a href="/tags/%E7%AC%94%E8%AE%B0/" rel="tag"># 笔记</a>
+              <a href="/tags/%E5%BB%BA%E6%A8%A1/" rel="tag"># 建模</a>
+              <a href="/tags/python/" rel="tag"># python</a>
+              <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag"># 机器学习</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/posts/50176/" rel="prev" title="机器学习基础笔记（一）">
+                  <i class="fa fa-angle-left"></i> 机器学习基础笔记（一）
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/posts/19041/" rel="next" title="Python脚本文件打包成Windows可执行程序格式">
+                  Python脚本文件打包成Windows可执行程序格式 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2021 – 
+    <span itemprop="copyrightYear">2023</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">分数受害者</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">195k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">2:57</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  
+
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://scorevictim.github.io/posts/37094/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"scorevictim/blogcomments","issue_term":"title","theme":"github-dark"}</script>
+<script src="/js/third-party/comments/utterances.js"></script>
+
+</body>
+</html>

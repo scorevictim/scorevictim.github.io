@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.0.0">
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/logo.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/logo.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/logo.png">
+  <link rel="mask-icon" href="/images/logo.png" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha256-CTSx/A06dm1B063156EVh15m6Y67pAjZZaQc89LLSrU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"scorevictim.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":true,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta property="og:type" content="blog">
+<meta property="og:title" content="时序分析学习笔记（一）">
+<meta property="og:url" content="https://scorevictim.github.io/posts/11530/index.html">
+<meta property="og:site_name" content="青崖之间">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://scorevictim.github.io/images/TSNote/TSCover.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/11530/Apple_Mac_Quaterly_Sales.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/11530/Apple_All_Quaterly_Sales.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/11530/Seasonal_Antidiabetic_drug_sales.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/11530/Subseries_Antidiabetic_drug_sales.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/11530/Antidiabetic_drug_sales.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/11530/Antidiabetic_drug_sales.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/11530/one_family_houses.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/11530/beerlag.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/11530/beerAcf.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/11530/elec2.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/11530/elec2Acf.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/11530/wn.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/11530/wnAcf.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/11530/beerfor.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/11530/elec.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/11530/eleclog.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/11530/elecatld.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/11530/naivegg.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/11530/resgg.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/11530/resdisgg.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/11530/resacfgg.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/11530/ai1gg.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/11530/cndi.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/11530/cndisct.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/11530/vars1.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/11530/scts1.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/11530/vers1.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/11530/vers2.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/11530/res1.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/11530/res2.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/11530/beer.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/11530/reg1.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/11530/vis1.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/11530/vis2.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/11530/vis3.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/11530/for1.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/11530/for2.png">
+<meta property="article:published_time" content="2022-04-09T12:30:21.000Z">
+<meta property="article:modified_time" content="2023-11-12T02:45:32.511Z">
+<meta property="article:author" content="分数受害者">
+<meta property="article:tag" content="数据分析">
+<meta property="article:tag" content="笔记">
+<meta property="article:tag" content="时间序列">
+<meta property="article:tag" content="统计">
+<meta property="article:tag" content="R语言">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://scorevictim.github.io/images/TSNote/TSCover.png">
+
+
+<link rel="canonical" href="https://scorevictim.github.io/posts/11530/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://scorevictim.github.io/posts/11530/","path":"posts/11530/","title":"时序分析学习笔记（一）"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>时序分析学习笔记（一） | 青崖之间</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="青崖之间" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">青崖之间</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">北海虽赊，扶摇可接</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-留言板"><a href="/contact/" rel="section"><i class="fa fa-comment fa-fw"></i>留言板</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-sitemap"><a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a></li><li class="menu-item menu-item-rss"><a href="/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>RSS</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%9F%E8%AE%A1%E9%A2%84%E6%B5%8B%E7%9A%84%E4%BA%94%E6%AD%A5"><span class="nav-number">2.</span> <span class="nav-text">统计预测的五步</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%B6%E5%BA%8F%E5%88%86%E6%9E%90%EF%BC%9A%E5%9F%BA%E7%A1%80"><span class="nav-number">3.</span> <span class="nav-text">时序分析：基础</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E4%BB%8B%E7%BB%8D"><span class="nav-number">3.1.</span> <span class="nav-text">环境介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ts%E5%AF%B9%E8%B1%A1%E4%BB%A5%E5%8F%8Ats%E6%96%B9%E7%A8%8B"><span class="nav-number">3.2.</span> <span class="nav-text">ts对象以及ts方程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%B6%E9%97%B4%E5%9B%BE-Time-Plot"><span class="nav-number">3.3.</span> <span class="nav-text">时间图(Time Plot)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%A3%E5%BA%A6%E5%9B%BE-Seasonal-Plot"><span class="nav-number">3.4.</span> <span class="nav-text">季度图(Seasonal Plot)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AD%A3%E8%8A%82%E6%80%A7%E5%AD%90%E5%BA%8F%E5%88%97%E5%9B%BE-Seasonal-Sub-series-Plot"><span class="nav-number">3.4.1.</span> <span class="nav-text">季节性子序列图(Seasonal Sub-series Plot)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%B6%E5%BA%8F%E6%A8%A1%E5%BC%8F-Time-Series-Patterns"><span class="nav-number">3.5.</span> <span class="nav-text">时序模式(Time Series Patterns)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%B6%8B%E5%8A%BF%E6%80%A7-Trend"><span class="nav-number">3.5.1.</span> <span class="nav-text">趋势性(Trend)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AD%A3%E8%8A%82%E6%80%A7-Seasonality"><span class="nav-number">3.5.2.</span> <span class="nav-text">季节性(Seasonality)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%91%A8%E6%9C%9F%E6%80%A7-Cyclicity"><span class="nav-number">3.5.3.</span> <span class="nav-text">周期性(Cyclicity)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9F%E6%BB%9E%E5%9B%BE%E4%B8%8E%E8%87%AA%E7%9B%B8%E5%85%B3-Lag-Plots-and-Autocorrelation"><span class="nav-number">3.6.</span> <span class="nav-text">迟滞图与自相关(Lag Plots and Autocorrelation)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%9F%E6%BB%9E%E5%9B%BE-Lag-Plots"><span class="nav-number">3.6.1.</span> <span class="nav-text">迟滞图(Lag Plots)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%87%AA%E7%9B%B8%E5%85%B3-Autocorrelation"><span class="nav-number">3.6.2.</span> <span class="nav-text">自相关(Autocorrelation)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%99%BD%E5%99%AA%E5%A3%B0-White-Noise"><span class="nav-number">3.7.</span> <span class="nav-text">白噪声(White Noise)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9D%E7%BA%A7%E9%A2%84%E6%B5%8B%E6%B3%95"><span class="nav-number">4.</span> <span class="nav-text">初级预测法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B9%B3%E5%9D%87%E6%B3%95-Average-Method"><span class="nav-number">4.1.</span> <span class="nav-text">平均法(Average Method)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%B4%E7%B4%A0%E6%B3%95-Naive-Method"><span class="nav-number">4.2.</span> <span class="nav-text">朴素法(Naive Method)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%A3%E8%8A%82%E6%80%A7%E6%9C%B4%E7%B4%A0%E6%B3%95-Seasonal-Naive-Method"><span class="nav-number">4.3.</span> <span class="nav-text">季节性朴素法(Seasonal Naive Method)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%BC%82%E7%A7%BB%E6%B3%95-Drift-Method"><span class="nav-number">4.4.</span> <span class="nav-text">漂移法(Drift Method)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%8F%98%E5%BD%A2-Data-Transformation"><span class="nav-number">5.</span> <span class="nav-text">数据变形(Data Transformation)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AE%8B%E5%B7%AE%E6%A3%80%E9%AA%8C-Residuals-Diagnose"><span class="nav-number">6.</span> <span class="nav-text">残差检验(Residuals Diagnose)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Box-Ljung-Test"><span class="nav-number">6.1.</span> <span class="nav-text">Box-Ljung Test</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E5%87%86%E7%A1%AE%E6%80%A7%E6%A3%80%E9%AA%8C-Accuracy"><span class="nav-number">7.</span> <span class="nav-text">模型准确性检验(Accuracy)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97%E7%9A%84%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92"><span class="nav-number">8.</span> <span class="nav-text">时间序列的线性回归</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%B6%E5%BA%8F%E5%9B%9E%E5%BD%92%E6%A8%A1%E5%9E%8B%E6%AE%8B%E5%B7%AE%E6%A3%80%E9%AA%8C"><span class="nav-number">9.</span> <span class="nav-text">时序回归模型残差检验</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%A3%E5%BA%A6%E6%95%B0%E6%8D%AE%E7%AE%80%E5%8D%95%E9%A2%84%E6%B5%8B"><span class="nav-number">10.</span> <span class="nav-text">季度数据简单预测</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%87%AA%E5%8F%98%E9%87%8F%E9%80%89%E6%8B%A9"><span class="nav-number">11.</span> <span class="nav-text">自变量选择</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%84%E7%B1%BB%E9%A2%84%E6%B5%8B"><span class="nav-number">12.</span> <span class="nav-text">各类预测</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E6%80%A7%E4%B8%8E%E5%9B%A0%E6%9E%9C%E6%80%A7-Correlation-and-Causation"><span class="nav-number">13.</span> <span class="nav-text">相关性与因果性(Correlation and Causation)</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="分数受害者"
+      src="/uploads/avatar.jpg">
+  <p class="site-author-name" itemprop="name">分数受害者</p>
+  <div class="site-description" itemprop="description">人生如痴人说梦，充满着喧哗与骚动，却没有任何意义</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">76</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://blog.vinfall.com/" title="https:&#x2F;&#x2F;blog.vinfall.com&#x2F;" rel="noopener" target="_blank">Vinfall@Geekademy</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://scorevictim.github.io/posts/11530/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+      <meta itemprop="name" content="分数受害者">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="青崖之间">
+      <meta itemprop="description" content="人生如痴人说梦，充满着喧哗与骚动，却没有任何意义">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="时序分析学习笔记（一） | 青崖之间">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          时序分析学习笔记（一）
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-04-09 05:30:21" itemprop="dateCreated datePublished" datetime="2022-04-09T05:30:21-07:00">2022-04-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-11-11 18:45:32" itemprop="dateModified" datetime="2023-11-11T18:45:32-08:00">2023-11-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>16k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>15 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><img src="/images/TSNote/TSCover.png" alt="banner"></p>
+<span id="more"></span>
+
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>一转眼2022年已经快过去一半了，这一天，笔者突然想起，自己已经好几个月没在博客更新文章了。不更新的理由倒并不是缺乏想写的东西，或者是懒得写文章之类的，仅仅是因为本人忘记了自己之前搭过一个博客而已（汗）。因此，在想起来有这回事后，本学渣再一次打开了文档，写点东西在这里。</p>
+<p>当然了，除去本人智商较低的因素外，忘记博客的存在这件事还因为近期确实有点小忙。</p>
+<p>一方面，学业上的事情很多，上个学期的SQL、Investment、Econometrics三门课几乎全都是零基础从头学起，同时教授讲的速度实在是有点过于快，超出了本人的智力能力，为了把这些课的搞明白，以及拿一个好成绩，就用了不少时间。</p>
+<p>另一方面，由于本学渣并不是那种可以一门心思学习的人，一旦学习与娱乐的时间比超过1：3就无法承受了，因此，本人还需花更多的时间去打游戏、练琴、学课程专业无关的无用知识才能勉强恢复元气，这就占据了我几乎全部的可用时间。</p>
+<p>而最后，最重要的是近期本人的睡眠质量可以说是历史最差的状态，夜里的睡眠无法维持超过四小时，且对各类微小的声音都极度敏感，平均半小时醒一次，尝试过褪黑素无果，这就导致了白天本人还得拿出几乎全部下午的时间进行低质量的休眠，进一步缩减了我的可支配时间。因此，能找到空闲来写这篇文章已经谢天谢地了。</p>
+<p>言归正传，这篇文章的作用，主要是为了记录下本学期的时间序列分析（Intro to Time Series）一课。由于其引入了大量对于文科生出身的我来言难以充分理解的数学概念，以及高频的使用R代码，如果不做一些笔记的话，恐怕之后的案例分析会很难做，故在此记录下课程中的我认为较重要的部分，为之后的工作做准备。</p>
+<p><del>当然，目前课程还只进行了一半，本文会随着课程进度，同步更新。</del></p>
+<p>由于当前内容已经超出本文目录结构所能承载的极限，故本文完结，后续内容将在<a href="/posts/11531/" title="时序分析学习笔记（二）">[时序分析学习笔记（二）]</a>中继续。</p>
+<hr>
+<h2 id="统计预测的五步"><a href="#统计预测的五步" class="headerlink" title="统计预测的五步"></a>统计预测的五步</h2><p>这一部分为课程大纲中给出的框架，先将原文贴于此，日后可能会简单的翻译一下（大概率不会）。</p>
+<ul>
+<li><p>A forecasting task usually involves five basic steps:</p>
+<ul>
+<li><p>Step 1: Problem definition.</p>
+<p>  Often this is the most difficult part of forecasting. Defining the problem carefully requires an understanding of the way the forecasts will be used, who requires the forecasts, and how the forecasting function fits within the organization requiring the forecasts. A forecaster needs to spend time talking to everyone who will be involved in collecting data, maintaining databases, and using the forecasts for future planning.</p>
+</li>
+<li><p>Step 2: Gathering information.</p>
+<p>  There are always at least two kinds of information required: (a) statistical data, and (b) the accumulated expertise of the people who collect the data and use the forecasts. Often, it will be difficult to obtain enough historical data to be able to fit a good statistical model. In that case, qualitative methods can be used. Occasionally, old data will be less useful due to structural changes in the system being forecast; then we may choose to use only the most recent data. However, remember that good statistical models will handle evolutionary changes in the system; don’t throw away good data unnecessarily.</p>
+</li>
+<li><p>Step 3: Preliminary (exploratory) analysis.</p>
+<p>  Always start by graphing the data. Are there consistent patterns? Is there a significant trend? Is seasonality important? Is there evidence of the presence of business cycles? Are there any outliers in the data that need to be explained by those with expert knowledge? How strong are the relationships among the variables available for analysis? Various tools have been developed to help with this analysis.</p>
+</li>
+<li><p>Step 4: Choosing and fitting models.</p>
+<p>  The best model to use depends on the availability of historical data, the strength of relationships between the forecast variable and any explanatory variables, and the way in which the forecasts are to be used. It is common to compare two or three potential models. Each model is itself an artificial construct that is based on a set of assumptions (explicit and implicit) and usually involves one or more parameters which must be estimated using the known historical data. We will discuss regression models, smoothing methods, ARIMA models, as well as several advanced methods including GARCH and others.</p>
+</li>
+<li><p>Step 5: Using and evaluating a forecasting model.</p>
+<p>  Once a model has been selected and its parameters estimated, the model is used to make forecasts. The performance of the model can only be properly evaluated after the data for the forecast period have become available. A number of methods have been developed to help in assessing the accuracy of forecasts. When using a forecasting model in practice, numerous practical issues arise such as how to handle missing values and outliers.</p>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="时序分析：基础"><a href="#时序分析：基础" class="headerlink" title="时序分析：基础"></a>时序分析：基础</h2><p>开始一切分析前，简单却必要的一步，便是做一个数据的基础可视化：如观察其distribution（分布）、是否有outliers（异常值）、是否随时间移动？应变量与自变量的关系？诸如此类……</p>
+<h3 id="环境介绍"><a href="#环境介绍" class="headerlink" title="环境介绍"></a>环境介绍</h3><p>我们的所有操作，都是基于R语言环境，因此需要在计算机中先安装R运行时，为了脚本化更容易，之后还需安装RStudio，后续一切操作都是在RStudio中完成。</p>
+<p>首先我们引入<code>fpp2</code>库</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">library<span class="punctuation">(</span>fpp2<span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<p>如果此时报错，则表示需先安装<code>fpp2</code>包</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">install.packages<span class="punctuation">(</span><span class="string">&quot;fpp2&quot;</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<p>这会在当前环境下加载如下内容：</p>
+<ul>
+<li>一些案例数据</li>
+<li><code>forecast</code>包（包含一些预测函数）</li>
+<li><code>ggplot2</code>包（包含一些绘图函数）</li>
+<li><code>fma</code>包（包含许多时序数据）</li>
+<li><code>expsmooth</code>包（包含许多时序数据）</li>
+</ul>
+<p>由此，便可以开始基础分析了</p>
+<h3 id="ts对象以及ts方程"><a href="#ts对象以及ts方程" class="headerlink" title="ts对象以及ts方程"></a>ts对象以及ts方程</h3><p>时序数据在R中储存在时序对象（ts object）中，记录了数据被记录时间以及数据的实值</p>
+<p>如创建一个简单的时序对象：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">y <span class="operator">&lt;</span> ts<span class="punctuation">(</span><span class="built_in">c</span><span class="punctuation">(</span><span class="number">123</span><span class="punctuation">,</span> <span class="number">39</span><span class="punctuation">,</span> <span class="number">78</span><span class="punctuation">,</span> <span class="number">52</span><span class="punctuation">,</span> <span class="number">110</span><span class="punctuation">)</span><span class="punctuation">,</span> start<span class="operator">=</span><span class="number">2012</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<p>此时我们会拿到一个由2012年起的，为期5年的年度时序，储存在y中。</p>
+<p>当然，我们也可以通过设置频率（frequency）来让时间并不仅仅为一年间隔</p>
+<p>如创建一个月度数据：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">y <span class="operator">&lt;</span> ts<span class="punctuation">(</span>z<span class="punctuation">,</span> frequency<span class="operator">=</span><span class="number">12</span><span class="punctuation">,</span> start<span class="operator">=</span><span class="built_in">c</span><span class="punctuation">(</span><span class="number">2003</span><span class="punctuation">,</span> <span class="number">1</span><span class="punctuation">)</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<p>其中，z为月度数据，start为起始时间，此时，我们拿到一个由2003年一月起的月度时序，储存在y中</p>
+<p>如果此时输入</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">class</span><span class="punctuation">(</span>y<span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<p>我们会得到<code>‘ts&#39;</code>，表示这是一个时序对象</p>
+<p>那么，在日常使用中，我们不太可能用上述向量赋值的方式来创建对象，通常我们会读取一个已有的数据文件，如<code>.csv</code>文件，此时，我们做如下操作：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apple <span class="operator">&lt;-</span> read.csv<span class="punctuation">(</span>file <span class="operator">=</span> apple.csv<span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<p>其中apple.csv是苹果公司某几年的季度销售数据</p>
+<p>此时该<code>apple.csv</code>文件便储存在了<code>apple</code>变量中。</p>
+<p>当然，此时的apple并不是时序对象，而是数据帧对象(DataFrame)，那么如何将其转换为时序对象呢？</p>
+<p>代码如下：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">apple.mac <span class="operator">=</span> ts<span class="punctuation">(</span></span><br><span class="line">  data <span class="operator">=</span> apple<span class="operator">$</span>Mac<span class="punctuation">,</span></span><br><span class="line">  frequency <span class="operator">=</span> <span class="number">4</span>，</span><br><span class="line">  start <span class="operator">=</span> <span class="built_in">c</span><span class="punctuation">(</span><span class="number">1998</span><span class="punctuation">,</span> <span class="number">4</span><span class="punctuation">)</span><span class="punctuation">,</span></span><br><span class="line">  end <span class="operator">=</span> <span class="built_in">c</span><span class="punctuation">(</span><span class="number">2018</span><span class="punctuation">,</span> <span class="number">1</span><span class="punctuation">)</span></span><br><span class="line"><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<p>由此，我们提取了apple的mac在1998年第4季度到2018年第1季度的销售数据，并将其存在apple.mac中，而它为一个ts对象。</p>
+<p>同理，我们也可以只提取ipone的数据：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">apple.iphone <span class="operator">=</span> ts<span class="punctuation">(</span></span><br><span class="line">  data <span class="operator">=</span> apple<span class="operator">$</span>iPhone<span class="punctuation">,</span></span><br><span class="line">  frequency <span class="operator">=</span> <span class="number">4</span>，</span><br><span class="line">  start <span class="operator">=</span> <span class="built_in">c</span><span class="punctuation">(</span><span class="number">1998</span><span class="punctuation">,</span> <span class="number">4</span><span class="punctuation">)</span><span class="punctuation">,</span></span><br><span class="line">  end <span class="operator">=</span> <span class="built_in">c</span><span class="punctuation">(</span><span class="number">2018</span><span class="punctuation">,</span> <span class="number">1</span><span class="punctuation">)</span></span><br><span class="line"><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<p>当然，我们也可以不提取单列，而是将其全部转换，此时只需要指定全部列名即可：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">apple.ts <span class="operator">=</span> ts<span class="punctuation">(</span></span><br><span class="line">  data <span class="operator">=</span> apple<span class="punctuation">[</span><span class="built_in">c</span><span class="punctuation">(</span><span class="string">&quot;iPhone&quot;</span><span class="punctuation">,</span> <span class="string">&quot;iPad&quot;</span><span class="punctuation">,</span> <span class="string">&quot;iPod&quot;</span><span class="punctuation">,</span> <span class="string">&quot;Mac&quot;</span><span class="punctuation">)</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">  frequency <span class="operator">=</span> <span class="number">4</span>，</span><br><span class="line">  start <span class="operator">=</span> <span class="built_in">c</span><span class="punctuation">(</span><span class="number">1998</span><span class="punctuation">,</span> <span class="number">4</span><span class="punctuation">)</span><span class="punctuation">,</span></span><br><span class="line">  end <span class="operator">=</span> <span class="built_in">c</span><span class="punctuation">(</span><span class="number">2018</span><span class="punctuation">,</span> <span class="number">1</span><span class="punctuation">)</span></span><br><span class="line"><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="时间图-Time-Plot"><a href="#时间图-Time-Plot" class="headerlink" title="时间图(Time Plot)"></a>时间图(Time Plot)</h3><p>简单来说，时间图绘图使用autoplot这一方程。</p>
+<p>例如，绘制苹果Mac的季度销售数据：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">autoplot<span class="punctuation">(</span>apple.mac<span class="punctuation">)</span><span class="operator">+</span></span><br><span class="line">  ggtitle<span class="punctuation">(</span><span class="string">&quot;Apple Mac Quaterly Sales&quot;</span><span class="punctuation">)</span><span class="operator">+</span></span><br><span class="line">  xlab<span class="punctuation">(</span><span class="string">&quot;Year&quot;</span><span class="punctuation">)</span><span class="operator">+</span>ylab<span class="punctuation">(</span><span class="string">&quot;millions&quot;</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<p>我们会得到：</p>
+<img src="/posts/11530/Apple_Mac_Quaterly_Sales.png" class="">
+
+<p>同理，我们还可以做全部产品销售数据的图：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">autoplot<span class="punctuation">(</span>apple.ts<span class="punctuation">)</span><span class="operator">+</span></span><br><span class="line">  ggtitle<span class="punctuation">(</span><span class="string">&quot;Apple All Quaterly Sales&quot;</span><span class="punctuation">)</span><span class="operator">+</span></span><br><span class="line">  xlab<span class="punctuation">(</span><span class="string">&quot;Year&quot;</span><span class="punctuation">)</span><span class="operator">+</span>ylab<span class="punctuation">(</span><span class="string">&quot;millions&quot;</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<p>可以得到：</p>
+<img src="/posts/11530/Apple_All_Quaterly_Sales.png" class="">
+
+
+<h3 id="季度图-Seasonal-Plot"><a href="#季度图-Seasonal-Plot" class="headerlink" title="季度图(Seasonal Plot)"></a>季度图(Seasonal Plot)</h3><p>简单来说，绘制季度图，我们使用<code>ggseasonplot</code>函数</p>
+<p>例如，我们绘制<code>a10</code>数据，这是一个<code>fpp2</code>中自带的糖尿病药物销售的数据：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ggseasonplot<span class="punctuation">(</span>a10<span class="punctuation">,</span> year.labels <span class="operator">=</span> <span class="literal">TRUE</span><span class="punctuation">,</span> year.labels.left <span class="operator">=</span> <span class="literal">TRUE</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  ylab<span class="punctuation">(</span><span class="string">&quot;$ million&quot;</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  ggtitle<span class="punctuation">(</span><span class="string">&quot;Seasonal Plot: Antidiabetic drug sales&quot;</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<p>可以得到：</p>
+<img src="/posts/11530/Seasonal_Antidiabetic_drug_sales.png" class="">
+
+<p>季度图可以直观显示出不同年的同一季的数据不同，使我们更容易发觉季与季之间的变化模式。</p>
+<p>当然，这里的“季度”只是season的直译，并不意味这中文中的三个月一季的”季度“，上述例子便是以月份为一“季（Season）”</p>
+<h4 id="季节性子序列图-Seasonal-Sub-series-Plot"><a href="#季节性子序列图-Seasonal-Sub-series-Plot" class="headerlink" title="季节性子序列图(Seasonal Sub-series Plot)"></a>季节性子序列图(Seasonal Sub-series Plot)</h4><p>简单来说，我们利用<code>ggsubseriesplot</code>绘制季节性子序列图：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ggsubseriesplot<span class="punctuation">(</span>a10<span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  ylab<span class="punctuation">(</span><span class="string">&quot;$ million&quot;</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  ggtitle<span class="punctuation">(</span><span class="string">&quot;Subseries Plot: Antidiabetic drug sales&quot;</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<p>可以得到：</p>
+<img src="/posts/11530/Subseries_Antidiabetic_drug_sales.png" class="">
+
+<p>季节性子序列图(Seasonal Sub-series Plot)可以让我们看出每一“季”的变动趋势</p>
+<h3 id="时序模式-Time-Series-Patterns"><a href="#时序模式-Time-Series-Patterns" class="headerlink" title="时序模式(Time Series Patterns)"></a>时序模式(Time Series Patterns)</h3><h4 id="趋势性-Trend"><a href="#趋势性-Trend" class="headerlink" title="趋势性(Trend)"></a>趋势性(Trend)</h4><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">autoplot<span class="punctuation">(</span>a10<span class="punctuation">,</span> year.labels <span class="operator">=</span> <span class="literal">TRUE</span><span class="punctuation">,</span> year.labels.left <span class="operator">=</span> <span class="literal">TRUE</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  ylab<span class="punctuation">(</span><span class="string">&quot;$ million&quot;</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  ggtitle<span class="punctuation">(</span><span class="string">&quot;Antidiabetic drug sales&quot;</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<img src="/posts/11530/Antidiabetic_drug_sales.png" class="">
+
+<p>趋势性指数据存在长期性的增或减，如上图。</p>
+<h4 id="季节性-Seasonality"><a href="#季节性-Seasonality" class="headerlink" title="季节性(Seasonality)"></a>季节性(Seasonality)</h4><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">autoplot<span class="punctuation">(</span>a10<span class="punctuation">,</span> year.labels <span class="operator">=</span> <span class="literal">TRUE</span><span class="punctuation">,</span> year.labels.left <span class="operator">=</span> <span class="literal">TRUE</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  ylab<span class="punctuation">(</span><span class="string">&quot;$ million&quot;</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  ggtitle<span class="punctuation">(</span><span class="string">&quot;Antidiabetic drug sales&quot;</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<img src="/posts/11530/Antidiabetic_drug_sales.png" class="">
+
+<p>季节性指数据以时间为固定周期，呈现循环，上图同样存在季节性。</p>
+<h4 id="周期性-Cyclicity"><a href="#周期性-Cyclicity" class="headerlink" title="周期性(Cyclicity)"></a>周期性(Cyclicity)</h4><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">autoplot<span class="punctuation">(</span>hsales<span class="punctuation">)</span><span class="operator">+</span></span><br><span class="line">  ggtitle<span class="punctuation">(</span><span class="string">&quot;Sales of new one-family houses, USA&quot;</span><span class="punctuation">)</span><span class="operator">+</span></span><br><span class="line">  xlab<span class="punctuation">(</span><span class="string">&quot;Year&quot;</span><span class="punctuation">)</span><span class="operator">+</span>ylab<span class="punctuation">(</span><span class="string">&quot;Sales&quot;</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<img src="/posts/11530/one_family_houses.png" class="">
+
+<p>周期性与季节性相似，然而并不限制循环周期，且循环周期一般较长，如两年以上的周期，如上图。</p>
+<h3 id="迟滞图与自相关-Lag-Plots-and-Autocorrelation"><a href="#迟滞图与自相关-Lag-Plots-and-Autocorrelation" class="headerlink" title="迟滞图与自相关(Lag Plots and Autocorrelation)"></a>迟滞图与自相关(Lag Plots and Autocorrelation)</h3><h4 id="迟滞图-Lag-Plots"><a href="#迟滞图-Lag-Plots" class="headerlink" title="迟滞图(Lag Plots)"></a>迟滞图(Lag Plots)</h4><p>我们使用gglagplot来绘制迟滞图，如：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">beer <span class="operator">&lt;-</span> window<span class="punctuation">(</span>ausbeer<span class="punctuation">,</span> start <span class="operator">=</span> <span class="number">1992</span><span class="punctuation">)</span></span><br><span class="line">gglagplot<span class="punctuation">(</span>beer<span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<img src="/posts/11530/beerlag.png" class="">
+
+<h4 id="自相关-Autocorrelation"><a href="#自相关-Autocorrelation" class="headerlink" title="自相关(Autocorrelation)"></a>自相关(Autocorrelation)</h4><p>自相关(Autocorrelation)用于评估时间序列数据是否依赖于其过去的数据。</p>
+<p>定义及具体算法比较麻烦，且应用层面无需涉及，故略去。</p>
+<p>我们使用<code>ggAcf</code>绘制自相关方程图：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ggAcf<span class="punctuation">(</span>beer<span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<img src="/posts/11530/beerAcf.png" class="">
+
+<p>越接近1则越表示与过去数据相关</p>
+<p>一般来说：</p>
+<p>趋势性数据的自相关性较大且随时间减少的慢</p>
+<p>季节性数据的自相关一般在季度迟滞值（指迟滞值为季度频率的倍数）较大</p>
+<p>比如下述的一个既有趋势性又有季节性的例子中：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">elec2 <span class="operator">&lt;-</span> window<span class="punctuation">(</span>elec<span class="punctuation">,</span> start <span class="operator">=</span> <span class="number">1980</span><span class="punctuation">)</span></span><br><span class="line">autoplot<span class="punctuation">(</span>elec2<span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<img src="/posts/11530/elec2.png" class="">
+
+<p>其ACF图为：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ggAcf<span class="punctuation">(</span>elec2<span class="punctuation">,</span> lag.max <span class="operator">=</span> <span class="number">48</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<img src="/posts/11530/elec2Acf.png" class="">
+
+<p>可以看出自相关性较大且随时间减少的慢且有季度的峰值波动。</p>
+<h3 id="白噪声-White-Noise"><a href="#白噪声-White-Noise" class="headerlink" title="白噪声(White Noise)"></a>白噪声(White Noise)</h3><p>白噪声指无自相关的时序数据</p>
+<p>假设我们创建一组随机时序：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wn <span class="operator">&lt;-</span> ts<span class="punctuation">(</span>rnorm<span class="punctuation">(</span><span class="number">36</span><span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line">autoplot<span class="punctuation">(</span>wn<span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<img src="/posts/11530/wn.png" class="">
+
+<p>绘制其ACF图：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ggAcf<span class="punctuation">(</span>wn<span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<img src="/posts/11530/wnAcf.png" class="">
+
+<p>可以看出，所有值都低于蓝线（高于则意味着显著），即自相关不显著</p>
+<hr>
+<h2 id="初级预测法"><a href="#初级预测法" class="headerlink" title="初级预测法"></a>初级预测法</h2><h3 id="平均法-Average-Method"><a href="#平均法-Average-Method" class="headerlink" title="平均法(Average Method)"></a>平均法(Average Method)</h3><p>以均值作为所有的预测值.</p>
+<p>代码：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mean<span class="punctuation">(</span>y<span class="punctuation">,</span> h<span class="operator">=</span><span class="number">20</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="朴素法-Naive-Method"><a href="#朴素法-Naive-Method" class="headerlink" title="朴素法(Naive Method)"></a>朴素法(Naive Method)</h3><p>以最后一次观测到的数据作为预测值。</p>
+<p>代码：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">naive<span class="punctuation">(</span>y<span class="punctuation">,</span> h<span class="operator">=</span><span class="number">20</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="季节性朴素法-Seasonal-Naive-Method"><a href="#季节性朴素法-Seasonal-Naive-Method" class="headerlink" title="季节性朴素法(Seasonal Naive Method)"></a>季节性朴素法(Seasonal Naive Method)</h3><p>以每一季的最后观测到的数据作为预测值。</p>
+<p>代码：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">snaive<span class="punctuation">(</span>y<span class="punctuation">,</span> h<span class="operator">=</span><span class="number">20</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="漂移法-Drift-Method"><a href="#漂移法-Drift-Method" class="headerlink" title="漂移法(Drift Method)"></a>漂移法(Drift Method)</h3><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rwf<span class="punctuation">(</span>y<span class="punctuation">,</span> drift<span class="operator">=</span><span class="literal">TRUE</span><span class="punctuation">,</span> h<span class="operator">=</span><span class="number">20</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<p>组合初始观测值与最后的观测值作为预测值。</p>
+<p>例：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">beer2 <span class="operator">&lt;-</span> window<span class="punctuation">(</span>ausbeer<span class="punctuation">,</span>start<span class="operator">=</span><span class="number">1992</span><span class="punctuation">,</span>end<span class="operator">=</span><span class="built_in">c</span><span class="punctuation">(</span><span class="number">2007</span><span class="punctuation">,</span><span class="number">4</span><span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line">autoplot<span class="punctuation">(</span>beer2<span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  autolayer<span class="punctuation">(</span>meanf<span class="punctuation">(</span>beer2<span class="punctuation">,</span> h<span class="operator">=</span><span class="number">11</span><span class="punctuation">)</span><span class="punctuation">,</span> PI<span class="operator">=</span><span class="literal">FALSE</span><span class="punctuation">,</span> series<span class="operator">=</span><span class="string">&quot;Mean&quot;</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  autolayer<span class="punctuation">(</span>naive<span class="punctuation">(</span>beer2<span class="punctuation">,</span> h<span class="operator">=</span><span class="number">11</span><span class="punctuation">)</span><span class="punctuation">,</span> PI<span class="operator">=</span><span class="literal">FALSE</span><span class="punctuation">,</span> series<span class="operator">=</span><span class="string">&quot;Naïve&quot;</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  autolayer<span class="punctuation">(</span>snaive<span class="punctuation">(</span>beer2<span class="punctuation">,</span> h<span class="operator">=</span><span class="number">11</span><span class="punctuation">)</span><span class="punctuation">,</span> PI<span class="operator">=</span><span class="literal">FALSE</span><span class="punctuation">,</span> series<span class="operator">=</span><span class="string">&quot;Seasonal naïve&quot;</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  autolayer<span class="punctuation">(</span>rwf<span class="punctuation">(</span>beer2<span class="punctuation">,</span>drift<span class="operator">=</span><span class="literal">TRUE</span><span class="punctuation">,</span> h<span class="operator">=</span><span class="number">11</span><span class="punctuation">)</span><span class="punctuation">,</span>PI<span class="operator">=</span><span class="literal">FALSE</span><span class="punctuation">,</span> series<span class="operator">=</span><span class="string">&quot;Drift&quot;</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  ggtitle<span class="punctuation">(</span><span class="string">&quot;Forecasts for quarterly beer production&quot;</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  xlab<span class="punctuation">(</span><span class="string">&quot;Year&quot;</span><span class="punctuation">)</span> <span class="operator">+</span> ylab<span class="punctuation">(</span><span class="string">&quot;Megalitres&quot;</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  guides<span class="punctuation">(</span>colour<span class="operator">=</span>guide_legend<span class="punctuation">(</span>title<span class="operator">=</span><span class="string">&quot;Forecast&quot;</span><span class="punctuation">)</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<img src="/posts/11530/beerfor.png" class="">
+
+<h2 id="数据变形-Data-Transformation"><a href="#数据变形-Data-Transformation" class="headerlink" title="数据变形(Data Transformation)"></a>数据变形(Data Transformation)</h2><p>数据整形主要是为了将某些特征显著化或者微小化</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">autoplot<span class="punctuation">(</span>elec<span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  xlab<span class="punctuation">(</span><span class="string">&quot;Year&quot;</span><span class="punctuation">)</span> <span class="operator">+</span> ylab<span class="punctuation">(</span><span class="string">&quot;&quot;</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  ggtitle<span class="punctuation">(</span><span class="string">&quot;Australian electricity production&quot;</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<img src="/posts/11530/elec.png" class="">
+
+<p>如上图，这是一组方差逐渐增大的数据，我们便可以通过数据变形，使其方差稳定化。</p>
+<p>稳定方差，我们一般使用指数化，或者对数化，这里展示对数化方法。</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">autoplot<span class="punctuation">(</span><span class="built_in">log</span><span class="punctuation">(</span>elec<span class="punctuation">)</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  xlab<span class="punctuation">(</span><span class="string">&quot;Year&quot;</span><span class="punctuation">)</span> <span class="operator">+</span> ylab<span class="punctuation">(</span><span class="string">&quot;&quot;</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  ggtitle<span class="punctuation">(</span><span class="string">&quot;Log electricity production&quot;</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<img src="/posts/11530/eleclog.png" class="">
+
+<p>这样，方差便稳定化了。</p>
+<p>而上述方法，都被归于了属于Box-Cox法，这是一个关于λ的分段函数，λ为0时，为自然对数变化，不为0时则是指数变化。这里就不贴出具体函数了，不重要。</p>
+<p>代码如下：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">autoplot<span class="punctuation">(</span>BoxCox<span class="punctuation">(</span>elec<span class="punctuation">,</span>lambda<span class="operator">=</span>BoxCox.lambda<span class="punctuation">(</span>elec<span class="punctuation">)</span><span class="punctuation">)</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<img src="/posts/11530/elecatld.png" class="">
+
+<p>上述代码可以自动生成最优λ（由<code>BoxCox.lambda(elec)</code>实现），同时画出时序图。</p>
+<h2 id="残差检验-Residuals-Diagnose"><a href="#残差检验-Residuals-Diagnose" class="headerlink" title="残差检验(Residuals Diagnose)"></a>残差检验(Residuals Diagnose)</h2><p>好的预测残差需要有如下特性：</p>
+<ol>
+<li><p>残差需无相关性</p>
+</li>
+<li><p>残差均值为零</p>
+</li>
+<li><p>残差方差稳定（非必须）</p>
+</li>
+<li><p>残差符合正态分布（非必须）</p>
+</li>
+</ol>
+<p>假设我们用naive法对于谷歌的数据进行预测，即用当天数据作为第二天数据的预测：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">fits <span class="operator">&lt;-</span> fitted<span class="punctuation">(</span>naive<span class="punctuation">(</span>goog200<span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line">autoplot<span class="punctuation">(</span>goog200<span class="punctuation">,</span> series<span class="operator">=</span><span class="string">&quot;Data&quot;</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  autolayer<span class="punctuation">(</span>fits<span class="punctuation">,</span> series<span class="operator">=</span><span class="string">&quot;Fitted&quot;</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  xlab<span class="punctuation">(</span><span class="string">&quot;Day&quot;</span><span class="punctuation">)</span> <span class="operator">+</span> ylab<span class="punctuation">(</span><span class="string">&quot;Closing Price (US$)&quot;</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  ggtitle<span class="punctuation">(</span><span class="string">&quot;Google Stock (daily ending 6 December 2013)&quot;</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<img src="/posts/11530/naivegg.png" class="">
+
+<p>然后我们计算残差：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">res <span class="operator">&lt;-</span> residuals<span class="punctuation">(</span>naive<span class="punctuation">(</span>goog200<span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line">autoplot<span class="punctuation">(</span>res<span class="punctuation">)</span> <span class="operator">+</span> xlab<span class="punctuation">(</span><span class="string">&quot;Day&quot;</span><span class="punctuation">)</span> <span class="operator">+</span> ylab<span class="punctuation">(</span><span class="string">&quot;&quot;</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  ggtitle<span class="punctuation">(</span><span class="string">&quot;Residuals from naïve method&quot;</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<img src="/posts/11530/resgg.png" class="">
+
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">gghistogram<span class="punctuation">(</span>res<span class="punctuation">,</span> add.normal<span class="operator">=</span><span class="literal">TRUE</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  ggtitle<span class="punctuation">(</span><span class="string">&quot;Histogram of residuals&quot;</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<img src="/posts/11530/resdisgg.png" class="">
+
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ggAcf<span class="punctuation">(</span>res<span class="punctuation">)</span> <span class="operator">+</span> ggtitle<span class="punctuation">(</span><span class="string">&quot;ACF of residuals&quot;</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<img src="/posts/11530/resacfgg.png" class="">
+
+<p>可以看出上述预测符合残差要求，</p>
+<h3 id="Box-Ljung-Test"><a href="#Box-Ljung-Test" class="headerlink" title="Box-Ljung Test"></a>Box-Ljung Test</h3><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Box.test<span class="punctuation">(</span>res<span class="punctuation">,</span> lag<span class="operator">=</span><span class="number">10</span><span class="punctuation">,</span> fitdf<span class="operator">=</span><span class="number">0</span><span class="punctuation">,</span> type<span class="operator">=</span><span class="string">&quot;Lj&quot;</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<p>得到<code>X-squared = 11.031, df = 10, p-value = 0.3551</code>，即拒绝零假设，表示残差不和白噪声有显著区别（即可以认为是白噪声），得出模型是好的的结论。</p>
+<p>上述全部过程都可以用一个打包好的代码实现：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">checkresiduals<span class="punctuation">(</span>naive<span class="punctuation">(</span>goog200<span class="punctuation">)</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+<p><code>X-squared = 11.031, df = 10, p-value = 0.3551</code></p>
+<img src="/posts/11530/ai1gg.png" class="">
+
+<h2 id="模型准确性检验-Accuracy"><a href="#模型准确性检验-Accuracy" class="headerlink" title="模型准确性检验(Accuracy)"></a>模型准确性检验(Accuracy)</h2><p>此时，假设我们有了多个预测模型，那么该如何决定哪一个好呢？</p>
+<p>一般来说我们采用的指标如下：</p>
+<ul>
+<li><p>MAE</p>
+<p>  残差的均值</p>
+</li>
+<li><p>MSE</p>
+<p>  残差的平方的均值</p>
+</li>
+<li><p>RMSE</p>
+<p>  MSE的平方根</p>
+</li>
+<li><p>MAPE</p>
+<p>  （残差绝对值&#x2F;实值绝对值）的百分值</p>
+</li>
+<li><p>MASE</p>
+<p>  （残差绝对值&#x2F;时间量度）的均值</p>
+</li>
+</ul>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">beer2 <span class="operator">&lt;-</span> window<span class="punctuation">(</span>ausbeer<span class="punctuation">,</span> start<span class="operator">=</span><span class="number">1992</span><span class="punctuation">,</span> end<span class="operator">=</span><span class="built_in">c</span><span class="punctuation">(</span><span class="number">2007</span><span class="punctuation">,</span><span class="number">4</span><span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line">beer3 <span class="operator">&lt;-</span> window<span class="punctuation">(</span>ausbeer<span class="punctuation">,</span> start<span class="operator">=</span><span class="number">2008</span><span class="punctuation">)</span></span><br><span class="line">beerfit1 <span class="operator">&lt;-</span> meanf<span class="punctuation">(</span>beer2<span class="punctuation">,</span> h<span class="operator">=</span><span class="number">10</span><span class="punctuation">)</span></span><br><span class="line">beerfit2 <span class="operator">&lt;-</span> rwf<span class="punctuation">(</span>beer2<span class="punctuation">,</span> h<span class="operator">=</span><span class="number">10</span><span class="punctuation">)</span></span><br><span class="line">beerfit3 <span class="operator">&lt;-</span> snaive<span class="punctuation">(</span>beer2<span class="punctuation">,</span> h<span class="operator">=</span><span class="number">10</span><span class="punctuation">)</span></span><br><span class="line">accuracy<span class="punctuation">(</span>beerfit1<span class="punctuation">,</span> beer3<span class="punctuation">)</span></span><br><span class="line">accuracy<span class="punctuation">(</span>beerfit2<span class="punctuation">,</span> beer3<span class="punctuation">)</span></span><br><span class="line">accuracy<span class="punctuation">(</span>beerfit3<span class="punctuation">,</span> beer3<span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&gt; accuracy(beerfit1, beer3)</span><br><span class="line">                  ME     RMSE      MAE        MPE     MAPE     MASE        ACF1 Theil&#x27;s U</span><br><span class="line">Training set   0.000 43.62858 35.23438 -0.9365102 7.886776 2.463942 -0.10915105        NA</span><br><span class="line">Test set     -13.775 38.44724 34.82500 -3.9698659 8.283390 2.435315 -0.06905715  0.801254</span><br><span class="line">&gt; accuracy(beerfit2, beer3)</span><br><span class="line">                      ME     RMSE      MAE         MPE     MAPE     MASE        ACF1 Theil&#x27;s U</span><br><span class="line">Training set   0.4761905 65.31511 54.73016  -0.9162496 12.16415 3.827284 -0.24098292        NA</span><br><span class="line">Test set     -51.4000000 62.69290 57.40000 -12.9549160 14.18442 4.013986 -0.06905715  1.254009</span><br><span class="line">&gt; accuracy(beerfit3, beer3)</span><br><span class="line">                    ME     RMSE  MAE        MPE     MAPE      MASE       ACF1 Theil&#x27;s U</span><br><span class="line">Training set -2.133333 16.78193 14.3 -0.5537713 3.313685 1.0000000 -0.2876333        NA</span><br><span class="line">Test set      5.200000 14.31084 13.4  1.1475536 3.168503 0.9370629  0.1318407  0.298728</span><br></pre></td></tr></table></figure>
+
+<p>如此我们便拿到了每个模型的分值，可以看出，SeasonalNaive法的结果最好。</p>
+<p>最后，记录三个关于预测的判断正误题：</p>
+<ol>
+<li>残差小的模型预测结果会好</li>
+</ol>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Answer
+    </div>
+    <div class='spoiler-content'>
+        <p>不一定，例如“过拟合”模型残差极小，但预测能力差</p>
+
+    </div>
+</div>
+
+<ol start="2">
+<li>如果一个模型预测不准确，那么我们应该增加它的复杂度</li>
+</ol>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Answer
+    </div>
+    <div class='spoiler-content'>
+        <p>不一定，增加复杂度与准确率无关</p>
+
+    </div>
+</div>
+
+<ol start="3">
+<li>只要在测试数据集上表现好的模型就是好模型</li>
+</ol>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Answer
+    </div>
+    <div class='spoiler-content'>
+        <p>不一定，例如测试数据集如果太小，则这个好的表现就无意义</p>
+
+    </div>
+</div>
+
+<p>以及额外的参考资料：<a target="_blank" rel="noopener" href="https://robjhyndman.com/publications/another-look-at-measures-of-forecast-accuracy/">Hyndman, R. J., &amp; Koehler, A. B. (2006). Another look at measures of forecast accuracy. International Journal of Forecasting, 22, 679–688. </a> </p>
+<h2 id="时间序列的线性回归"><a href="#时间序列的线性回归" class="headerlink" title="时间序列的线性回归"></a>时间序列的线性回归</h2><p>这部分内容比较基础，底层就是最小二乘法进行系数计算，略过不表。</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">autoplot<span class="punctuation">(</span>uschange<span class="punctuation">[</span><span class="punctuation">,</span> <span class="built_in">c</span><span class="punctuation">(</span><span class="string">&quot;Consumption&quot;</span><span class="punctuation">,</span> <span class="string">&quot;Income&quot;</span><span class="punctuation">)</span><span class="punctuation">]</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  ylab<span class="punctuation">(</span><span class="string">&quot;% change&quot;</span><span class="punctuation">)</span> <span class="operator">+</span> xlab<span class="punctuation">(</span><span class="string">&quot;Year&quot;</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<img src="/posts/11530/cndi.png" class="">
+
+<p>例如这里有两个时序数据，”Consumption”和”Income”，它们的散点图如下：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">uschange <span class="operator">%&gt;%</span></span><br><span class="line">  as.data.frame <span class="operator">%&gt;%</span></span><br><span class="line">  ggplot<span class="punctuation">(</span>aes<span class="punctuation">(</span>x <span class="operator">=</span> Income<span class="punctuation">,</span> y <span class="operator">=</span> Consumption<span class="punctuation">)</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  ylab<span class="punctuation">(</span><span class="string">&quot;Consumption (quarterly % change)&quot;</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  xlab<span class="punctuation">(</span><span class="string">&quot;Income (quarterly % change)&quot;</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  geom_point<span class="punctuation">(</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  geom_smooth<span class="punctuation">(</span>method <span class="operator">=</span> <span class="string">&quot;lm&quot;</span><span class="punctuation">,</span> se <span class="operator">=</span> <span class="literal">FALSE</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+<p>或：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ggplot<span class="punctuation">(</span>data <span class="operator">=</span> as.data.frame<span class="punctuation">(</span>uschange<span class="punctuation">)</span><span class="punctuation">,</span> aes<span class="punctuation">(</span>x <span class="operator">=</span> Income<span class="punctuation">,</span> y <span class="operator">=</span> Consumption<span class="punctuation">)</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  ylab<span class="punctuation">(</span><span class="string">&quot;Consumption (quarterly % change)&quot;</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  xlab<span class="punctuation">(</span><span class="string">&quot;Income (quarterly % change)&quot;</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  geom_point<span class="punctuation">(</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  geom_smooth<span class="punctuation">(</span>method <span class="operator">=</span> <span class="string">&quot;lm&quot;</span><span class="punctuation">,</span> se <span class="operator">=</span> <span class="literal">FALSE</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<img src="/posts/11530/cndisct.png" class="">
+
+<p>可见存在一定正相关。</p>
+<p>进行时序回归：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tslm<span class="punctuation">(</span>Consumption <span class="operator">~</span> Income<span class="punctuation">,</span> data <span class="operator">=</span> uschange<span class="punctuation">)</span> <span class="operator">%&gt;%</span> summary</span><br></pre></td></tr></table></figure>
+<p>得到结果：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">Residuals:</span><br><span class="line">     Min       1Q   Median       3Q      Max </span><br><span class="line">-2.40845 -0.31816  0.02558  0.29978  1.45157 </span><br><span class="line"></span><br><span class="line">Coefficients:</span><br><span class="line">            Estimate Std. Error t value Pr(&gt;|t|)    </span><br><span class="line">(Intercept)  0.54510    0.05569   9.789  &lt; 2e-16 ***</span><br><span class="line">Income       0.28060    0.04744   5.915 1.58e-08 ***</span><br><span class="line">---</span><br><span class="line">Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span><br><span class="line"></span><br><span class="line">Residual standard error: 0.6026 on 185 degrees of freedom</span><br><span class="line">Multiple R-squared:  0.159,	Adjusted R-squared:  0.1545 </span><br><span class="line">F-statistic: 34.98 on 1 and 185 DF,  p-value: 1.577e-08</span><br></pre></td></tr></table></figure>
+
+<p>在此基础上添加新的自变量：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">autoplot<span class="punctuation">(</span>uschange<span class="punctuation">[</span><span class="punctuation">,</span> <span class="number">3</span><span class="operator">:</span><span class="number">5</span><span class="punctuation">]</span><span class="punctuation">,</span> facets <span class="operator">=</span> <span class="literal">TRUE</span><span class="punctuation">,</span> colour <span class="operator">=</span> <span class="literal">TRUE</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  ylab<span class="punctuation">(</span><span class="string">&quot;&quot;</span><span class="punctuation">)</span> <span class="operator">+</span> xlab<span class="punctuation">(</span><span class="string">&quot;Year&quot;</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  guides<span class="punctuation">(</span>colour <span class="operator">=</span> <span class="string">&quot;none&quot;</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<img src="/posts/11530/vars1.png" class="">
+
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">uschange <span class="operator">%&gt;%</span></span><br><span class="line">  as.data.frame <span class="operator">%&gt;%</span></span><br><span class="line">  GGally<span class="operator">::</span>ggpairs<span class="punctuation">(</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<img src="/posts/11530/scts1.png" class="">
+
+<p>运行多元回归：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">fit.consMR <span class="operator">&lt;-</span> tslm<span class="punctuation">(</span>Consumption <span class="operator">~</span> Income <span class="operator">+</span> Production <span class="operator">+</span> Unemployment <span class="operator">+</span> Savings<span class="punctuation">,</span> data <span class="operator">=</span> uschange<span class="punctuation">)</span></span><br><span class="line">summary<span class="punctuation">(</span>fit.consMR<span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">Call:</span><br><span class="line">tslm(formula = Consumption ~ Income + Production + Unemployment + </span><br><span class="line">    Savings, data = uschange)</span><br><span class="line"></span><br><span class="line">Residuals:</span><br><span class="line">     Min       1Q   Median       3Q      Max </span><br><span class="line">-0.88296 -0.17638 -0.03679  0.15251  1.20553 </span><br><span class="line"></span><br><span class="line">Coefficients:</span><br><span class="line">             Estimate Std. Error t value Pr(&gt;|t|)    </span><br><span class="line">(Intercept)   0.26729    0.03721   7.184 1.68e-11 ***</span><br><span class="line">Income        0.71449    0.04219  16.934  &lt; 2e-16 ***</span><br><span class="line">Production    0.04589    0.02588   1.773   0.0778 .  </span><br><span class="line">Unemployment -0.20477    0.10550  -1.941   0.0538 .  </span><br><span class="line">Savings      -0.04527    0.00278 -16.287  &lt; 2e-16 ***</span><br><span class="line">---</span><br><span class="line">Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span><br><span class="line"></span><br><span class="line">Residual standard error: 0.3286 on 182 degrees of freedom</span><br><span class="line">Multiple R-squared:  0.754,	Adjusted R-squared:  0.7486 </span><br><span class="line">F-statistic: 139.5 on 4 and 182 DF,  p-value: &lt; 2.2e-16</span><br></pre></td></tr></table></figure>
+
+<p>可见Income、Production、Savings显著，另外两个不显著。</p>
+<p>模型与实值比较：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">autoplot<span class="punctuation">(</span>uschange<span class="punctuation">[</span><span class="punctuation">,</span> <span class="string">&#x27;Consumption&#x27;</span><span class="punctuation">]</span><span class="punctuation">,</span> series <span class="operator">=</span> <span class="string">&quot;Data&quot;</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  autolayer<span class="punctuation">(</span>fitted<span class="punctuation">(</span>fit.consMR<span class="punctuation">)</span><span class="punctuation">,</span> series <span class="operator">=</span> <span class="string">&quot;Fitted&quot;</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  xlab<span class="punctuation">(</span><span class="string">&quot;Year&quot;</span><span class="punctuation">)</span> <span class="operator">+</span> ylab<span class="punctuation">(</span><span class="string">&quot;&quot;</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  ggtitle<span class="punctuation">(</span><span class="string">&quot;Percentage change in US consumption expenditure&quot;</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  guides<span class="punctuation">(</span>colour <span class="operator">=</span> guide_legend<span class="punctuation">(</span>title <span class="operator">=</span> <span class="string">&quot; &quot;</span><span class="punctuation">)</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<img src="/posts/11530/vers1.png" class="">
+
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">cbind<span class="punctuation">(</span>Data <span class="operator">=</span> uschange<span class="punctuation">[</span><span class="punctuation">,</span> <span class="string">&quot;Consumption&quot;</span><span class="punctuation">]</span><span class="punctuation">,</span> Fitted <span class="operator">=</span> fitted<span class="punctuation">(</span>fit.consMR<span class="punctuation">)</span><span class="punctuation">)</span> <span class="operator">%&gt;%</span></span><br><span class="line">  as.data.frame <span class="operator">%&gt;%</span></span><br><span class="line">  ggplot<span class="punctuation">(</span>aes<span class="punctuation">(</span>x <span class="operator">=</span> Data<span class="punctuation">,</span> y <span class="operator">=</span> Fitted<span class="punctuation">)</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  geom_point<span class="punctuation">(</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  xlab<span class="punctuation">(</span><span class="string">&quot;Fitted (predicted values)&quot;</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  ylab<span class="punctuation">(</span><span class="string">&quot;Data (actual values)&quot;</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  ggtitle<span class="punctuation">(</span><span class="string">&quot;Percentage change in US consumption expenditure&quot;</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  geom_abline<span class="punctuation">(</span>intercept <span class="operator">=</span> <span class="number">0</span><span class="punctuation">,</span> slope <span class="operator">=</span> <span class="number">1</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<img src="/posts/11530/vers2.png" class="">
+
+<h2 id="时序回归模型残差检验"><a href="#时序回归模型残差检验" class="headerlink" title="时序回归模型残差检验"></a>时序回归模型残差检验</h2><p>前文已经讨论过优质模型的残差相关内容，这里直接实践。</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">checkresiduals<span class="punctuation">(</span>fit.consMR<span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<img src="/posts/11530/res1.png" class="">
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Breusch-Godfrey test for serial correlation of order up to 8</span><br><span class="line"></span><br><span class="line">data:  Residuals from Linear regression model</span><br><span class="line">LM test = 14.874, df = 8, p-value = 0.06163</span><br></pre></td></tr></table></figure>
+
+<p>残差均值几乎为零，相关性不显著，近似正态分布，总体还不错。</p>
+<p>每个自变量的残差：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">df <span class="operator">&lt;-</span> as.data.frame<span class="punctuation">(</span>uschange<span class="punctuation">)</span></span><br><span class="line">df<span class="punctuation">[</span><span class="punctuation">,</span> <span class="string">&quot;Residuals&quot;</span><span class="punctuation">]</span>  <span class="operator">&lt;-</span> <span class="built_in">as.numeric</span><span class="punctuation">(</span>residuals<span class="punctuation">(</span>fit.consMR<span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line">p1 <span class="operator">&lt;-</span> ggplot<span class="punctuation">(</span>df<span class="punctuation">,</span> aes<span class="punctuation">(</span>x <span class="operator">=</span> Income<span class="punctuation">,</span> y <span class="operator">=</span> Residuals<span class="punctuation">)</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  geom_point<span class="punctuation">(</span><span class="punctuation">)</span></span><br><span class="line">p2 <span class="operator">&lt;-</span> ggplot<span class="punctuation">(</span>df<span class="punctuation">,</span> aes<span class="punctuation">(</span>x <span class="operator">=</span> Production<span class="punctuation">,</span> y <span class="operator">=</span> Residuals<span class="punctuation">)</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  geom_point<span class="punctuation">(</span><span class="punctuation">)</span></span><br><span class="line">p3 <span class="operator">&lt;-</span> ggplot<span class="punctuation">(</span>df<span class="punctuation">,</span> aes<span class="punctuation">(</span>x <span class="operator">=</span> Savings<span class="punctuation">,</span> y <span class="operator">=</span> Residuals<span class="punctuation">)</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  geom_point<span class="punctuation">(</span><span class="punctuation">)</span></span><br><span class="line">p4 <span class="operator">&lt;-</span> ggplot<span class="punctuation">(</span>df<span class="punctuation">,</span> aes<span class="punctuation">(</span>x <span class="operator">=</span> Unemployment<span class="punctuation">,</span> y <span class="operator">=</span> Residuals<span class="punctuation">)</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  geom_point<span class="punctuation">(</span><span class="punctuation">)</span></span><br><span class="line">gridExtra<span class="operator">::</span>grid.arrange<span class="punctuation">(</span>p1<span class="punctuation">,</span> p2<span class="punctuation">,</span> p3<span class="punctuation">,</span> p4<span class="punctuation">,</span> nrow <span class="operator">=</span> <span class="number">2</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<img src="/posts/11530/res2.png" class="">
+
+<p>可以看出，残差与各变量间无显著相关</p>
+<h2 id="季度数据简单预测"><a href="#季度数据简单预测" class="headerlink" title="季度数据简单预测"></a>季度数据简单预测</h2><p>预测季节性数据，我们将模型分为两部分：t作为趋势，描述整体数据走向，然后不同的季节作为布尔类型的数据，都量入线性回归模型。</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">beer <span class="operator">&lt;-</span> window<span class="punctuation">(</span>ausbeer<span class="punctuation">,</span> start <span class="operator">=</span> <span class="number">1992</span><span class="punctuation">)</span></span><br><span class="line">autoplot<span class="punctuation">(</span>beer<span class="punctuation">)</span> <span class="operator">+</span> xlab<span class="punctuation">(</span><span class="string">&quot;Year&quot;</span><span class="punctuation">)</span> <span class="operator">+</span> ylab<span class="punctuation">(</span><span class="string">&quot;megalitres&quot;</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  ggtitle<span class="punctuation">(</span><span class="string">&quot;Australian quarterly beer production&quot;</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<img src="/posts/11530/beer.png" class="">
+
+<p>模型逻辑为下：</p>
+<img src="/posts/11530/reg1.png" class="">
+
+<p>代码实现：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">fit.beer <span class="operator">&lt;-</span> tslm<span class="punctuation">(</span>beer <span class="operator">~</span> trend <span class="operator">+</span> season<span class="punctuation">)</span></span><br><span class="line">summary<span class="punctuation">(</span>fit.beer<span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">Residuals:</span><br><span class="line">    Min      1Q  Median      3Q     Max </span><br><span class="line">-42.903  -7.599  -0.459   7.991  21.789 </span><br><span class="line"></span><br><span class="line">Coefficients:</span><br><span class="line">             Estimate Std. Error t value Pr(&gt;|t|)    </span><br><span class="line">(Intercept) 441.80044    3.73353 118.333  &lt; 2e-16 ***</span><br><span class="line">trend        -0.34027    0.06657  -5.111 2.73e-06 ***</span><br><span class="line">season2     -34.65973    3.96832  -8.734 9.10e-13 ***</span><br><span class="line">season3     -17.82164    4.02249  -4.430 3.45e-05 ***</span><br><span class="line">season4      72.79641    4.02305  18.095  &lt; 2e-16 ***</span><br><span class="line">---</span><br><span class="line">Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span><br><span class="line"></span><br><span class="line">Residual standard error: 12.23 on 69 degrees of freedom</span><br><span class="line">Multiple R-squared:  0.9243,	Adjusted R-squared:  0.9199 </span><br><span class="line">F-statistic: 210.7 on 4 and 69 DF,  p-value: &lt; 2.2e-16</span><br></pre></td></tr></table></figure>
+
+<p>可见各项系数皆显著。</p>
+<p>接下来将预测模型可视化：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">autoplot<span class="punctuation">(</span>beer<span class="punctuation">,</span> series <span class="operator">=</span> <span class="string">&quot;Data&quot;</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  autolayer<span class="punctuation">(</span>fitted<span class="punctuation">(</span>fit.beer<span class="punctuation">)</span><span class="punctuation">,</span> series <span class="operator">=</span> <span class="string">&quot;Fitted&quot;</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  xlab<span class="punctuation">(</span><span class="string">&quot;Year&quot;</span><span class="punctuation">)</span> <span class="operator">+</span> ylab<span class="punctuation">(</span><span class="string">&quot;Megalitres&quot;</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  ggtitle<span class="punctuation">(</span><span class="string">&quot;Quarterly Beer Production&quot;</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<img src="/posts/11530/vis1.png" class="">
+
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">cbind<span class="punctuation">(</span>Data <span class="operator">=</span> beer<span class="punctuation">,</span> Fitted <span class="operator">=</span> fitted<span class="punctuation">(</span>fit.beer<span class="punctuation">)</span><span class="punctuation">)</span> <span class="operator">%&gt;%</span></span><br><span class="line">  as.data.frame <span class="operator">%&gt;%</span></span><br><span class="line">  ggplot<span class="punctuation">(</span>aes<span class="punctuation">(</span></span><br><span class="line">    x <span class="operator">=</span> Data<span class="punctuation">,</span></span><br><span class="line">    y <span class="operator">=</span> Fitted<span class="punctuation">,</span></span><br><span class="line">    colour <span class="operator">=</span> as.factor<span class="punctuation">(</span>cycle<span class="punctuation">(</span>beer<span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line">  <span class="punctuation">)</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  geom_point<span class="punctuation">(</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  ylab<span class="punctuation">(</span><span class="string">&quot;Fitted&quot;</span><span class="punctuation">)</span> <span class="operator">+</span> xlab<span class="punctuation">(</span><span class="string">&quot;Actual values&quot;</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  ggtitle<span class="punctuation">(</span><span class="string">&quot;Quarterly beer production&quot;</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  scale_colour_brewer<span class="punctuation">(</span>palette <span class="operator">=</span> <span class="string">&quot;Dark2&quot;</span><span class="punctuation">,</span> name <span class="operator">=</span> <span class="string">&quot;Quarter&quot;</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  geom_abline<span class="punctuation">(</span>intercept <span class="operator">=</span> <span class="number">0</span><span class="punctuation">,</span> slope <span class="operator">=</span> <span class="number">1</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<img src="/posts/11530/vis2.png" class="">
+
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">checkresiduals<span class="punctuation">(</span>fit.beer<span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<img src="/posts/11530/vis3.png" class="">
+
+<p>可见这个模型拟合效果在训练数据集上还是不错的.</p>
+<p>接下来我们使用上述模型进行预测：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">fit.beer <span class="operator">%&gt;%</span> forecast <span class="operator">%&gt;%</span> autoplot</span><br><span class="line">autoplot<span class="punctuation">(</span>forecast<span class="punctuation">(</span>fit.beer<span class="punctuation">,</span> h <span class="operator">=</span> <span class="number">12</span><span class="punctuation">)</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<img src="/posts/11530/for1.png" class="">
+
+<h2 id="自变量选择"><a href="#自变量选择" class="headerlink" title="自变量选择"></a>自变量选择</h2><p>当可用的自变量较多时，我们该如何选择？本段主要讨论这个问题。</p>
+<p>使用CV函数获取指标：</p>
+<p>模型1：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">fit.consMR <span class="operator">&lt;-</span> tslm<span class="punctuation">(</span>Consumption <span class="operator">~</span> Income <span class="operator">+</span> Production <span class="operator">+</span> Unemployment <span class="operator">+</span> Savings<span class="punctuation">,</span> data <span class="operator">=</span> uschange<span class="punctuation">)</span></span><br><span class="line">CV<span class="punctuation">(</span>fit.consMR<span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CV          AIC         AICc          BIC        AdjR2 </span><br><span class="line">0.1163477 -409.2980298 -408.8313631 -389.9113781    0.7485856</span><br></pre></td></tr></table></figure>
+
+<p>模型2：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">fit.consMR2 <span class="operator">&lt;-</span> tslm<span class="punctuation">(</span>Consumption <span class="operator">~</span> Production <span class="operator">+</span> Unemployment <span class="operator">+</span> Savings<span class="punctuation">,</span> data <span class="operator">=</span> uschange<span class="punctuation">)</span></span><br><span class="line">CV<span class="punctuation">(</span>fit.consMR2<span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CV          AIC         AICc          BIC        AdjR2 </span><br><span class="line">0.2927095 -234.3734580 -234.0419663 -218.2179149    0.3559711</span><br></pre></td></tr></table></figure>
+
+<p>这些值除了AdjR2外，越低越好，因此第一个模型更好。</p>
+<h2 id="各类预测"><a href="#各类预测" class="headerlink" title="各类预测"></a>各类预测</h2><ol>
+<li><p>Ex-ante 预测与 Ex-post预测</p>
+</li>
+<li><p>Senario-based预测</p>
+<p> 这里用一个例子展示：</p>
+ <figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">fit.consBest <span class="operator">&lt;-</span> tslm<span class="punctuation">(</span>Consumption <span class="operator">~</span> Income <span class="operator">+</span> Savings <span class="operator">+</span> Unemployment<span class="punctuation">,</span></span><br><span class="line">					 data <span class="operator">=</span> uschange<span class="punctuation">)</span></span><br><span class="line">h <span class="operator">&lt;-</span> 4</span><br><span class="line">newdata <span class="operator">&lt;-</span> data.frame<span class="punctuation">(</span></span><br><span class="line">  Income <span class="operator">=</span> <span class="built_in">c</span><span class="punctuation">(</span><span class="number">1</span><span class="punctuation">,</span> <span class="number">1</span><span class="punctuation">,</span> <span class="number">1</span><span class="punctuation">,</span> <span class="number">1</span><span class="punctuation">)</span><span class="punctuation">,</span></span><br><span class="line">  Savings <span class="operator">=</span> <span class="built_in">c</span><span class="punctuation">(</span><span class="number">0.5</span><span class="punctuation">,</span> <span class="number">0.5</span><span class="punctuation">,</span> <span class="number">0.5</span><span class="punctuation">,</span> <span class="number">0.5</span><span class="punctuation">)</span><span class="punctuation">,</span></span><br><span class="line">  Unemployment <span class="operator">=</span> <span class="built_in">c</span><span class="punctuation">(</span><span class="number">0</span><span class="punctuation">,</span> <span class="number">0</span><span class="punctuation">,</span> <span class="number">0</span><span class="punctuation">,</span> <span class="number">0</span><span class="punctuation">)</span></span><br><span class="line"><span class="punctuation">)</span></span><br><span class="line">fcast.up <span class="operator">&lt;-</span> forecast<span class="punctuation">(</span>fit.consBest<span class="punctuation">,</span> newdata <span class="operator">=</span> newdata<span class="punctuation">)</span></span><br><span class="line">newdata <span class="operator">&lt;-</span> data.frame<span class="punctuation">(</span></span><br><span class="line">  Income <span class="operator">=</span> <span class="built_in">rep</span><span class="punctuation">(</span><span class="operator">-</span><span class="number">1</span><span class="punctuation">,</span> h<span class="punctuation">)</span><span class="punctuation">,</span></span><br><span class="line">  Savings <span class="operator">=</span> <span class="built_in">rep</span><span class="punctuation">(</span><span class="operator">-</span><span class="number">0.5</span><span class="punctuation">,</span> h<span class="punctuation">)</span><span class="punctuation">,</span></span><br><span class="line">  Unemployment <span class="operator">=</span> <span class="built_in">rep</span><span class="punctuation">(</span><span class="number">0</span><span class="punctuation">,</span> h<span class="punctuation">)</span></span><br><span class="line"><span class="punctuation">)</span></span><br><span class="line">fcast.down <span class="operator">&lt;-</span> forecast<span class="punctuation">(</span>fit.consBest<span class="punctuation">,</span> newdata <span class="operator">=</span> newdata<span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line">autoplot<span class="punctuation">(</span>uschange<span class="punctuation">[</span><span class="punctuation">,</span> <span class="number">1</span><span class="punctuation">]</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">ylab<span class="punctuation">(</span><span class="string">&quot;% change in US consumption&quot;</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">autolayer<span class="punctuation">(</span>fcast.up<span class="punctuation">,</span> PI <span class="operator">=</span> <span class="literal">TRUE</span><span class="punctuation">,</span> series <span class="operator">=</span> <span class="string">&quot;increase&quot;</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">autolayer<span class="punctuation">(</span>fcast.down<span class="punctuation">,</span> PI <span class="operator">=</span> <span class="literal">TRUE</span><span class="punctuation">,</span> series <span class="operator">=</span> <span class="string">&quot;decrease&quot;</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">guides<span class="punctuation">(</span>colour <span class="operator">=</span> guide_legend<span class="punctuation">(</span>title <span class="operator">=</span> <span class="string">&quot;Scenario&quot;</span><span class="punctuation">)</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+ <img src="/posts/11530/for2.png" class=""></li>
+</ol>
+<h2 id="相关性与因果性-Correlation-and-Causation"><a href="#相关性与因果性-Correlation-and-Causation" class="headerlink" title="相关性与因果性(Correlation and Causation)"></a>相关性与因果性(Correlation and Causation)</h2><p>相关性不代表有因果性</p>
+<p><br>&lt;br&gt;</p>
+<p><del><strong>未完待续…</strong></del></p>
+<p>由于当前内容已经超出本文目录所能承载的极限，故本文完结，后续内容将在<a href="/posts/11531/" title="时序分析学习笔记（二）">[时序分析学习笔记（二）]</a>中继续。</p>
+<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>请我一杯咖啡吧！</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/Sponsor/wechat.png" alt="分数受害者 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/Sponsor/alipay.jpg" alt="分数受害者 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>原作者： </strong>分数受害者
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://scorevictim.github.io/posts/11530/" title="时序分析学习笔记（一）">https://scorevictim.github.io/posts/11530/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/" rel="tag"># 数据分析</a>
+              <a href="/tags/%E7%AC%94%E8%AE%B0/" rel="tag"># 笔记</a>
+              <a href="/tags/%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97/" rel="tag"># 时间序列</a>
+              <a href="/tags/%E7%BB%9F%E8%AE%A1/" rel="tag"># 统计</a>
+              <a href="/tags/R%E8%AF%AD%E8%A8%80/" rel="tag"># R语言</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/posts/38611/" rel="prev" title="湮没的记忆-原神渊下宫bgm吉他谱">
+                  <i class="fa fa-angle-left"></i> 湮没的记忆-原神渊下宫bgm吉他谱
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/posts/11532/" rel="next" title="时间序列案例分析（一） —— Lac Leman Festival De La Musique">
+                  时间序列案例分析（一） —— Lac Leman Festival De La Musique <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2021 – 
+    <span itemprop="copyrightYear">2023</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">分数受害者</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">195k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">2:57</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  
+
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://scorevictim.github.io/posts/11530/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"scorevictim/blogcomments","issue_term":"title","theme":"github-dark"}</script>
+<script src="/js/third-party/comments/utterances.js"></script>
+
+</body>
+</html>

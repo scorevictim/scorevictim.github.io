@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.0.0">
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/logo.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/logo.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/logo.png">
+  <link rel="mask-icon" href="/images/logo.png" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha256-CTSx/A06dm1B063156EVh15m6Y67pAjZZaQc89LLSrU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"scorevictim.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":true,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta property="og:type" content="blog">
+<meta property="og:title" content="机器学习基础笔记（三）">
+<meta property="og:url" content="https://scorevictim.github.io/posts/40095/index.html">
+<meta property="og:site_name" content="青崖之间">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://scorevictim.github.io/images/ML3/MLCover.jpg">
+<meta property="og:image" content="https://scorevictim.github.io/posts/40095/bow1.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/40095/bow2.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/40095/lsa1.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/40095/lsa2.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/40095/lda1.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/40095/logistic.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/40095/nn.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/40095/activation.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/40095/gradient1.webp">
+<meta property="og:image" content="https://scorevictim.github.io/posts/40095/gradient2.jpg">
+<meta property="og:image" content="https://scorevictim.github.io/posts/40095/kernel.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/40095/org.jpg">
+<meta property="og:image" content="https://scorevictim.github.io/posts/40095/ke.jpg">
+<meta property="og:image" content="https://scorevictim.github.io/posts/40095/auto1.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/40095/auto2.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/40095/auto3.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/40095/auto4.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/40095/seasonal.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/40095/ar.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/40095/arima.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/40095/sarimax.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/40095/sklearn.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/40095/sklearn2.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/40095/FBProphet.png">
+<meta property="article:published_time" content="2022-05-15T14:18:09.000Z">
+<meta property="article:modified_time" content="2023-11-12T02:43:51.089Z">
+<meta property="article:author" content="分数受害者">
+<meta property="article:tag" content="数据分析">
+<meta property="article:tag" content="笔记">
+<meta property="article:tag" content="建模">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="机器学习">
+<meta property="article:tag" content="自然语言处理">
+<meta property="article:tag" content="NLP">
+<meta property="article:tag" content="神经网络">
+<meta property="article:tag" content="Neural Networks">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://scorevictim.github.io/images/ML3/MLCover.jpg">
+
+
+<link rel="canonical" href="https://scorevictim.github.io/posts/40095/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://scorevictim.github.io/posts/40095/","path":"posts/40095/","title":"机器学习基础笔记（三）"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>机器学习基础笔记（三） | 青崖之间</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="青崖之间" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">青崖之间</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">北海虽赊，扶摇可接</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-留言板"><a href="/contact/" rel="section"><i class="fa fa-comment fa-fw"></i>留言板</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-sitemap"><a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a></li><li class="menu-item menu-item-rss"><a href="/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>RSS</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86-Natural-Language-Processing"><span class="nav-number">2.</span> <span class="nav-text">自然语言处理(Natural Language Processing)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E8%AF%8D-Tokenization"><span class="nav-number">2.1.</span> <span class="nav-text">分词(Tokenization)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%8D%E8%A2%8B-Bag-of-Words"><span class="nav-number">2.2.</span> <span class="nav-text">词袋(Bag of Words)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E6%9C%AC%E6%A0%87%E5%87%86%E5%8C%96-Normalization"><span class="nav-number">2.3.</span> <span class="nav-text">文本标准化(Normalization)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AF%8D%E5%B9%B2%E6%8F%90%E5%8F%96-Stemming"><span class="nav-number">2.3.1.</span> <span class="nav-text">词干提取(Stemming)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AF%8D%E5%BD%A2%E8%BF%98%E5%8E%9F-Lemmatization"><span class="nav-number">2.3.2.</span> <span class="nav-text">词形还原(Lemmatization)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%81%9C%E7%94%A8%E8%AF%8D-Stop-Words"><span class="nav-number">2.4.</span> <span class="nav-text">停用词(Stop Words)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%8E%E9%A2%91%E8%AF%8D-Infrequent-Words"><span class="nav-number">2.5.</span> <span class="nav-text">低频词(Infrequent Words)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#N-grams%E6%A8%A1%E5%9E%8B"><span class="nav-number">2.6.</span> <span class="nav-text">N-grams模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%8D%E9%A2%91-%E9%80%86%E6%96%87%E6%A1%A3%E9%A2%91%E7%8E%87-Term-Frequency-Inverse-Document-Frecuency"><span class="nav-number">2.7.</span> <span class="nav-text">词频-逆文档频率(Term Frequency-Inverse Document Frecuency)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BB%E9%A2%98%E6%A8%A1%E5%9E%8B"><span class="nav-number">2.8.</span> <span class="nav-text">主题模型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%BD%9C%E8%AF%AD%E4%B9%89%E5%88%86%E6%9E%90-Latent-Semantic-Analysis"><span class="nav-number">2.8.1.</span> <span class="nav-text">潜语义分析(Latent Semantic Analysis)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%9A%90%E5%90%AB%E7%8B%84%E5%88%A9%E5%85%8B%E9%9B%B7%E5%88%86%E5%B8%83-Latent-Dirichlet-Allocation"><span class="nav-number">2.8.2.</span> <span class="nav-text">隐含狄利克雷分布(Latent Dirichlet Allocation)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%8D%E5%B5%8C%E5%85%A5-Word-Embeddings"><span class="nav-number">2.9.</span> <span class="nav-text">词嵌入(Word Embeddings)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-Neural-Networks"><span class="nav-number">3.</span> <span class="nav-text">神经网络(Neural Networks)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">3.1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0-Activation-Function"><span class="nav-number">3.2.</span> <span class="nav-text">激活函数(Activation Function)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E7%AE%97%E6%B3%95-Gradient-Descent"><span class="nav-number">3.3.</span> <span class="nav-text">梯度下降算法(Gradient Descent)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD-Back-Propagation"><span class="nav-number">3.3.1.</span> <span class="nav-text">反向传播(Back Propagation)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TensorFlow"><span class="nav-number">3.4.</span> <span class="nav-text">TensorFlow</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Keras"><span class="nav-number">3.4.1.</span> <span class="nav-text">Keras</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-Convolutional-Neural-Network"><span class="nav-number">3.4.2.</span> <span class="nav-text">卷积神经网络(Convolutional Neural Network)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Drop-Out"><span class="nav-number">3.4.3.</span> <span class="nav-text">Drop Out</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%80%92%E5%BD%92%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-Recurrent-Neural-Network"><span class="nav-number">3.4.4.</span> <span class="nav-text">递归神经网络(Recurrent Neural Network)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%B6%E5%BA%8F%E9%A2%84%E6%B5%8B-Time-Series-Forecast"><span class="nav-number">4.</span> <span class="nav-text">时序预测(Time Series Forecast)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%8E%E8%AE%B0"><span class="nav-number">5.</span> <span class="nav-text">后记</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="分数受害者"
+      src="/uploads/avatar.jpg">
+  <p class="site-author-name" itemprop="name">分数受害者</p>
+  <div class="site-description" itemprop="description">人生如痴人说梦，充满着喧哗与骚动，却没有任何意义</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">76</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://blog.vinfall.com/" title="https:&#x2F;&#x2F;blog.vinfall.com&#x2F;" rel="noopener" target="_blank">Vinfall@Geekademy</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://scorevictim.github.io/posts/40095/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+      <meta itemprop="name" content="分数受害者">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="青崖之间">
+      <meta itemprop="description" content="人生如痴人说梦，充满着喧哗与骚动，却没有任何意义">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="机器学习基础笔记（三） | 青崖之间">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          机器学习基础笔记（三）
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-05-15 07:18:09" itemprop="dateCreated datePublished" datetime="2022-05-15T07:18:09-07:00">2022-05-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-11-11 18:43:51" itemprop="dateModified" datetime="2023-11-11T18:43:51-08:00">2023-11-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>17k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>15 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><img src="/images/ML3/MLCover.jpg" alt="banner"></p>
+<span id="more"></span>
+
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在前两篇文章<a href="/posts/50176/" title="机器学习基础笔记（一）">[机器学习基础笔记（一）]</a>和<a href="/posts/37094/" title="机器学习基础笔记（二）">[机器学习基础笔记（二）]</a>中，笔者整理了机器学习这门课上半节的课程内容，由于博客目录存在容量上限，之后的内容目录会无法显示，因此为了美观起见，在此重开一篇文章，作为该系列的第三部分。</p>
+<p>当然，目前课程还未结束，本文会随着课程进度，同步更新。</p>
+<hr>
+<h2 id="自然语言处理-Natural-Language-Processing"><a href="#自然语言处理-Natural-Language-Processing" class="headerlink" title="自然语言处理(Natural Language Processing)"></a>自然语言处理(Natural Language Processing)</h2><p>截至目前，我们学习的分析方法主要建立在连续或分类特征之上，并未涉及太多图像、语言处理部分。而这一章节，我们会探讨一些简单的自然语言处理相关的技术。不过本节课涉及到的仅仅只有英文文本的处理，对于中文，则可能需进一步对以下方法进行一定程度的改进，这里就不做深入探讨了。</p>
+<h3 id="分词-Tokenization"><a href="#分词-Tokenization" class="headerlink" title="分词(Tokenization)"></a>分词(Tokenization)</h3><p>这一步无需多谈，第一步总归是将句子打散成一个一个的单词，这一过程我们叫做分词。具体如何实现我们也并不关心，交给研究算法、理论的人处理就可以了。我们只需要知道这一概念即可。</p>
+<h3 id="词袋-Bag-of-Words"><a href="#词袋-Bag-of-Words" class="headerlink" title="词袋(Bag of Words)"></a>词袋(Bag of Words)</h3><p>词袋法做的是：首先将每一句话进行分词，拆解为单个单词，然后将所有句子中的每一个单词都按字母表顺序放入一个“词袋”中，进而每一句话便可以表示为一个词袋的布尔行形式，最终整个文本便可以表示为一个稀疏矩阵。</p>
+<img src="/posts/40095/bow1.png" class="">
+
+<p>代码示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">malory = [<span class="string">&quot;Do you want ants?&quot;</span>, </span><br><span class="line">		  <span class="string">&quot;Because that’s how you get ants.&quot;</span>]</span><br><span class="line">		  </span><br><span class="line"><span class="keyword">from</span> sklearn.feature_extraction.text <span class="keyword">import</span> CountVectorizer</span><br><span class="line">vect = CountVectorizer()</span><br><span class="line">vect.fit(malory)</span><br><span class="line"><span class="built_in">print</span>(vect.get_feature_names())</span><br><span class="line"></span><br><span class="line"><span class="comment"># 得到词袋为： [&#x27;ants&#x27;, &#x27;because&#x27;, &#x27;do&#x27;, &#x27;get&#x27;, &#x27;how&#x27;, &#x27;that&#x27;, &#x27;want&#x27;, &#x27;you&#x27;]</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">X = vect.transform(malory)</span><br><span class="line"><span class="built_in">print</span>(X.toarray())</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 得到的处理完成的文本为：</span></span><br><span class="line"><span class="comment"># array([[1, 0, 1, 0, 0, 0, 1, 1],</span></span><br><span class="line"><span class="comment">#       [1, 1, 0, 1, 1, 1, 0, 1]])</span></span><br></pre></td></tr></table></figure>
+
+<p>也可以查看每一句话的词袋：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(malory)</span><br><span class="line"><span class="built_in">print</span>(vect.inverse_transform(X)[<span class="number">0</span>])</span><br><span class="line"><span class="built_in">print</span>(vect.inverse_transform(X)[<span class="number">1</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 得到：</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># [&#x27;Do you want ants?&#x27;, &#x27;Because that’s how you get ants.&#x27;]</span></span><br><span class="line"><span class="comment"># [&#x27;ants&#x27; &#x27;do&#x27; &#x27;want&#x27; &#x27;you&#x27;]</span></span><br><span class="line"><span class="comment"># [&#x27;ants&#x27; &#x27;because&#x27; &#x27;get&#x27; &#x27;how&#x27; &#x27;that&#x27; &#x27;you&#x27;]</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>做好词袋后，其实就已经可以进行模型拟合了，如IMDB好评&#x2F;差评的预测示例：</p>
+<p>首先我们加载数据：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.datasets <span class="keyword">import</span> load_files</span><br><span class="line">reviews_train = load_files(<span class="string">&quot;../data/aclImdb/train/&quot;</span>)</span><br><span class="line"></span><br><span class="line">text_trainval, y_trainval = reviews_train.data, reviews_train.target</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;text_train[1]:\n&#123;&#125;&quot;</span>.<span class="built_in">format</span>(text_trainval[<span class="number">1</span>].decode()))</span><br></pre></td></tr></table></figure>
+
+<p>其中评论内容格式如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">text_train[1]:</span><br><span class="line">&#x27;Words can&#x27;t describe how bad this movie is. I can&#x27;t explain it by</span><br><span class="line">writing only. You have too see it for yourself to get at grip of how</span><br><span class="line">horrible a movie really can be. Not that I recommend you to do that.</span><br><span class="line">There are so many clichés, mistakes (and all other negative things</span><br><span class="line">you can imagine) here that will just make you cry. To start with the</span><br><span class="line">technical first, there are a LOT of mistakes regarding the airplane. I </span><br><span class="line">won&#x27;t list them here, but just mention the coloring of the plane. They</span><br><span class="line">didn&#x27;t even manage to show an airliner in the colors of a fictional</span><br><span class="line">airline, but instead used a 747 painted in the original Boeing livery.</span><br><span class="line">Very bad. The plot is stupid and has been done many times before, only</span><br><span class="line">much, much better. There are so many ridiculous moments here that i</span><br><span class="line">lost count of it really early. Also, I was on the bad guys&#x27; side all</span><br><span class="line">the time in the movie, because the good guys were so stupid. &quot;Executive</span><br><span class="line">Decision&quot; should without a doubt be you&#x27;re choice over this one, even the</span><br><span class="line">&quot;Turbulence&quot;-movies are better. In fact, every other movie in the world is</span><br><span class="line">better than this one.&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>将文本去除特殊符号并矢量化，然后进行训练、验证、测试集的分割：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">text_train_val = [doc.replace(<span class="string">b&quot;&lt;br /&gt;&quot;</span>, <span class="string">b&quot; &quot;</span>) <span class="keyword">for</span> doc <span class="keyword">in</span> text_train_val</span><br><span class="line">text_train, text_val, y_train_, y_val = train_test_split(text_trainval,</span><br><span class="line">														 y_trainval,</span><br><span class="line">														 stratify=y_trainval, </span><br><span class="line">														 random_state=<span class="number">0</span>)</span><br><span class="line">vect = CountVectorizer()</span><br><span class="line">X_train = vect.fit_transform(text_train)</span><br><span class="line">X_val = vect.transform(text_val)</span><br><span class="line">X_train</span><br></pre></td></tr></table></figure>
+
+<p>可以看到<code>X_train</code>是一个稀疏矩阵：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;18750x66651 sparse matrix of type &#x27;&lt;class &#x27;numpy.int64&#x27;&gt;&#x27;</span><br><span class="line"> with 2580448 stored elements in Compressed Sparse Row format&gt;</span><br></pre></td></tr></table></figure>
+
+<p>这里我们用逻辑回归模型来拟合：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LogisticRegressionCV</span><br><span class="line">lr = LogisticRegressionCV().fit(X_train, y_train)</span><br></pre></td></tr></table></figure>
+
+<p>得到的特征重要性如下：</p>
+<img src="/posts/40095/bow2.png" class="">
+
+<p>可以看出，结果还是比较符合预期的：其中积极的词汇对于好评的贡献率大，而消极的词汇对于差评的贡献率大。</p>
+<h3 id="文本标准化-Normalization"><a href="#文本标准化-Normalization" class="headerlink" title="文本标准化(Normalization)"></a>文本标准化(Normalization)</h3><p>我们知道，英文中同一个单词往往有不同时态、单复数等变化，而显然这些变化的词义不会改变太多，于是我们希望将这些词合并，以减少特征维度以及无意义的计算。主要方式有下述两种：</p>
+<h4 id="词干提取-Stemming"><a href="#词干提取-Stemming" class="headerlink" title="词干提取(Stemming)"></a>词干提取(Stemming)</h4><p>英语中有单词加前后缀变形的习惯，于是，我们可以基于变形规则，直接将词缀去掉。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> nltk.stem <span class="keyword">import</span> LancasterStemmer</span><br><span class="line">lancaster=LancasterStemmer()</span><br><span class="line">lancaster.stem(<span class="string">&#x27;prestudy&#x27;</span>)</span><br><span class="line"><span class="comment"># 输出：prestudi</span></span><br><span class="line"><span class="comment"># study:study </span></span><br><span class="line"><span class="comment"># studies:studi</span></span><br></pre></td></tr></table></figure>
+
+<p>当然，可以看出词干提取有一定问题：</p>
+<ol>
+<li><p>还原出来的词干，未必是一个单词。</p>
+</li>
+<li><p>有的单词是一样的，但是规则却不能将他们还原成一样。</p>
+</li>
+<li><p>有的单词是不一样的，但是规则会把这两个单词还原成一个。</p>
+</li>
+</ol>
+<h4 id="词形还原-Lemmatization"><a href="#词形还原-Lemmatization" class="headerlink" title="词形还原(Lemmatization)"></a>词形还原(Lemmatization)</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> nltk.stem <span class="keyword">import</span> WordNetLemmatizer</span><br><span class="line">wordnet_lemmatizer = WordNetLemmatizer()</span><br><span class="line">wordnet_lemmatizer.lemmatize(<span class="string">&#x27;studies&#x27;</span>)</span><br><span class="line"><span class="comment"># 输出是study</span></span><br></pre></td></tr></table></figure>
+
+<p>词形还原的准确度更高，因为本质上是基于字典的查询，然而问题在于：对于字典中没有的单词，是无法进行还原的。</p>
+<h3 id="停用词-Stop-Words"><a href="#停用词-Stop-Words" class="headerlink" title="停用词(Stop Words)"></a>停用词(Stop Words)</h3><p>我们知道，有很多词语并没有实质的意义，比如连词、冠词等，也就是说它们对于语义的贡献很少，故而我们考虑忽略这些词语。</p>
+<p>这一操作的实现手段很原始：建立一个停用词库，如果词汇出现在词库中则被忽略。当然，停用词库是需要手动建立的，目前已经有许多过去的从业者建立的停用词库可供选择。</p>
+<p>除了主观判断，具体的建立停用词库的标准也是有的，但涉及到的知识比较复杂，超出本人理论知识范畴了，鉴于本人也不是PhD，这里我们就不对理论做过多研究了。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">vect = CountVectorizer(stop_words=<span class="string">&#x27;english&#x27;</span>)</span><br><span class="line">vect.fit(malory)</span><br><span class="line"><span class="built_in">print</span>(vect.get_feature_names())</span><br><span class="line"></span><br><span class="line"><span class="comment"># 得到[&#x27;ants&#x27;, &#x27;want&#x27;]</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="低频词-Infrequent-Words"><a href="#低频词-Infrequent-Words" class="headerlink" title="低频词(Infrequent Words)"></a>低频词(Infrequent Words)</h3><p>直觉上来看，如果一个词汇仅在语料库中出现一两次，那么它很有可能对于语义贡献较小，于是我们考虑移除这样的低频词。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">vect = CountVectorizer(min_df=<span class="number">2</span>)</span><br><span class="line">vect.fit(malory)</span><br><span class="line"><span class="built_in">print</span>(vect.get_feature_names())</span><br><span class="line"></span><br><span class="line"><span class="comment"># [&#x27;ants&#x27;, &#x27;you&#x27;]</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="N-grams模型"><a href="#N-grams模型" class="headerlink" title="N-grams模型"></a>N-grams模型</h3><p>不难看出，上文提到的词袋法将词汇的顺序完全解体，这显然会产生一定的问题，因为很多时候词汇间存在关联，如”didn’t love” 和 “love” 之间的意义则完全不同。</p>
+<p>考量到这种因素，我们采取N-grams模型，将原本的语料进行数目为N的配对，如N为2时，建立的Bigrams：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">cv = CountVectorizer(ngram_range=(<span class="number">2</span>, <span class="number">2</span>)).fit(malory)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Vocabulary size: &#123;&#125;&quot;</span>.<span class="built_in">format</span>(<span class="built_in">len</span>(cv.vocabulary_)))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Vocabulary:\n&#123;&#125;&quot;</span>.<span class="built_in">format</span>(cv.get_feature_names()))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 得到：</span></span><br><span class="line"><span class="comment"># Vocabulary size: 8</span></span><br><span class="line"><span class="comment"># Vocabulary:</span></span><br><span class="line"><span class="comment"># [&#x27;because that&#x27;, &#x27;do you&#x27;, &#x27;get ants&#x27;, &#x27;how you&#x27;, &#x27;that how&#x27;, &#x27;want ants&#x27;, &#x27;you get&#x27;, &#x27;you want&#x27;]</span></span><br></pre></td></tr></table></figure>
+
+<p>N-gram有许多应用，我们最熟悉的应该就是搜索引擎的词汇联想：即当我们输入几个单词后，搜索引擎便会给出自动补全的问题猜测。当然，至于N-grams实现这一操作的数学原理，以及其深入的计算，本人就不研究了。</p>
+<h3 id="词频-逆文档频率-Term-Frequency-Inverse-Document-Frecuency"><a href="#词频-逆文档频率-Term-Frequency-Inverse-Document-Frecuency" class="headerlink" title="词频-逆文档频率(Term Frequency-Inverse Document Frecuency)"></a>词频-逆文档频率(Term Frequency-Inverse Document Frecuency)</h3><p>简称<code>Tf-idf</code>，这是一种评估一个词在整个模型中的重要程度的手段，基本思想是：</p>
+<p>一个词在一句话中出现的次数越多，则越重要；同时如果其在整个语料库中出现的次数越多，则越不重要。</p>
+<center>$TF-IDF(t,d) = TF(t,d) \cdot IDF(t)$</center>
+
+<p>&lt;br&gt;</p>
+<center>$IDF(t)=log\frac{1+n_{d}}{1+DF(d,t))}$</center>
+
+<p>&lt;br&gt;</p>
+<p>其中，</p>
+<p>TF(Term Frequency, 词频)表示词条在一句话（文档）中出现的频率；</p>
+<p>$n_{d}$为总文档数;</p>
+<p>$DF(d,t)$ 为包含t词汇的文档数；</p>
+<p>简而言之，Tf-idf倾向于过滤掉常见的词语，保留重要的词语。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.feature_extraction.text <span class="keyword">import</span> TfidfVectorizer, TfidfTransformer</span><br><span class="line"></span><br><span class="line">malory_tfidf = TfidfVectorizer().fit_transform(malory)</span><br><span class="line">malory_tfidf.toarray()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 得到：</span></span><br><span class="line"><span class="comment"># array([[ 0.41 , 0. , 0.576, 0. , 0. , 0. , 0.576, 0.41 ],</span></span><br><span class="line"><span class="comment"># 		 [ 0.318, 0.447, 0. , 0.447, 0.447, 0.447, 0. , 0.318]])</span></span><br><span class="line"></span><br><span class="line">malory_tfidf = make_pipeline(CountVectorizer(),</span><br><span class="line">							 TfidfTransformer()).fit_transform(malory)</span><br><span class="line">malory_tfidf.toarray()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 得到：</span></span><br><span class="line"><span class="comment"># array([[ 0.41 , 0. , 0.576, 0. , 0. , 0. , 0.576, 0.41 ],</span></span><br><span class="line"><span class="comment">#		 [ 0.318, 0.447, 0. , 0.447, 0.447, 0.447, 0. , 0.318]])</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="主题模型"><a href="#主题模型" class="headerlink" title="主题模型"></a>主题模型</h3><p>前文所讲的词袋模型，存在一定的不足：</p>
+<ol>
+<li><p>词语的句法特征无法捕捉</p>
+</li>
+<li><p>同义词无法捕捉</p>
+</li>
+<li><p>独热编码，因此特征数量很多</p>
+</li>
+</ol>
+<p>为了解决上述问题，便有了主题模型出现。</p>
+<h4 id="潜语义分析-Latent-Semantic-Analysis"><a href="#潜语义分析-Latent-Semantic-Analysis" class="headerlink" title="潜语义分析(Latent Semantic Analysis)"></a>潜语义分析(Latent Semantic Analysis)</h4><p>简称LSA，核心手法是运用截断奇异值分解(Truncated SVD)进行数据降维。</p>
+<p>具体的数学原理本学渣搞不明白，也不想搞明白，就不深入研究了。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.feature_extraction.text <span class="keyword">import</span> CountVectorizer</span><br><span class="line">vect = CountVectorizer(stop_words=<span class="string">&quot;english&quot;</span>, min_df=<span class="number">4</span>)</span><br><span class="line">X_train = vect.fit_transform(text_train)</span><br><span class="line">X_train.shape</span><br><span class="line"></span><br><span class="line"><span class="comment"># 得到原始的矢量化文本数据：</span></span><br><span class="line"><span class="comment"># (25000, 30462)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> sklearn.decomposition <span class="keyword">import</span> TruncatedSVD</span><br><span class="line">lsa = TruncatedSVD(n_components=<span class="number">100</span>)</span><br><span class="line">X_lsa = lsa.fit_transform(X_train)</span><br><span class="line">lsa.components_.shape</span><br><span class="line"></span><br><span class="line"><span class="comment"># 得到100个话题的数据：</span></span><br><span class="line"><span class="comment"># (100, 30462)</span></span><br></pre></td></tr></table></figure>
+
+<img src="/posts/40095/lsa1.png" class="">
+
+<p>可以看出LSA易受非均衡数据的影响，因此有必要先进行放缩：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> MaxAbsScaler</span><br><span class="line">scaler = MaxAbsScaler()</span><br><span class="line">X_scaled = scaler.fit_transform(X_train)</span><br><span class="line">lsa_scaled = TruncatedSVD(n_components=<span class="number">100</span>)</span><br><span class="line">X_lsa_scaled = lsa_scaled.fit_transform(X_nscaled)</span><br></pre></td></tr></table></figure>
+
+<p>放缩后的特征重要性：</p>
+<img src="/posts/40095/lsa2.png" class="">
+
+<blockquote>
+<p>优点：<br>1）低维空间表示可以刻画同义词，同义词会对应着相同或相似的主题。<br>2）降维可去除部分噪声，使特征更优。<br>3）充分利用冗余数据。<br>4）无监督&#x2F;完全自动化。<br>5）与语言无关。<br>缺点：<br>1）LSA可以处理向量空间模型无法解决的一义多词(synonymy)问题，但不能解决一词多义(polysemy)问题。因为LSA将每一个词映射为潜在语义空间中的一个点，也就是说一个词的多个意思在空间中对于的是同一个点，并没有被区分。<br>2）SVD的优化目标基于L-2 Norm 或者 Frobenius Norm 的，这相当于隐含了对数据的高斯分布假设。而 term 出现的次数是非负的，这明显不符合 Gaussian 假设，而更接近 Multi-nomial (多项)分布。<br>3）特征向量的方向没有对应的物理解释。<br>4）SVD的计算复杂度很高，而且当有新的文档来到时，若要更新模型需重新训练。<br>5）没有刻画term出现次数的概率模型。<br>6）对于count vectors 而言，欧式距离表达是不合适的（重建时会产生负数）。<br>7）维数的选择是ad-hoc的。<br>8）LSA具有词袋模型的缺点，即在一篇文章，或者一个句子中忽略词语的先后顺序。<br>9）LSA的概率模型假设文档和词的分布是服从联合正态分布的，但从观测数据来看是服从泊松分布的。因此LSA算法的一个改进PLSA使用了多项分布，其效果要好于LSA。</p>
+</blockquote>
+<h4 id="隐含狄利克雷分布-Latent-Dirichlet-Allocation"><a href="#隐含狄利克雷分布-Latent-Dirichlet-Allocation" class="headerlink" title="隐含狄利克雷分布(Latent Dirichlet Allocation)"></a>隐含狄利克雷分布(Latent Dirichlet Allocation)</h4><p>简称LDA，这个模型涉及很多数学知识，本人不是专业研究这个领域的，就不搞什么知难而上了。总之就是基于一系列的运算，我们可以将语料库划分为预先设置好的话题数。这里仅记录下使用方法。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.decomposition <span class="keyword">import</span> LatentDirichletAllocation</span><br><span class="line">lda100 = LatentDirichletAllocation(n_components=<span class="number">100</span>)</span><br><span class="line">X_lda100 = lda100.fit_transform(X_train)</span><br></pre></td></tr></table></figure>
+
+<img src="/posts/40095/lda1.png" class="">
+
+<h3 id="词嵌入-Word-Embeddings"><a href="#词嵌入-Word-Embeddings" class="headerlink" title="词嵌入(Word Embeddings)"></a>词嵌入(Word Embeddings)</h3><p>似乎这一部分没有课时讲了，导致笔记没办法记录。那么自然语言处理部分就先到这了，算是小小地入了个门，等未来如果我有机会再学的话再补齐。</p>
+<ul>
+<li><p>连续词袋模型(Continuous Bag of Words)</p>
+<p>  简称CBOW</p>
+<p>  tbc……</p>
+</li>
+<li><p>跳字模型(Skip-Gram)</p>
+<p>  tbc……</p>
+</li>
+<li><p>Gensim</p>
+<p>  tbc……</p>
+</li>
+</ul>
+<hr>
+<h2 id="神经网络-Neural-Networks"><a href="#神经网络-Neural-Networks" class="headerlink" title="神经网络(Neural Networks)"></a>神经网络(Neural Networks)</h2><p>神经网络，一个看起来很厉害的名字，就仿佛机器真的有了人脑的神经似的，单看这名字，还以为天网毁灭人类已经指日可待了，结果学了才知道，这名字原来只是个修辞层面的形容…</p>
+<p>虽然各种百科上都自称神经网络算法受到了人脑神经元运转的启发，但依我说，这就是一群写百科的程序员胡扯出来的自我吹捧罢了，至少到目前为止，机器学习这领域本质上还是在做统计学的事情，机器也仍然一如既往地没有任何真正的智能存在，当然人工智能领域未来会怎么样我们不好说，但至少现今没必要觉得它有多神奇。</p>
+<h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>从这一部分起，终于才算进到了较为前沿的算法领域。之前所记录的各种模型，说到底都是九十年代前就有了的，而时至今日，对于大体量的数据处理而言，神经网络的应用会更广泛些。</p>
+<p>其实神经网络并不是一个与之前的模型完全不同的概念，比如说逻辑回归就可以看作一个单神经元的单层网络：</p>
+<img src="/posts/40095/logistic.png" class="">
+
+<p>这样的结构被称为“感知机(Perceptron)”，其本身就已经是一个决策模型了，但是由于真实世界的复杂性，单一的模型无法胜任，我们便将多个感知机叠加多层，便成为了所谓的“神经网络”，这里其实就已经能看出来，这样的模型与人脑的神经结构差距大到完全没有可比性，本人更愿意用多层感知机(MLP)来称呼它，但谁让发明这个模型的人取了这么个名字呢，我们也就只能接受神经网络这一名词了。</p>
+<img src="/posts/40095/nn.png" class="">
+
+<h3 id="激活函数-Activation-Function"><a href="#激活函数-Activation-Function" class="headerlink" title="激活函数(Activation Function)"></a>激活函数(Activation Function)</h3><p>激活函数是用来计算一个节点的输出的，如下图中的Activation所示：</p>
+<img src="/posts/40095/activation.png" class="">
+
+<p>可以用作这一步的函数很多，既有线性也有非线性函数，如Sigmoid、Tanh、ReLU、Leaky ReLU、ELU、PReLU、Maxout、 Softplus，每一个都有其优劣，如Sigmond存在梯度消失的问题，且每个展开来都能写好几页，这里就不多深入了。</p>
+<h3 id="梯度下降算法-Gradient-Descent"><a href="#梯度下降算法-Gradient-Descent" class="headerlink" title="梯度下降算法(Gradient Descent)"></a>梯度下降算法(Gradient Descent)</h3><p>梯度下降算法是神经网络模型训练中常用的优化算法，其目的是用来求目标函数的最小值。</p>
+<p>根据计算目标函数采用数据量的不同，梯度下降算法又可以分为批量梯度下降算法（Batch Gradient Descent），随机梯度下降算法（Stochastic Gradient Descent）和小批量梯度下降算法（Mini-batch Gradient Descent）。</p>
+<blockquote>
+<p>对于批量梯度下降算法，其是在整个训练集上计算的，如果数据集比较大，可能会面临内存不足问题，而且其收敛速度一般比较慢；对于随机梯度下降算法，又称为在线学习，收敛速度会快一些，但是有可能出现目标函数值震荡现象，因为高频率的参数更新导致了高方差；小批量梯度下降算法是折中方案，选取训练集中一个小批量样本计算，这样可以保证训练过程更稳定，而且采用批量训练方法也可以利用矩阵计算的优势。这是目前最常用的梯度下降算法。</p>
+</blockquote>
+<p>那什么是梯度呢？简单来说，就是函数切线&#x2F;切面&#x2F;超平面切面上，指向函数极值方向的一个向量。数学上，就是函数的所有偏微分之和，具体的数学公式这里就不写了，对于入门理解有百害而无一利，这里放几张直观的图，可以帮助在宏观层面上理解即可，具体怎么算就交给热衷理论研究的大佬们搞了。</p>
+<img src="/posts/40095/gradient1.webp" class="">
+
+<p>就很像在山顶放了一个球，一松手它就会顺着山坡最陡峭的地方滚落到谷底。</p>
+<p>当然，梯度下降并非万能，像这样的有许多局部最优的函数，梯度下降就几乎无法找到全局最优点，这也很好理解：球滚到一个坑的底部时就不会再爬上去了，这就使其无法发现附近是否有更深的坑。</p>
+<img src="/posts/40095/gradient2.jpg" class="">
+
+<p>目前，梯度下降算法目前无法保证全局收敛也是一大问题，这里本学渣就不去管了，希望未来有理论大佬解决这一问题吧，</p>
+<h4 id="反向传播-Back-Propagation"><a href="#反向传播-Back-Propagation" class="headerlink" title="反向传播(Back Propagation)"></a>反向传播(Back Propagation)</h4><p>反向传播，也叫BP算法，指的是在神经网络模型中，梯度下降算法的实现手段。</p>
+<p>总在网上看到大佬说：</p>
+<blockquote>
+<p>对于反向传播，简单的理解，它就是复合函数的链式法则</p>
+</blockquote>
+<p>本人实在不才，不能理解这样的表述哪里简单，可能这就是专精数学的理科大佬的加密通话罢……</p>
+<p>读了一些资料后，本人对于反向传播的理解大概如下：当我们给神经网络模型一组参数（也就是权重和偏误）后，这个模型便会得到一组预测数据，基于这组预测数据和实际数据，我们可以得到一个偏误值，接下来我们便希望降低偏误值，得到更优的模型。</p>
+<p>而显然，影响偏误值、且我们能调整的，就是一开始给各个感知机的参数。由于每一层感知机的一部分参数是都由上一层的感知机传入，因此，为了调整某一层(n)的感知机，我们便需要先调整其上一层(n-1)的感知机，而为了调整上一层(n-1)的感知机，就需要调整更上一层(n-2)的感知机，这便出现了层层反推的效果，也就是所谓的“反向传播”。</p>
+<p>在这样的思路下，我们首先将偏误值写为一个函数，然后对其求偏导，得到其梯度向量，然后通过设置学习率步长，使其逐步迭代至最优值。而在求偏导时，便会在反向传播的作用下，出现链式求导，最终作用到最外层参数。</p>
+<p>这里的数学原理本人也不记录了，实在是十分十分的冗长，看多了脑袋疼。</p>
+<h3 id="TensorFlow"><a href="#TensorFlow" class="headerlink" title="TensorFlow"></a>TensorFlow</h3><p>前面说了一堆理论的东西，对于本人来说其实没有什么用处，毕竟一方面本人的数学水平着实有限，看不太明白，另一方面本人没有搞理论研究的兴趣，看了对我也是浪费时间。这时候，其实我们需要的是一个能马上上手跑起来的东西，TensorFlow便是很好的选择。</p>
+<p>TensorFlow是一个机器学习框架，简单的说，就是许多常用的底层算法，大佬们已经打包写好了，我们只需要调度就行，用搭房子比喻机器学习建模的话，TensorFlow就是提供了搭建房屋所用的木料，这样我们就不用从种树做起。</p>
+<h4 id="Keras"><a href="#Keras" class="headerlink" title="Keras"></a>Keras</h4><p>Keras是TensorFlow的官方高级API，对于初学者来说，Keras更简单易用。</p>
+<p>实际使用时，像本人这种玩家级别的用户，使用Keras就足够了，没有必要过多深入TensorFlow本体。</p>
+<p>使用：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> keras.models <span class="keyword">import</span> Sequential</span><br><span class="line"><span class="keyword">from</span> keras.layers <span class="keyword">import</span> Dense, Activation</span><br><span class="line"></span><br><span class="line">model = Sequential([</span><br><span class="line"> Dense(<span class="number">32</span>, input_shape=(<span class="number">784</span>,)),</span><br><span class="line"> Activation(<span class="string">&#x27;relu&#x27;</span>),</span><br><span class="line"> Dense(<span class="number">10</span>),</span><br><span class="line"> Activation(<span class="string">&#x27;softmax&#x27;</span>)])</span><br><span class="line"><span class="comment"># or</span></span><br><span class="line">model = Sequential()</span><br><span class="line">model.add(Dense(<span class="number">32</span>, input_dim=<span class="number">784</span>))</span><br><span class="line">model.add(Activation(<span class="string">&#x27;relu&#x27;</span>))</span><br><span class="line"><span class="comment"># or</span></span><br><span class="line">model = Sequential([</span><br><span class="line"> Dense(<span class="number">32</span>, input_shape=(<span class="number">784</span>,), activation=<span class="string">&#x27;relu&#x27;</span>),</span><br><span class="line"> Dense(<span class="number">10</span>, activation=<span class="string">&#x27;softmax&#x27;</span>)])</span><br></pre></td></tr></table></figure>
+
+<h4 id="卷积神经网络-Convolutional-Neural-Network"><a href="#卷积神经网络-Convolutional-Neural-Network" class="headerlink" title="卷积神经网络(Convolutional Neural Network)"></a>卷积神经网络(Convolutional Neural Network)</h4><p>简称CNN，当然不是那个整体搞意识形态输出新闻的CNN（不过话说回来，哪个媒体没有一定意识形态输出成分呢）。</p>
+<p>当前的时代，卷积神经网络可以说是一个明星算法了，可能这个年代的人都对“卷”有着莫名的执着吧…</p>
+<p>卷积神经网络最著名的是其在图象识别领域的应用。</p>
+<p>卷积神经网络与一般的神经网络的区别在于：在将数据输入神经网络模型前，进行了“卷积”和“池化”的操作。</p>
+<ul>
+<li><p>卷积核(Convolution Kernel)</p>
+<p>  “卷积”指的是基于一个“卷积核”矩阵进行的数据运算，具体的算法很简单，这里就不说了，而其背后的思想很复杂，这里也不多说了（说不明白），总而言之，一个图形经过卷积运算后，可以提取出一些特定的特征，有了这些特征，我们便可以将其交由神经网络模型来拟合。</p>
+<p>  比如图片的“锐化”就是一个卷积运算的例子：</p>
+  <img src="/posts/40095/kernel.png" class="">
+<p>  或者这样的效果：</p>
+  <img src="/posts/40095/org.jpg" class="">
+  <img src="/posts/40095/ke.jpg" class="">
+<p>  不过具体为什么卷积核可以实现这样的效果，就会涉及到信号处理和一些微积分的知识，本人目前还没研究明白，这里先宏观层面记录下其效果。</p>
+<p>  卷积核本质上是神经网络的参数，因此无需手动设定，神经网络会通过算法自动调整出最合适的卷积核。</p>
+</li>
+<li><p>池化(Pooling)</p>
+<p>  池化是进一步对卷积后的特征进行降维的操作，一般会用下述类型：平均池化(mean-pooling)，最大池化(max-pooling)、随机池化(Stochastic-pooling)和全局平均池化(global average pooling)，这一步可以节省显存的使用。</p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> keras.models <span class="keyword">import</span> Sequential</span><br><span class="line"><span class="keyword">from</span> keras.layers <span class="keyword">import</span> Conv2D, MaxPool2D</span><br><span class="line"><span class="keyword">from</span> keras.layers <span class="keyword">import</span> Dense, Flatten</span><br><span class="line"><span class="keyword">from</span> keras.utils <span class="keyword">import</span> to_categorical</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> keras.datasets <span class="keyword">import</span> mnist</span><br><span class="line">(x_train, y_train), (x_test, y_test) = mnist.load_data()</span><br><span class="line"></span><br><span class="line">img_x, img_y = <span class="number">28</span>, <span class="number">28</span></span><br><span class="line">x_train = x_train.reshape(x_train.shape[<span class="number">0</span>], img_x, img_y, <span class="number">1</span>)</span><br><span class="line">x_test = x_test.reshape(x_test.shape[<span class="number">0</span>], img_x, img_y, <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">x_train = x_train.astype(<span class="string">&#x27;float32&#x27;</span>)</span><br><span class="line">x_test = x_test.astype(<span class="string">&#x27;float32&#x27;</span>)</span><br><span class="line">x_train /= <span class="number">255</span></span><br><span class="line">x_test /= <span class="number">255</span></span><br><span class="line"></span><br><span class="line">y_train = to_categorical(y_train, <span class="number">10</span>)</span><br><span class="line">y_test = to_categorical(y_test, <span class="number">10</span>)</span><br><span class="line"></span><br><span class="line">model = Sequential()</span><br><span class="line">model.add(Conv2D(<span class="number">32</span>, kernel_size=(<span class="number">5</span>,<span class="number">5</span>), activation=<span class="string">&#x27;relu&#x27;</span>, input_shape=(img_x, img_y, <span class="number">1</span>)))</span><br><span class="line">model.add(MaxPool2D(pool_size=(<span class="number">2</span>,<span class="number">2</span>), strides=(<span class="number">2</span>,<span class="number">2</span>)))</span><br><span class="line">model.add(Conv2D(<span class="number">64</span>, kernel_size=(<span class="number">5</span>,<span class="number">5</span>), activation=<span class="string">&#x27;relu&#x27;</span>))</span><br><span class="line">model.add(MaxPool2D(pool_size=(<span class="number">2</span>,<span class="number">2</span>), strides=(<span class="number">2</span>,<span class="number">2</span>)))</span><br><span class="line">model.add(Flatten())</span><br><span class="line">model.add(Dense(<span class="number">1000</span>, activation=<span class="string">&#x27;relu&#x27;</span>))</span><br><span class="line">model.add(Dense(<span class="number">10</span>, activation=<span class="string">&#x27;softmax&#x27;</span>))</span><br><span class="line"></span><br><span class="line">model.<span class="built_in">compile</span>(optimizer=<span class="string">&#x27;adam&#x27;</span>,</span><br><span class="line">			  loss=<span class="string">&#x27;categorical_crossentropy&#x27;</span>,</span><br><span class="line">			  metrics=[<span class="string">&#x27;accuracy&#x27;</span>])</span><br><span class="line"></span><br><span class="line">model.fit(x_train, y_train, batch_size=<span class="number">128</span>, epochs=<span class="number">10</span>)</span><br><span class="line"></span><br><span class="line">score = model.evaluate(x_test, y_test)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;acc&#x27;</span>, score[<span class="number">1</span>])</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="Drop-Out"><a href="#Drop-Out" class="headerlink" title="Drop Out"></a>Drop Out</h4><p>这一手段是为了解决神经网络容易出现的过拟合问题，简单来说就是删除某些感知机节点。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> keras.layers <span class="keyword">import</span> Dropout</span><br><span class="line">model_dropout = Sequential([</span><br><span class="line"> Dense(<span class="number">1024</span>, input_shape=(<span class="number">784</span>,), activation=<span class="string">&#x27;relu&#x27;</span>),</span><br><span class="line"> Dropout(<span class="number">.5</span>),</span><br><span class="line"> Dense(<span class="number">1024</span>, activation=<span class="string">&#x27;relu&#x27;</span>),</span><br><span class="line"> Dropout(<span class="number">.5</span>),</span><br><span class="line"> Dense(<span class="number">10</span>, activation=<span class="string">&#x27;softmax&#x27;</span>),</span><br><span class="line">])</span><br><span class="line">model_dropout.<span class="built_in">compile</span>(<span class="string">&quot;adam&quot;</span>, <span class="string">&quot;categorical_crossentropy&quot;</span>, metrics=[<span class="string">&#x27;accuracy&#x27;</span>])</span><br><span class="line">history_dropout = model_dropout.fit(X_train, y_train, batch_size=<span class="number">128</span>,</span><br><span class="line"> epochs=<span class="number">20</span>, verbose=<span class="number">1</span>, validation_split=<span class="number">.1</span>)</span><br></pre></td></tr></table></figure>
+
+<h4 id="递归神经网络-Recurrent-Neural-Network"><a href="#递归神经网络-Recurrent-Neural-Network" class="headerlink" title="递归神经网络(Recurrent Neural Network)"></a>递归神经网络(Recurrent Neural Network)</h4><p>简称RNN，一般用于机器翻译。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">model = keras.Sequential()</span><br><span class="line"><span class="comment"># Add an Embedding layer expecting input vocab of size 1000, and</span></span><br><span class="line"><span class="comment"># output embedding dimension of size 64.</span></span><br><span class="line">model.add(layers.Embedding(input_dim=<span class="number">1000</span>, output_dim=<span class="number">64</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Add a LSTM layer with 128 internal units.</span></span><br><span class="line">model.add(layers.LSTM(<span class="number">128</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Add a Dense layer with 10 units.</span></span><br><span class="line">model.add(layers.Dense(<span class="number">10</span>))</span><br><span class="line"></span><br><span class="line">model.summary()</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="时序预测-Time-Series-Forecast"><a href="#时序预测-Time-Series-Forecast" class="headerlink" title="时序预测(Time Series Forecast)"></a>时序预测(Time Series Forecast)</h2><p>时序分析，算是个老朋友了，正巧本学期学了时间序列分析这门课，详见这几篇文章：<a href="/posts/11530/" title="时序分析学习笔记（一）">[时序分析学习笔记（一）]</a>、<a href="/posts/11531/" title="时序分析学习笔记（二）">[时序分析学习笔记（二）]</a>、<a href="/posts/11532/" title="时间序列案例分析（一） —— Lac Leman Festival De La Musique">[时间序列案例分析（一）——Lac Leman Festival De La Musique]</a></p>
+<p>不过之前本人学习的时序知识都是基于R语言实现的，这里再记录下Python中的一些代码实现。</p>
+<p>处理日期数据：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">url = <span class="string">&quot;ftp://aftp.cmdl.noaa.gov/products/trends/co2/co2_weekly_mlo.txt&quot;</span></span><br><span class="line">names = [<span class="string">&quot;year&quot;</span>, <span class="string">&quot;month&quot;</span>, <span class="string">&quot;day&quot;</span>, <span class="string">&quot;year_decimal&quot;</span>, <span class="string">&quot;co2&quot;</span>, <span class="string">&quot;days&quot;</span>, <span class="string">&quot;1 yr ago&quot;</span>, </span><br><span class="line"> <span class="string">&quot;10 yr ago&quot;</span>, <span class="string">&quot;since 1800&quot;</span>]</span><br><span class="line">maunaloa = pd.read_csv(url, skiprows=<span class="number">49</span>, header=<span class="literal">None</span>, delim_whitespace=<span class="literal">True</span>,</span><br><span class="line"> names=names, na_values=[-<span class="number">999.99</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 或：</span></span><br><span class="line">maunaloa = pd.read_csv(url, skiprows=<span class="number">49</span>, header=<span class="literal">None</span>, delim_whitespace=<span class="literal">True</span>,</span><br><span class="line">					   names=names, parse_dates=[[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>]], na_values=[-<span class="number">999.99</span>])</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>加索引：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">maunaloa = pd.read_csv(url, skiprows=<span class="number">49</span>, header=<span class="literal">None</span>, delim_whitespace=<span class="literal">True</span>,</span><br><span class="line"> names=names, parse_dates=[[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>]], na_values=[-<span class="number">999.99</span>],</span><br><span class="line"> index_col=<span class="string">&quot;year_month_day&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>自相关：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ppm.autocorr()</span><br></pre></td></tr></table></figure>
+
+<p>自相关函数：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> statsmodels.tsa.stattools <span class="keyword">import</span> acf</span><br><span class="line">autocorrelation = acf(ppm)</span><br><span class="line">plt.plot(autocorrelation)</span><br></pre></td></tr></table></figure>
+
+<img src="/posts/40095/auto1.png" class="">
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pandas.tools.plotting <span class="keyword">import</span> autocorrelation_plot</span><br><span class="line">autocorrelation_plot(ppm)</span><br></pre></td></tr></table></figure>
+
+<img src="/posts/40095/auto2.png" class="">
+
+<p>差分序列自相关：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">autocorrelation_plot(ppm.diff()[<span class="number">1</span>:]) </span><br></pre></td></tr></table></figure>
+
+<img src="/posts/40095/auto3.png" class="">
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> statsmodels.tsa.stattools <span class="keyword">import</span> acf</span><br><span class="line">autocorrelation = acf(ppm.diff()[<span class="number">1</span>:])</span><br><span class="line">plt.plot(autocorrelation)</span><br></pre></td></tr></table></figure>
+
+<img src="/posts/40095/auto4.png" class="">
+
+<p>季节性数据拆分：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> statsmodels.tsa.seasonal <span class="keyword">import</span> seasonal_decompose</span><br><span class="line">decomposition = seasonal_decompose(ppm, model=<span class="string">&#x27;additive&#x27;</span>)</span><br><span class="line">fig = decomposition.plot()</span><br></pre></td></tr></table></figure>
+
+<img src="/posts/40095/seasonal.png" class="">
+
+<p>自回归模型(AR)：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> statsmodels.tsa <span class="keyword">import</span> ar_model</span><br><span class="line">ar = ar_model.AR(ppm[:<span class="number">500</span>])</span><br><span class="line">res = ar.fit(maxlag=<span class="number">12</span>)</span><br><span class="line"></span><br><span class="line">ppm[<span class="number">300</span>:].plot(label=<span class="string">&quot;true&quot;</span>)</span><br><span class="line">res.predict(ppm.index[<span class="number">500</span>], </span><br><span class="line"> ppm.index[-<span class="number">1</span>]).plot(label=<span class="string">&quot;predict&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<img src="/posts/40095/ar.png" class="">
+
+<p>整合移动自回归模型(ARIMA)：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> statsmodels <span class="keyword">import</span> tsa</span><br><span class="line">arima_model = tsa.arima_model.ARIMA (ppm[:<span class="number">500</span>], order=(<span class="number">12</span>, <span class="number">1</span>, <span class="number">0</span>))</span><br><span class="line">res = arima_model.fit()</span><br><span class="line">arima_pred = res.predict(ppm.index[<span class="number">500</span>], ppm.index[-<span class="number">1</span>], typ=<span class="string">&quot;levels&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<img src="/posts/40095/arima.png" class="">
+
+<p>SARIMAX：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> statsmodels.api <span class="keyword">as</span> sm</span><br><span class="line">sar = sm.tsa.statespace.SARIMAX(ppm[:<span class="number">500</span>], order=(<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>),</span><br><span class="line"> seasonal_order=(<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">12</span>),trend=<span class="string">&#x27;ct&#x27;</span>).fit()</span><br><span class="line">fcst = sar.forecast(steps = <span class="built_in">len</span>(ppm)-<span class="number">500</span>)</span><br></pre></td></tr></table></figure>
+
+<img src="/posts/40095/sarimax.png" class="">
+
+<p>Auto-ARIMA:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pmdarima <span class="keyword">import</span> auto_arima</span><br><span class="line">model = pm.auto_arima(ppm[:<span class="number">500</span>], max_p=<span class="number">7</span>, max_d=<span class="number">2</span>, max_q=<span class="number">7</span>,</span><br><span class="line"> max_P=<span class="number">4</span>, max_D=<span class="number">2</span>, max_Q=<span class="number">4</span>, m=<span class="number">12</span>, trace=<span class="literal">True</span>)</span><br><span class="line">fcst, conf_int = model.predict(n_periods = <span class="built_in">len</span>(ppm)-<span class="number">500</span>, return_conf_int=<span class="literal">True</span>)</span><br><span class="line">fcst = pd.Series(data=fcst, index=ppm.index[<span class="number">500</span>:])</span><br></pre></td></tr></table></figure>
+
+<p>sklearn 预测</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">train = ppm[:<span class="number">500</span>]</span><br><span class="line">test = ppm[<span class="number">500</span>:]</span><br><span class="line">X = ppm.index.to_series().apply(<span class="keyword">lambda</span> x: x.toordinal())</span><br><span class="line">X = pd.DataFrame(X)</span><br><span class="line">X_train, X_test = X.iloc[:<span class="number">500</span>, :], X.iloc[<span class="number">500</span>:, :]</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LinearRegression</span><br><span class="line">lr = LinearRegression().fit(X_train, train)</span><br><span class="line">lr_pred = lr.predict(X_test)</span><br><span class="line">plt.plot(ppm.index, lr.predict(X))</span><br><span class="line">ppm.plot()</span><br></pre></td></tr></table></figure>
+
+<img src="/posts/40095/sklearn.png" class="">
+
+<p>添加多项式特征：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> PolynomialFeatures</span><br><span class="line">lr_poly = make_pipeline(PolynomialFeatures(include_bias=<span class="literal">False</span>), </span><br><span class="line"> LinearRegression())</span><br><span class="line">lr_poly.fit(X_train, train)</span><br><span class="line">plt.plot(ppm.index, lr_poly.predict(X))</span><br><span class="line">ppm.plot()</span><br></pre></td></tr></table></figure>
+
+<img src="/posts/40095/sklearn2.png" class="">
+
+<p>FBProphet</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> fbprophet <span class="keyword">import</span> Prophet</span><br><span class="line">m = Prophet()</span><br><span class="line">m.fit(fb_ppm[:<span class="number">500</span>])</span><br><span class="line">forecast = m.predict(fb_ppm)</span><br></pre></td></tr></table></figure>
+
+<img src="/posts/40095/FBProphet.png" class="">
+
+<p><del><strong>未完待续…</strong></del></p>
+<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>2022年11月28日更新：</p>
+<p>在笔者写这篇后记时，这门课实际已经结课半年了。其实早在结课时，我就想把后记写了的，奈何怠惰缠身，一直就搁置着没做。而今天本人正好在为整个博客更新文章图片的引用格式，看到这里，想着索性就把后记顺手补全了。</p>
+<p>学习机器学习这门课，于我来说是一门收获颇丰的记忆，当然，如果你看过我的笔记内容也不难发现，对于各种模型的许多底层数学知识，本学渣没有学的很透彻，所以坦白来讲，这门课并没有让我直接摇身一变，成为了可以通过相关知识来就业的人，恐怕对于许多人来说，这样的结果都会被归于“浪费时间”之列。然而对于我来说，在其中获得到的乐趣足以让我无悔于投入的时间。</p>
+<p>当然，学完这门课，我对于机器行业的偏见仍然没什么变化，正如本人在前言中所说，机器学习中，尤其是如今流行的神经网络模型，对于我们来说，已经完全是黑盒了，模型的拟合性由于其内部成千上万的变量，对于人类来说，没有可读性，大家实际都不知道为什么一个模型有效，只是利用了“有效”这一结果，这样总让人联想到“炼丹”一类的玄学，如此的模式，我还是打心底难以认同，也对其未来的发展有些担忧。</p>
+<p>但不管怎么说，倒腾数据、跑模型、调参数……这些都是很有趣的过程，虽说未来我大概很难有机会从事相关行业，具体的知识想必也会很快的被我遗忘，但是学习途中的所思所感，对我来说比记住某些数学公式更加珍贵。在这个时代，机器仿佛可以通过求数学最优解来学会很多东西：做数学题、下棋、识别图片，然而我想，有一件事情恐怕一时半会机器是无法学会的，那就是意识到：这个世界并非是一个必须追求最优的游戏，有时，以自己的方式来度过人生，要远比被强迫着追求“最优”的人生来的幸福的多。</p>
+<p>以上是本人的一些意识流废话，如果你能看到这里，我要道一声谢谢，但我也要说，你可能是真的闲的没事干，建议你干点正事。Anyway，就让我们在别的什么地方再见吧。</p>
+<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>请我一杯咖啡吧！</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/Sponsor/wechat.png" alt="分数受害者 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/Sponsor/alipay.jpg" alt="分数受害者 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>原作者： </strong>分数受害者
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://scorevictim.github.io/posts/40095/" title="机器学习基础笔记（三）">https://scorevictim.github.io/posts/40095/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/" rel="tag"># 数据分析</a>
+              <a href="/tags/%E7%AC%94%E8%AE%B0/" rel="tag"># 笔记</a>
+              <a href="/tags/%E5%BB%BA%E6%A8%A1/" rel="tag"># 建模</a>
+              <a href="/tags/python/" rel="tag"># python</a>
+              <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag"># 机器学习</a>
+              <a href="/tags/%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86/" rel="tag"># 自然语言处理</a>
+              <a href="/tags/NLP/" rel="tag"># NLP</a>
+              <a href="/tags/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" rel="tag"># 神经网络</a>
+              <a href="/tags/Neural-Networks/" rel="tag"># Neural Networks</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/posts/19041/" rel="prev" title="Python脚本文件打包成Windows可执行程序格式">
+                  <i class="fa fa-angle-left"></i> Python脚本文件打包成Windows可执行程序格式
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/posts/47643/" rel="next" title="《红玫瑰》吉他谱">
+                  《红玫瑰》吉他谱 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2021 – 
+    <span itemprop="copyrightYear">2023</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">分数受害者</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">195k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">2:57</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  
+
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://scorevictim.github.io/posts/40095/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"scorevictim/blogcomments","issue_term":"title","theme":"github-dark"}</script>
+<script src="/js/third-party/comments/utterances.js"></script>
+
+</body>
+</html>

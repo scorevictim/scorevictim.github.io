@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.0.0">
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/logo.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/logo.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/logo.png">
+  <link rel="mask-icon" href="/images/logo.png" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha256-CTSx/A06dm1B063156EVh15m6Y67pAjZZaQc89LLSrU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"scorevictim.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":true,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta property="og:type" content="blog">
+<meta property="og:title" content="时间序列案例分析（一） —— Lac Leman Festival De La Musique">
+<meta property="og:url" content="https://scorevictim.github.io/posts/11532/index.html">
+<meta property="og:site_name" content="青崖之间">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://scorevictim.github.io/images/TSCase1/case.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/11532/Exb1.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/11532/tplt1.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/11532/for1.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/11532/Exb2.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/11532/reg1.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/11532/for2.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/11532/for3.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/11532/atd6.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/11532/prf1.png">
+<meta property="og:image" content="https://scorevictim.github.io/posts/11532/opt.png">
+<meta property="article:published_time" content="2022-04-12T15:30:03.000Z">
+<meta property="article:modified_time" content="2023-11-12T02:45:22.543Z">
+<meta property="article:author" content="分数受害者">
+<meta property="article:tag" content="数据分析">
+<meta property="article:tag" content="笔记">
+<meta property="article:tag" content="时间序列">
+<meta property="article:tag" content="统计">
+<meta property="article:tag" content="R语言">
+<meta property="article:tag" content="案例分析">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://scorevictim.github.io/images/TSCase1/case.png">
+
+
+<link rel="canonical" href="https://scorevictim.github.io/posts/11532/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://scorevictim.github.io/posts/11532/","path":"posts/11532/","title":"时间序列案例分析（一） —— Lac Leman Festival De La Musique"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>时间序列案例分析（一） —— Lac Leman Festival De La Musique | 青崖之间</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="青崖之间" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">青崖之间</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">北海虽赊，扶摇可接</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-留言板"><a href="/contact/" rel="section"><i class="fa fa-comment fa-fw"></i>留言板</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-sitemap"><a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a></li><li class="menu-item menu-item-rss"><a href="/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>RSS</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A1%88%E4%BE%8B%E5%9C%BA%E6%99%AF%E6%A6%82%E8%BF%B0-Senario-Description"><span class="nav-number">2.</span> <span class="nav-text">案例场景概述(Senario Description)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E4%B8%80%EF%BC%9A%E6%A0%B9%E6%8D%AE%E7%BB%99%E5%AE%9A%E6%9D%A1%E4%BB%B6%E6%B1%82%E5%88%A9%E6%B6%A6"><span class="nav-number">3.</span> <span class="nav-text">问题一：根据给定条件求利润</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E4%BA%8C%EF%BC%9A%E5%9F%BA%E4%BA%8E%E5%BE%80%E5%B9%B4%E6%95%B0%E6%8D%AE%EF%BC%8C%E7%AE%80%E5%8D%95%E9%A2%84%E6%B5%8B%E4%BB%8A%E5%B9%B4%E6%95%B0%E6%8D%AE"><span class="nav-number">4.</span> <span class="nav-text">问题二：基于往年数据，简单预测今年数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E4%B8%89%EF%BC%9A%E6%A0%B7%E6%9C%AC%E6%A0%87%E5%87%86%E5%B7%AE"><span class="nav-number">5.</span> <span class="nav-text">问题三：样本标准差</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E5%9B%9B%EF%BC%9A%E5%A2%9E%E5%8A%A0%E8%87%AA%E5%8F%98%E9%87%8F%EF%BC%8C%E8%BF%9B%E8%A1%8C%E5%9B%9E%E5%BD%92%E5%88%86%E6%9E%90%E9%A2%84%E6%B5%8B"><span class="nav-number">6.</span> <span class="nav-text">问题四：增加自变量，进行回归分析预测</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E4%BA%94%EF%BC%9A%E5%9F%BA%E4%BA%8E%E7%BB%99%E5%AE%9A%E6%9D%A1%E4%BB%B6%EF%BC%8C%E6%B1%82%E9%A3%8E%E9%99%A9%E5%88%86%E5%B8%83"><span class="nav-number">7.</span> <span class="nav-text">问题五：基于给定条件，求风险分布</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E5%85%AD%EF%BC%9ADVD%E7%94%9F%E4%BA%A7%E5%BB%BA%E8%AE%AE"><span class="nav-number">8.</span> <span class="nav-text">问题六：DVD生产建议</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="分数受害者"
+      src="/uploads/avatar.jpg">
+  <p class="site-author-name" itemprop="name">分数受害者</p>
+  <div class="site-description" itemprop="description">人生如痴人说梦，充满着喧哗与骚动，却没有任何意义</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">76</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://blog.vinfall.com/" title="https:&#x2F;&#x2F;blog.vinfall.com&#x2F;" rel="noopener" target="_blank">Vinfall@Geekademy</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://scorevictim.github.io/posts/11532/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+      <meta itemprop="name" content="分数受害者">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="青崖之间">
+      <meta itemprop="description" content="人生如痴人说梦，充满着喧哗与骚动，却没有任何意义">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="时间序列案例分析（一） —— Lac Leman Festival De La Musique | 青崖之间">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          时间序列案例分析（一） —— Lac Leman Festival De La Musique
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-04-12 08:30:03" itemprop="dateCreated datePublished" datetime="2022-04-12T08:30:03-07:00">2022-04-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-11-11 18:45:22" itemprop="dateModified" datetime="2023-11-11T18:45:22-08:00">2023-11-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>3.8k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><img src="/images/TSCase1/case.png" alt="banner"></p>
+<span id="more"></span>
+
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在本周的时序分析课程中，我们主要对一个音乐会案例进行了分析，该案例数学层面的难度虽然不太大，不过用到的一些方法值得记录。</p>
+<p>该案例名为“Lac Leman Festival De La Musique”，其主要模拟了我们作为一场音乐会的管理人员，该如何制定音乐会的周边销售计划。</p>
+<hr>
+<h2 id="案例场景概述-Senario-Description"><a href="#案例场景概述-Senario-Description" class="headerlink" title="案例场景概述(Senario Description)"></a>案例场景概述(Senario Description)</h2><p>案例原文件可以在此购买：</p>
+<p><a target="_blank" rel="noopener" href="http://store.darden.virginia.edu/lac-leman-festival-de-la-musique-a">Lac Leman Festival de la Musique (A)</a> </p>
+<p><a target="_blank" rel="noopener" href="http://store.darden.virginia.edu/lac-leman-festival-de-la-musique-b">Lac Leman Festival de la Musique (B)</a> </p>
+<p>该案例的原文件文字冗长，明明是个商业案例，却时常不合时宜的使用修辞来描述人物心情，读之尴尬，故本人在此简单概括下核心需要使用的内容：</p>
+<p>假设我们的音乐会分别有周五、周六两天的、内容不同的场次。我们作为主办方，想要将周五当天的表演录制为DVD，进而在周六的场次贩卖录制好的光盘。（这里设定为我们只拿到了周六当天售卖的版权，周六过后所有未销售的光盘全部需要销毁）</p>
+<p>而进行DVD录制分别有下述成本：</p>
+<ol>
+<li>雇佣录制团队 11740CHF</li>
+<li>烧录母碟 3000CHF</li>
+<li>光碟量产开机费 1250CHF</li>
+<li>光碟量产费：<br> 如果制作量小于等于5300张，则每张光盘0.86CHF<br> 如果制作量大于5300张，超出的部分每张加收0.2CHF</li>
+<li>版税(Royalty) 每张1.02CHF（仅包含卖出的，烧录但未卖出的不算）</li>
+</ol>
+<p>最终每张DVD所定的售价为：18CHF</p>
+<p>可以看出，由于制作产品本身需要成本，且有意愿购买DVD的人数不确定，因此无论做的太少或太多都会有损失风险，此时我们便需要对各类因素做预测，以计算出最优的制作数量。</p>
+<hr>
+<h2 id="问题一：根据给定条件求利润"><a href="#问题一：根据给定条件求利润" class="headerlink" title="问题一：根据给定条件求利润"></a>问题一：根据给定条件求利润</h2><p>在这一问题中，案例假定我们已经得到了下述数据，需要我们在这些条件下计算出卖DVD的所得利润。</p>
+<ol>
+<li>周六的参加人数为 24139</li>
+<li>18.92% 的参加者会购买DVD</li>
+<li>我们烧录了4500份DVD</li>
+</ol>
+<p>逻辑上来说，本题很简单，只需套入条件，算出上文中的成本，然后用收益减成本即可，然而，为了后续问题（主要是5、6两题）的可计算，本题构建一个利润方程来求解：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">profitf <span class="operator">&lt;-</span> <span class="keyword">function</span> <span class="punctuation">(</span>People<span class="punctuation">,</span> Total<span class="punctuation">)</span> <span class="punctuation">&#123;</span></span><br><span class="line">  Revenue <span class="operator">&lt;-</span> 18 <span class="operator">*</span> <span class="built_in">min</span><span class="punctuation">(</span>People<span class="punctuation">,</span> Total<span class="punctuation">)</span></span><br><span class="line">  <span class="keyword">if</span> <span class="punctuation">(</span>Total <span class="operator">&gt;</span> <span class="number">5300</span><span class="punctuation">)</span> <span class="punctuation">&#123;</span></span><br><span class="line">    cost <span class="operator">&lt;-</span> 0.86 <span class="operator">*</span> Total <span class="operator">+</span> <span class="punctuation">(</span><span class="number">0.86</span> <span class="operator">+</span> <span class="number">0.2</span><span class="punctuation">)</span> <span class="operator">*</span> <span class="punctuation">(</span>Total <span class="operator">-</span> <span class="number">5300</span><span class="punctuation">)</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="keyword">else</span> <span class="punctuation">&#123;</span></span><br><span class="line">    cost <span class="operator">&lt;-</span> 0.86 <span class="operator">*</span> Total</span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line">  Royalty <span class="operator">&lt;-</span> 1.02 <span class="operator">*</span> Total</span><br><span class="line">  totalCost <span class="operator">&lt;-</span> 15990 <span class="operator">+</span> cost <span class="operator">+</span> Royalty</span><br><span class="line">  Profit <span class="operator">&lt;-</span> Revenue <span class="operator">-</span> TotalCost</span><br><span class="line">  <span class="built_in">return</span><span class="punctuation">(</span>Profit<span class="punctuation">)</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>两项输入中，<code>People</code>为购买DVD的人数，<code>Total</code>为总生产的DVD数量。</p>
+<p>构建好方程后，本题便只需调用即可：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">profitf<span class="punctuation">(</span><span class="number">24139</span><span class="operator">*</span><span class="number">0.1892</span><span class="punctuation">,</span> <span class="number">4500</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<p>得到解为：56550CHF</p>
+<hr>
+<h2 id="问题二：基于往年数据，简单预测今年数据"><a href="#问题二：基于往年数据，简单预测今年数据" class="headerlink" title="问题二：基于往年数据，简单预测今年数据"></a>问题二：基于往年数据，简单预测今年数据</h2><p>这一题中，案例给出了往年的周六参加人数的数据：</p>
+<img src="/posts/11532/Exb1.png" class="">
+
+<p>首先我们绘制下该数据随时间变化的图：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">autoplot<span class="punctuation">(</span>data.ts<span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  ggtitle<span class="punctuation">(</span><span class="string">&quot;Attendance&quot;</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  xlab<span class="punctuation">(</span><span class="string">&quot;Year&quot;</span><span class="punctuation">)</span> <span class="operator">+</span> ylab<span class="punctuation">(</span><span class="string">&quot;Saturday Attendance&quot;</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<img src="/posts/11532/tplt1.png" class="">
+
+<p>坦白来说，这个数据具备白噪音特征，不适合预测，然而，这里仅当练手，便无所谓了，先把方法套上去再说。</p>
+<p>通过观测可知其没有季节性(Seasonal)特征，所以我们便不采用季节法预测，而是采用平均、朴素、和漂移法：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">autoplot<span class="punctuation">(</span>data.ts<span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  ggtitle<span class="punctuation">(</span><span class="string">&quot;Attendance&quot;</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  xlab<span class="punctuation">(</span><span class="string">&quot;Year&quot;</span><span class="punctuation">)</span> <span class="operator">+</span> ylab<span class="punctuation">(</span><span class="string">&quot;Saturday Attendance&quot;</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  autolayer<span class="punctuation">(</span>meanf<span class="punctuation">(</span>data.ts<span class="punctuation">,</span> h <span class="operator">=</span> <span class="number">1</span><span class="punctuation">)</span><span class="punctuation">,</span> PI <span class="operator">=</span> <span class="literal">FALSE</span><span class="punctuation">,</span> series <span class="operator">=</span> <span class="string">&quot;Mean&quot;</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  autolayer<span class="punctuation">(</span>naive<span class="punctuation">(</span>data.ts<span class="punctuation">,</span> h <span class="operator">=</span> <span class="number">1</span><span class="punctuation">)</span><span class="punctuation">,</span> PI <span class="operator">=</span> <span class="literal">FALSE</span><span class="punctuation">,</span> series <span class="operator">=</span> <span class="string">&quot;Naïve&quot;</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  autolayer<span class="punctuation">(</span>rwf<span class="punctuation">(</span>data.ts<span class="punctuation">,</span> drift <span class="operator">=</span> <span class="literal">TRUE</span><span class="punctuation">,</span> h <span class="operator">=</span> <span class="number">1</span><span class="punctuation">)</span><span class="punctuation">,</span></span><br><span class="line">            PI <span class="operator">=</span> <span class="literal">FALSE</span><span class="punctuation">,</span></span><br><span class="line">            series <span class="operator">=</span> <span class="string">&quot;Drift&quot;</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<img src="/posts/11532/for1.png" class="">
+
+<p>这样我们便得到了三个预测值</p>
+<hr>
+<h2 id="问题三：样本标准差"><a href="#问题三：样本标准差" class="headerlink" title="问题三：样本标准差"></a>问题三：样本标准差</h2><p>该问题需要我们基于已有信息求出样本平均方差。</p>
+<p>假设我们得到了周六参加音乐会的人数预测值，我们此时其实还是无法确定该生产多少DVD，因为参与音乐会的人不一定买DVD。于是，我们就需要知道参加音乐会的有多少人愿意购买DVD。</p>
+<p>在案例中，主办方向以往参与过的客户发送了调查问卷邮件，以询问其是否愿意购买DVD。共计发放150封问卷，收到37封反馈，其中8封表示愿意购买。</p>
+<p>于是，基于此，我们便可以假定每个观众购买DVD的概率均值$p$为$8&#x2F;37&#x3D;0.1892$</p>
+<p>而由于这是一个二项分布问题，标准差计算公式为：$\sqrt{(p(1-p))}&#x3D;0.3917$，进而样本标准差即可求出为：$\sqrt{((p(1-p))&#x2F;37)}&#x3D;0.06439508$</p>
+<hr>
+<h2 id="问题四：增加自变量，进行回归分析预测"><a href="#问题四：增加自变量，进行回归分析预测" class="headerlink" title="问题四：增加自变量，进行回归分析预测"></a>问题四：增加自变量，进行回归分析预测</h2><p>在这一问题中，案例引入了三个新数据：周五观众人数、周五是否下雨、周六是否下雨。</p>
+<p>同时，我们已知今年周五的观众人数为：18394，且今年周五没有下雨。案例要求我们基于上述条件，进行今年周六的观众人数预测.</p>
+<img src="/posts/11532/Exb2.png" class="">
+
+<p>引入上述数据作为自变量，我们便可以进行时序回归：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">fit <span class="operator">=</span> tslm<span class="punctuation">(</span>SatAtt <span class="operator">~</span>  rain6 <span class="operator">+</span> FriAtt <span class="operator">+</span> rain5<span class="punctuation">,</span> data <span class="operator">=</span> <span class="built_in">all</span><span class="punctuation">)</span></span><br><span class="line">summary<span class="punctuation">(</span>fit<span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<img src="/posts/11532/reg1.png" class="">
+
+<p>得到回归模型后，我们便可以输入自变量的未来值来预测，而此时，今年周六是否有雨仍未未知，因此我们进行分类讨论：</p>
+<ol>
+<li>假设周六无雨：</li>
+</ol>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">newdata1 <span class="operator">&lt;-</span> data.frame<span class="punctuation">(</span>rain5 <span class="operator">=</span> <span class="number">0</span><span class="punctuation">,</span></span><br><span class="line">                       FriAtt <span class="operator">=</span> <span class="number">18394</span><span class="punctuation">,</span></span><br><span class="line">                       rain6 <span class="operator">=</span> <span class="number">0</span><span class="punctuation">)</span></span><br><span class="line">fcast1 <span class="operator">&lt;-</span> forecast<span class="punctuation">(</span>fit<span class="punctuation">,</span> newdata <span class="operator">=</span> newdata1<span class="punctuation">)</span>	</span><br><span class="line">autoplot<span class="punctuation">(</span>fcast1<span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<img src="/posts/11532/for2.png" class="">
+
+<ol start="2">
+<li>假设周六有雨：</li>
+</ol>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">newdata2 <span class="operator">&lt;-</span> data.frame<span class="punctuation">(</span>rain5 <span class="operator">=</span> <span class="number">0</span><span class="punctuation">,</span></span><br><span class="line">                       FriAtt <span class="operator">=</span> <span class="number">18394</span><span class="punctuation">,</span></span><br><span class="line">                       rain6 <span class="operator">=</span> <span class="number">1</span><span class="punctuation">)</span></span><br><span class="line">fcast1 <span class="operator">&lt;-</span> forecast<span class="punctuation">(</span>fit<span class="punctuation">,</span> newdata <span class="operator">=</span> newdata2<span class="punctuation">)</span>	</span><br><span class="line">autoplot<span class="punctuation">(</span>fcast2<span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<img src="/posts/11532/for3.png" class="">
+
+<hr>
+<h2 id="问题五：基于给定条件，求风险分布"><a href="#问题五：基于给定条件，求风险分布" class="headerlink" title="问题五：基于给定条件，求风险分布"></a>问题五：基于给定条件，求风险分布</h2><p>在这一问题中，进一步的，我们假设周六下雨的概率为80%，且我们制作了4500张DVD，案例要求我们找到利润的分布</p>
+<p>在这一问题中，我们用到了<code>蒙特卡洛模拟(Monte Carlo Simulation)</code>，由于所需的概率分布都已知，我们可以使用模拟出的数据，来计算利润，并绘制分布图。</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">set.seed<span class="punctuation">(</span><span class="number">123</span><span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line">n1 <span class="operator">&lt;-</span> 2500</span><br><span class="line">a <span class="operator">&lt;-</span> rnorm<span class="punctuation">(</span>n1<span class="punctuation">,</span> <span class="number">18611</span><span class="punctuation">,</span> <span class="number">3466</span><span class="punctuation">)</span>  <span class="comment"># attendance with rain</span></span><br><span class="line">b <span class="operator">&lt;-</span> rnorm<span class="punctuation">(</span>n1<span class="punctuation">,</span> <span class="number">27818</span><span class="punctuation">,</span> <span class="number">3466</span><span class="punctuation">)</span>  <span class="comment"># attendance with no rain</span></span><br><span class="line"><span class="built_in">c</span> <span class="operator">&lt;-</span> rbinom<span class="punctuation">(</span>n1<span class="punctuation">,</span> <span class="number">1</span><span class="punctuation">,</span> <span class="number">0.8</span><span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line">attendance6 <span class="operator">=</span> <span class="built_in">c</span> <span class="operator">*</span> a <span class="operator">+</span> <span class="punctuation">(</span><span class="number">1</span><span class="operator">-</span><span class="built_in">c</span><span class="punctuation">)</span> <span class="operator">*</span> b</span><br><span class="line">hist<span class="punctuation">(</span>attendance6<span class="punctuation">,</span> breaks<span class="operator">=</span><span class="number">50</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<img src="/posts/11532/atd6.png" class="">
+
+<p>此时，我们便得到了模拟出的周六观众分布图。</p>
+<p>接下来，我们将每一个模拟的观众数据代入第一题中的收益方程，便可得到利润分布：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">pf <span class="operator">&lt;-</span> numeric<span class="punctuation">(</span><span class="built_in">length</span> <span class="operator">=</span> <span class="built_in">length</span><span class="punctuation">(</span>f<span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line">pfneg <span class="operator">&lt;-</span> numeric<span class="punctuation">(</span><span class="built_in">length</span> <span class="operator">=</span> <span class="built_in">length</span><span class="punctuation">(</span>f<span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line"><span class="keyword">for</span><span class="punctuation">(</span>i <span class="keyword">in</span> <span class="number">1</span><span class="operator">:</span><span class="built_in">length</span><span class="punctuation">(</span>f<span class="punctuation">)</span><span class="punctuation">)</span> <span class="punctuation">&#123;</span></span><br><span class="line">  pf<span class="punctuation">[</span>i<span class="punctuation">]</span> <span class="operator">&lt;-</span> profitf<span class="punctuation">(</span><span class="punctuation">(</span>f<span class="punctuation">[</span>i<span class="punctuation">]</span><span class="punctuation">,</span><span class="number">4500</span><span class="punctuation">)</span></span><br><span class="line">  <span class="keyword">if</span> <span class="punctuation">(</span>pf<span class="punctuation">[</span>i<span class="punctuation">]</span><span class="operator">&lt;</span><span class="number">0</span><span class="punctuation">)</span> <span class="punctuation">&#123;</span></span><br><span class="line">    pfneg<span class="punctuation">[</span>i<span class="punctuation">]</span><span class="operator">=</span><span class="number">1</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="keyword">else</span> <span class="punctuation">&#123;</span></span><br><span class="line">    pfneg<span class="punctuation">[</span>i<span class="punctuation">]</span><span class="operator">=</span><span class="number">0</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br><span class="line">hist<span class="punctuation">(</span>pf<span class="punctuation">,</span> breaks<span class="operator">=</span><span class="number">50</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<img src="/posts/11532/prf1.png" class="">
+
+<p>其中，<code>pfneg</code>表示负利润，也就是亏损</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mean<span class="punctuation">(</span>pfneg<span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<p>最后我们求其均值，便可以得到亏损概率为0.0390864。</p>
+<p>p.s. <code>pfneg</code>并非题目所要求，只是为了结果更易读而存在。</p>
+<hr>
+<h2 id="问题六：DVD生产建议"><a href="#问题六：DVD生产建议" class="headerlink" title="问题六：DVD生产建议"></a>问题六：DVD生产建议</h2><p>这一题中，所有已知条件都与上一题一致，除了生产DVD数目不再提供，案例要求我们给出推荐的DVD生产数量。</p>
+<p>主要思路和穷举法相似，将一定区间的数字输入收益函数中循环，然后取收益最高的点：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">dvd <span class="operator">&lt;-</span> 4500<span class="operator">+</span><span class="number">25</span><span class="operator">*</span><span class="built_in">c</span><span class="punctuation">(</span><span class="number">0</span><span class="operator">:</span><span class="number">100</span><span class="punctuation">)</span></span><br><span class="line">profit <span class="operator">&lt;-</span> numeric<span class="punctuation">(</span><span class="built_in">length</span> <span class="operator">=</span> <span class="built_in">length</span><span class="punctuation">(</span>dvd<span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span><span class="punctuation">(</span>j <span class="keyword">in</span> <span class="number">1</span><span class="operator">:</span><span class="built_in">length</span><span class="punctuation">(</span>dvd<span class="punctuation">)</span><span class="punctuation">)</span> <span class="punctuation">&#123;</span></span><br><span class="line">  <span class="keyword">for</span><span class="punctuation">(</span>i <span class="keyword">in</span> <span class="number">1</span><span class="operator">:</span><span class="built_in">length</span><span class="punctuation">(</span>f<span class="punctuation">)</span><span class="punctuation">)</span> <span class="punctuation">&#123;</span></span><br><span class="line">    pf<span class="punctuation">[</span>i<span class="punctuation">]</span> <span class="operator">&lt;-</span> profitf<span class="punctuation">(</span>f<span class="punctuation">[</span>i<span class="punctuation">]</span><span class="punctuation">,</span>dvd<span class="punctuation">[</span>j<span class="punctuation">]</span><span class="punctuation">)</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line">  profit<span class="punctuation">[</span>j<span class="punctuation">]</span> <span class="operator">&lt;-</span> mean<span class="punctuation">(</span>pf<span class="punctuation">)</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br><span class="line"></span><br><span class="line">dvdprofit <span class="operator">&lt;-</span> cbind<span class="punctuation">(</span>dvd<span class="punctuation">,</span>profit<span class="punctuation">)</span></span><br><span class="line">dvdprofit</span><br><span class="line">plot<span class="punctuation">(</span>x<span class="operator">=</span>dvd<span class="punctuation">,</span>y<span class="operator">=</span>profit<span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<img src="/posts/11532/opt.png" class="">
+
+<p>直观的可以看出，生产量5500左右的利润最大。</p>
+<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>请我一杯咖啡吧！</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/Sponsor/wechat.png" alt="分数受害者 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/Sponsor/alipay.jpg" alt="分数受害者 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>原作者： </strong>分数受害者
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://scorevictim.github.io/posts/11532/" title="时间序列案例分析（一） —— Lac Leman Festival De La Musique">https://scorevictim.github.io/posts/11532/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/" rel="tag"># 数据分析</a>
+              <a href="/tags/%E7%AC%94%E8%AE%B0/" rel="tag"># 笔记</a>
+              <a href="/tags/%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97/" rel="tag"># 时间序列</a>
+              <a href="/tags/%E7%BB%9F%E8%AE%A1/" rel="tag"># 统计</a>
+              <a href="/tags/R%E8%AF%AD%E8%A8%80/" rel="tag"># R语言</a>
+              <a href="/tags/%E6%A1%88%E4%BE%8B%E5%88%86%E6%9E%90/" rel="tag"># 案例分析</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/posts/11530/" rel="prev" title="时序分析学习笔记（一）">
+                  <i class="fa fa-angle-left"></i> 时序分析学习笔记（一）
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/posts/11531/" rel="next" title="时序分析学习笔记（二）">
+                  时序分析学习笔记（二） <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2021 – 
+    <span itemprop="copyrightYear">2023</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">分数受害者</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">195k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">2:57</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  
+
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://scorevictim.github.io/posts/11532/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"scorevictim/blogcomments","issue_term":"title","theme":"github-dark"}</script>
+<script src="/js/third-party/comments/utterances.js"></script>
+
+</body>
+</html>
