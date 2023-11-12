@@ -6,7 +6,7 @@
   <link href="https://scorevictim.github.io/atom.xml" rel="self"/>
   
   <link href="https://scorevictim.github.io/"/>
-  <updated>2023-11-12T02:35:46.745Z</updated>
+  <updated>2023-11-12T07:08:50.490Z</updated>
   <id>https://scorevictim.github.io/</id>
   
   <author>
@@ -17,14 +17,41 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>如何解决NodeJS应用启动时出现内存溢出问题</title>
+    <title>记Hexo博客主题迁移及更名 - Next/青崖之间</title>
+    <link href="https://scorevictim.github.io/posts/1799334236/"/>
+    <id>https://scorevictim.github.io/posts/1799334236/</id>
+    <published>2023-11-12T05:13:47.000Z</published>
+    <updated>2023-11-12T07:08:50.490Z</updated>
+    
+    
+    <summary type="html">记录博客主题变更至Next、以及更名的事件</summary>
+    
+    
+    
+    <category term="折腾日记" scheme="https://scorevictim.github.io/categories/%E6%8A%98%E8%85%BE%E6%97%A5%E8%AE%B0/"/>
+    
+    
+    <category term="Hexo" scheme="https://scorevictim.github.io/tags/Hexo/"/>
+    
+    <category term="个人博客" scheme="https://scorevictim.github.io/tags/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/"/>
+    
+    <category term="Theme" scheme="https://scorevictim.github.io/tags/Theme/"/>
+    
+    <category term="主题" scheme="https://scorevictim.github.io/tags/%E4%B8%BB%E9%A2%98/"/>
+    
+    <category term="Next" scheme="https://scorevictim.github.io/tags/Next/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>如何解决NodeJS应用启动时出现的内存溢出问题</title>
     <link href="https://scorevictim.github.io/posts/47828/"/>
     <id>https://scorevictim.github.io/posts/47828/</id>
     <published>2023-09-19T02:40:03.000Z</published>
-    <updated>2023-11-12T02:35:46.745Z</updated>
+    <updated>2023-11-12T06:49:56.344Z</updated>
     
     
-    <summary type="html">&lt;p&gt;&lt;img src=&quot;/images/NodeMemoryLeak/Is-Node-Required-For-Angular.png&quot; alt=&quot;banner&quot;&gt;&lt;/p&gt;</summary>
+    <summary type="html">记录解决NodeJS应用启动时出现内存溢出问题的过程</summary>
     
     
     
@@ -52,10 +79,10 @@
     <link href="https://scorevictim.github.io/posts/24073/"/>
     <id>https://scorevictim.github.io/posts/24073/</id>
     <published>2023-08-02T01:22:09.000Z</published>
-    <updated>2023-11-12T02:35:46.733Z</updated>
+    <updated>2023-11-12T06:40:33.825Z</updated>
     
     
-    <summary type="html">&lt;p&gt;&lt;img src=&quot;/images/AspTextStreamController/cover.png&quot; alt=&quot;banner&quot;&gt;&lt;/p&gt;</summary>
+    <summary type="html">记录利用ASP.NET Core框架，开发一个可以返还可终止的“文本流”后端接口的实现细节</summary>
     
     
     
@@ -81,10 +108,10 @@
     <link href="https://scorevictim.github.io/posts/46697/"/>
     <id>https://scorevictim.github.io/posts/46697/</id>
     <published>2023-08-01T17:50:21.000Z</published>
-    <updated>2023-11-12T02:35:46.685Z</updated>
+    <updated>2023-11-12T06:39:18.402Z</updated>
     
     
-    <summary type="html">&lt;p&gt;&lt;img src=&quot;/images/XiangWoZheYangDeRen/cover.png&quot; alt=&quot;banner&quot;&gt;&lt;/p&gt;</summary>
+    <summary type="html">《像我这样的人》乐谱归档</summary>
     
     
     
@@ -102,10 +129,10 @@
     <link href="https://scorevictim.github.io/posts/46459/"/>
     <id>https://scorevictim.github.io/posts/46459/</id>
     <published>2023-07-10T23:20:47.000Z</published>
-    <updated>2023-11-12T02:37:09.888Z</updated>
+    <updated>2023-11-12T06:39:18.422Z</updated>
     
     
-    <summary type="html">&lt;p&gt;&lt;img src=&quot;/images/nginx/Nginx-Logo.jpeg&quot; alt=&quot;banner&quot;&gt;&lt;/p&gt;</summary>
+    <summary type="html">记录在Linux中安装并配置Nginx服务的流程</summary>
     
     
     
@@ -125,10 +152,10 @@
     <link href="https://scorevictim.github.io/posts/9273/"/>
     <id>https://scorevictim.github.io/posts/9273/</id>
     <published>2023-01-31T12:30:47.000Z</published>
-    <updated>2023-11-12T02:37:43.723Z</updated>
+    <updated>2023-11-12T06:39:18.402Z</updated>
     
     
-    <summary type="html">&lt;p&gt;&lt;img src=&quot;/images/ruby/ruby.png&quot; alt=&quot;banner&quot;&gt;&lt;/p&gt;</summary>
+    <summary type="html">记录在Linux中安装Ruby环境的流程</summary>
     
     
     
@@ -150,10 +177,10 @@
     <link href="https://scorevictim.github.io/posts/23186/"/>
     <id>https://scorevictim.github.io/posts/23186/</id>
     <published>2022-11-06T12:43:36.000Z</published>
-    <updated>2023-11-12T02:44:26.608Z</updated>
+    <updated>2023-11-12T06:39:18.402Z</updated>
     
     
-    <summary type="html">&lt;p&gt;&lt;img src=&quot;/images/rosefuneral/maxresdefault.jpg&quot; alt=&quot;banner&quot;&gt;&lt;/p&gt;</summary>
+    <summary type="html">《玫瑰花的葬礼》乐谱归档</summary>
     
     
     
@@ -171,10 +198,10 @@
     <link href="https://scorevictim.github.io/posts/56658/"/>
     <id>https://scorevictim.github.io/posts/56658/</id>
     <published>2022-10-23T19:14:57.000Z</published>
-    <updated>2023-11-12T02:42:11.575Z</updated>
+    <updated>2023-11-12T06:39:18.402Z</updated>
     
     
-    <summary type="html">&lt;p&gt;&lt;img src=&quot;/images/Essays/Writing2.jpg&quot; alt=&quot;banner&quot;&gt;&lt;/p&gt;</summary>
+    <summary type="html">本科时为了应付写作课而完成的拙作</summary>
     
     
     
@@ -192,10 +219,10 @@
     <link href="https://scorevictim.github.io/posts/23775/"/>
     <id>https://scorevictim.github.io/posts/23775/</id>
     <published>2022-10-19T10:40:47.000Z</published>
-    <updated>2023-11-12T02:43:26.025Z</updated>
+    <updated>2023-11-12T06:39:18.422Z</updated>
     
     
-    <summary type="html">&lt;p&gt;&lt;img src=&quot;/images/Maven/Apache_Maven_logo.svg.jpg&quot; alt=&quot;banner&quot;&gt;&lt;/p&gt;</summary>
+    <summary type="html">学习Maven过程中的一些笔记</summary>
     
     
     
@@ -219,10 +246,10 @@
     <link href="https://scorevictim.github.io/posts/56183/"/>
     <id>https://scorevictim.github.io/posts/56183/</id>
     <published>2022-09-21T06:22:09.000Z</published>
-    <updated>2023-11-12T02:42:58.534Z</updated>
+    <updated>2023-11-12T06:39:18.422Z</updated>
     
     
-    <summary type="html">&lt;p&gt;&lt;img src=&quot;/images/OOP/oop.png&quot; alt=&quot;banner&quot;&gt;&lt;/p&gt;</summary>
+    <summary type="html">记录利用Java学习“面向对象编程”的过程中值得记录的细节</summary>
     
     
     
@@ -246,10 +273,10 @@
     <link href="https://scorevictim.github.io/posts/47238/"/>
     <id>https://scorevictim.github.io/posts/47238/</id>
     <published>2022-09-20T22:40:47.000Z</published>
-    <updated>2023-11-12T02:42:19.002Z</updated>
+    <updated>2023-11-12T06:39:18.402Z</updated>
     
     
-    <summary type="html">&lt;p&gt;&lt;img src=&quot;/images/BigData1/big-data-2.jpg&quot; alt=&quot;banner&quot;&gt;&lt;/p&gt;</summary>
+    <summary type="html">记录在学习大数据建模与分析这门课中，值得留意的概念以及代码</summary>
     
     
     
@@ -273,10 +300,10 @@
     <link href="https://scorevictim.github.io/posts/32311/"/>
     <id>https://scorevictim.github.io/posts/32311/</id>
     <published>2022-08-07T23:05:36.000Z</published>
-    <updated>2023-11-12T02:43:16.830Z</updated>
+    <updated>2023-11-12T06:39:18.422Z</updated>
     
     
-    <summary type="html">&lt;p&gt;&lt;img src=&quot;/images/lilian/lilian.jpg&quot; alt=&quot;banner&quot;&gt;&lt;/p&gt;</summary>
+    <summary type="html">《莉莉安》乐谱归档</summary>
     
     
     
@@ -294,10 +321,10 @@
     <link href="https://scorevictim.github.io/posts/61274/"/>
     <id>https://scorevictim.github.io/posts/61274/</id>
     <published>2022-07-09T18:13:47.000Z</published>
-    <updated>2023-11-12T02:41:59.539Z</updated>
+    <updated>2023-11-12T06:39:18.422Z</updated>
     
     
-    <summary type="html">&lt;p&gt;&lt;img src=&quot;/images/Essays/Writing1.jpg&quot; alt=&quot;banner&quot;&gt;&lt;/p&gt;</summary>
+    <summary type="html">本科时为了应付写作课而完成的拙作</summary>
     
     
     
@@ -315,10 +342,10 @@
     <link href="https://scorevictim.github.io/posts/35072/"/>
     <id>https://scorevictim.github.io/posts/35072/</id>
     <published>2022-07-09T16:20:47.000Z</published>
-    <updated>2023-11-12T02:44:37.832Z</updated>
+    <updated>2023-11-12T06:39:18.402Z</updated>
     
     
-    <summary type="html">&lt;p&gt;&lt;img src=&quot;/images/Essays/DG.jpg&quot; alt=&quot;banner&quot;&gt;&lt;/p&gt;</summary>
+    <summary type="html">本科时为了应付写作课而完成的拙作</summary>
     
     
     
@@ -336,10 +363,10 @@
     <link href="https://scorevictim.github.io/posts/10969/"/>
     <id>https://scorevictim.github.io/posts/10969/</id>
     <published>2022-07-09T15:13:47.000Z</published>
-    <updated>2023-11-12T02:44:47.448Z</updated>
+    <updated>2023-11-12T06:39:18.402Z</updated>
     
     
-    <summary type="html">&lt;p&gt;&lt;img src=&quot;/images/Essays/WH.webp&quot; alt=&quot;banner&quot;&gt;&lt;/p&gt;</summary>
+    <summary type="html">本科时为了应付泛读课而完成的拙作</summary>
     
     
     
@@ -357,10 +384,10 @@
     <link href="https://scorevictim.github.io/posts/42757/"/>
     <id>https://scorevictim.github.io/posts/42757/</id>
     <published>2022-07-02T21:09:33.000Z</published>
-    <updated>2023-11-12T02:45:47.883Z</updated>
+    <updated>2023-11-12T06:39:18.422Z</updated>
     
     
-    <summary type="html">&lt;p&gt;&lt;img src=&quot;/images/xiaochou/xiaochou.jpg&quot; alt=&quot;banner&quot;&gt;&lt;/p&gt;</summary>
+    <summary type="html">《消愁》乐谱归档</summary>
     
     
     
@@ -378,10 +405,10 @@
     <link href="https://scorevictim.github.io/posts/34883/"/>
     <id>https://scorevictim.github.io/posts/34883/</id>
     <published>2022-06-25T15:19:09.000Z</published>
-    <updated>2023-11-12T02:45:12.612Z</updated>
+    <updated>2023-11-12T06:39:18.402Z</updated>
     
     
-    <summary type="html">&lt;p&gt;&lt;img src=&quot;/images/tensorflowstart.png&quot; alt=&quot;banner&quot;&gt;&lt;/p&gt;</summary>
+    <summary type="html">记录Tensorflow使用GPU加速需要的一些环境配置</summary>
     
     
     
@@ -407,10 +434,10 @@
     <link href="https://scorevictim.github.io/posts/32983/"/>
     <id>https://scorevictim.github.io/posts/32983/</id>
     <published>2022-05-25T10:46:09.000Z</published>
-    <updated>2023-11-12T02:43:33.257Z</updated>
+    <updated>2023-11-12T06:39:18.402Z</updated>
     
     
-    <summary type="html">&lt;p&gt;&lt;img src=&quot;/images/ML2631Project/cover.jpg&quot; alt=&quot;banner&quot;&gt;&lt;/p&gt;</summary>
+    <summary type="html">记录机器学习(MSIS2631)课程期末项目的思路及代码</summary>
     
     
     
@@ -446,10 +473,10 @@
     <link href="https://scorevictim.github.io/posts/47643/"/>
     <id>https://scorevictim.github.io/posts/47643/</id>
     <published>2022-05-18T15:21:00.000Z</published>
-    <updated>2023-11-12T02:44:19.376Z</updated>
+    <updated>2023-11-12T06:39:18.402Z</updated>
     
     
-    <summary type="html">&lt;p&gt;&lt;img src=&quot;/images/redrose/cover.jpg&quot; alt=&quot;banner&quot;&gt;&lt;/p&gt;</summary>
+    <summary type="html">《红玫瑰》乐谱归档</summary>
     
     
     
@@ -467,10 +494,10 @@
     <link href="https://scorevictim.github.io/posts/40095/"/>
     <id>https://scorevictim.github.io/posts/40095/</id>
     <published>2022-05-15T14:18:09.000Z</published>
-    <updated>2023-11-12T02:43:51.089Z</updated>
+    <updated>2023-11-12T06:39:18.422Z</updated>
     
     
-    <summary type="html">&lt;p&gt;&lt;img src=&quot;/images/ML3/MLCover.jpg&quot; alt=&quot;banner&quot;&gt;&lt;/p&gt;</summary>
+    <summary type="html">记录下机器学习中，常用的基础概念以及代码</summary>
     
     
     
@@ -494,37 +521,6 @@
     <category term="神经网络" scheme="https://scorevictim.github.io/tags/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/"/>
     
     <category term="Neural Networks" scheme="https://scorevictim.github.io/tags/Neural-Networks/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Python脚本文件打包成Windows可执行程序格式</title>
-    <link href="https://scorevictim.github.io/posts/19041/"/>
-    <id>https://scorevictim.github.io/posts/19041/</id>
-    <published>2022-05-03T23:00:24.000Z</published>
-    <updated>2023-11-12T02:44:01.145Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;&lt;img src=&quot;/images/pyinstaller.jpeg&quot; alt=&quot;banner&quot;&gt;&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="折腾日记" scheme="https://scorevictim.github.io/categories/%E6%8A%98%E8%85%BE%E6%97%A5%E8%AE%B0/"/>
-    
-    
-    <category term="python" scheme="https://scorevictim.github.io/tags/python/"/>
-    
-    <category term="教程" scheme="https://scorevictim.github.io/tags/%E6%95%99%E7%A8%8B/"/>
-    
-    <category term="程序封装" scheme="https://scorevictim.github.io/tags/%E7%A8%8B%E5%BA%8F%E5%B0%81%E8%A3%85/"/>
-    
-    <category term="打包" scheme="https://scorevictim.github.io/tags/%E6%89%93%E5%8C%85/"/>
-    
-    <category term="Windows" scheme="https://scorevictim.github.io/tags/Windows/"/>
-    
-    <category term="exe" scheme="https://scorevictim.github.io/tags/exe/"/>
-    
-    <category term="可执行文件" scheme="https://scorevictim.github.io/tags/%E5%8F%AF%E6%89%A7%E8%A1%8C%E6%96%87%E4%BB%B6/"/>
     
   </entry>
   
