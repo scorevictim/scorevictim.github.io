@@ -32,7 +32,7 @@
 <meta property="og:image" content="https://blog.vinfall.com/img/android-chrome-512x512.png">
 <meta property="og:image" content="https://www.prettymeng.com/favicon.ico">
 <meta property="article:published_time" content="2023-11-11T08:34:27.000Z">
-<meta property="article:modified_time" content="2023-11-12T04:27:57.071Z">
+<meta property="article:modified_time" content="2023-11-12T07:44:47.309Z">
 <meta property="article:author" content="分数受害者">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://blog.vinfall.com/img/android-chrome-512x512.png">
@@ -191,64 +191,66 @@
    <div id="links">
       <style>
          .links-content{
-         margin-top:1rem;
+            margin-top:1rem;
          }
-         .link-navigation::after {
-         content: " ";
-         display: block;
-         clear: both;
+         .link-navigation {
+            display: flex;
+            flex-wrap: wrap; /* 这会允许card在一行放不下时换行 */
+            justify-content: space-between; /* 分散对齐，如果你想每个元素之间有等距 */
          }
          .card {
-         width: 45%;
-         font-size: 1rem;
-         padding: 10px 20px;
-         border-radius: 4px;
-         transition-duration: 0.15s;
-         margin-bottom: 1rem;
-         display:flex;
+            width: 45%;
+            font-size: 1rem;
+            padding: 10px 20px;
+            border-radius: 4px;
+            transition-duration: 0.15s;
+            margin-bottom: 1rem;
+            display:flex;
          }
-         .card:nth-child(odd) {
-         float: left;
-         }
-         .card:nth-child(even) {
-         float: right;
-         }
-         .card:hover {
-         transform: scale(1.1);
-         box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.12), 0 0 6px 0 rgba(0, 0, 0, 0.04);
+         @media (hover: hover) and (pointer: fine) {
+            .card:hover {
+               transform: scale(1.1);
+               box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.12), 0 0 6px 0 rgba(0, 0, 0, 0.04);
+            }
          }
          .card a {
-         border:none;
+            border:none;
          }
          .card .ava {
-         width: 3rem!important;
-         height: 3rem!important;
-         margin:0!important;
-         margin-right: 1em!important;
-         border-radius:4px;
+            width: 3rem!important;
+            height: 3rem!important;
+            margin:0!important;
+            margin-right: 1em!important;
+            border-radius:4px;
          }
          .card .card-header {
-         font-style: italic;
-         overflow: hidden;
-         width: 100%;
+            font-style: italic;
+            overflow: hidden;
+            width: 100%;
          }
          .card .card-header a {
-         font-style: normal;
-         color: #2bbc8a;
-         font-weight: bold;
-         text-decoration: none;
+            font-style: normal;
+            color: #2bbc8a;
+            font-weight: bold;
+            text-decoration: none;
          }
          .card .card-header a:hover {
-         color: #d480aa;
-         text-decoration: none;
+            color: #d480aa;
+            text-decoration: none;
          }
          .card .card-header .info {
-         font-style:normal;
-         color:#a3a3a3;
-         font-size:14px;
-         min-width: 0;
-         overflow: hidden;
-         white-space: nowrap;
+            font-style:normal;
+            color:#a3a3a3;
+            font-size:14px;
+            min-width: 0;
+            overflow: hidden;
+            white-space: nowrap;
+         }
+         @media screen and (max-width: 768px) { /* 你可以根据需要调整这个阈值 */
+            .card {
+               width: 100%; /* 让.card占据全部宽度 */
+               margin-bottom: 0.5rem; /* 如果需要，调整margin来更好地控制垂直间距 */
+            }
          }
       </style>
       <div class="links-content">

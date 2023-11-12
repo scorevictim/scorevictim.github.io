@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://scorevictim.github.io/friends/index.html</loc>
+    
+    <lastmod>2023-11-12</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://scorevictim.github.io/posts/1799334236/</loc>
     
     <lastmod>2023-11-12</lastmod>
@@ -309,15 +318,6 @@
   
   <url>
     <loc>https://scorevictim.github.io/about/index.html</loc>
-    
-    <lastmod>2023-11-12</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://scorevictim.github.io/friends/index.html</loc>
     
     <lastmod>2023-11-12</lastmod>
     
