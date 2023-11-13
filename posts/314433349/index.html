@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.0.0">
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/logo.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/logo.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/logo.png">
+  <link rel="mask-icon" href="/images/logo.png" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha256-CTSx/A06dm1B063156EVh15m6Y67pAjZZaQc89LLSrU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"scorevictim.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":true,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta property="og:type" content="blog">
+<meta property="og:title" content="如何在Linux下架设我的世界(Minecraft)模组(Mod)服务器">
+<meta property="og:url" content="https://scorevictim.github.io/posts/314433349/index.html">
+<meta property="og:site_name" content="青崖之间">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://scorevictim.github.io/images/mcserver/mc.jpg">
+<meta property="og:image" content="https://scorevictim.github.io/images/xuexip.gif">
+<meta property="og:image" content="https://scorevictim.github.io/images/tietie.png">
+<meta property="article:published_time" content="2022-11-11T19:11:11.000Z">
+<meta property="article:modified_time" content="2023-11-13T01:37:40.933Z">
+<meta property="article:author" content="分数受害者">
+<meta property="article:tag" content="教程">
+<meta property="article:tag" content="Minecraft">
+<meta property="article:tag" content="我的世界">
+<meta property="article:tag" content="服务器">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="模组">
+<meta property="article:tag" content="Mod">
+<meta property="article:tag" content="IPv4&#x2F;IPv6 双栈">
+<meta property="article:tag" content="DDNS">
+<meta property="article:tag" content="远程联机">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://scorevictim.github.io/images/mcserver/mc.jpg">
+
+
+<link rel="canonical" href="https://scorevictim.github.io/posts/314433349/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://scorevictim.github.io/posts/314433349/","path":"posts/314433349/","title":"如何在Linux下架设我的世界(Minecraft)模组(Mod)服务器"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>如何在Linux下架设我的世界(Minecraft)模组(Mod)服务器 | 青崖之间</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="青崖之间" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">青崖之间</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">北海虽赊，扶摇可接</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-留言板"><a href="/contact/" rel="section"><i class="fa fa-comment fa-fw"></i>留言板</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-友情链接"><a href="/friends/" rel="section"><i class="fa fa-link fa-fw"></i>友情链接</a></li><li class="menu-item menu-item-sitemap"><a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a></li><li class="menu-item menu-item-rss"><a href="/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>RSS</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E8%A7%88%E5%8F%8A%E5%87%86%E5%A4%87"><span class="nav-number">2.</span> <span class="nav-text">总览及准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%83%A8%E7%BD%B2%E5%8E%9F%E7%94%9FJava%E6%9C%8D%E5%8A%A1%E7%AB%AF"><span class="nav-number">3.</span> <span class="nav-text">部署原生Java服务端</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Screen%E5%AE%89%E8%A3%85"><span class="nav-number">3.1.</span> <span class="nav-text">Screen安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JRE%E5%AE%89%E8%A3%85"><span class="nav-number">3.2.</span> <span class="nav-text">JRE安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E7%AB%AF%E4%B8%8B%E8%BD%BD"><span class="nav-number">3.3.</span> <span class="nav-text">服务端下载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8E%A5%E5%8F%97EULA"><span class="nav-number">3.4.</span> <span class="nav-text">接受EULA</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%80%E6%9C%8D"><span class="nav-number">3.5.</span> <span class="nav-text">开服</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%83%A8%E7%BD%B2%E6%A8%A1%E7%BB%84%E6%9C%8D%E5%8A%A1%E7%AB%AF-Forge%E7%89%88"><span class="nav-number">4.</span> <span class="nav-text">部署模组服务端(Forge版)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Screen%E5%AE%89%E8%A3%85-1"><span class="nav-number">4.1.</span> <span class="nav-text">Screen安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JRE%E5%AE%89%E8%A3%85-1"><span class="nav-number">4.2.</span> <span class="nav-text">JRE安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Forge%E6%9C%8D%E5%8A%A1%E7%AB%AF%E4%B8%8B%E8%BD%BD"><span class="nav-number">4.3.</span> <span class="nav-text">Forge服务端下载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8E%A5%E5%8F%97EULA-1"><span class="nav-number">4.4.</span> <span class="nav-text">接受EULA</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E6%A8%A1%E7%BB%84-Mods"><span class="nav-number">4.5.</span> <span class="nav-text">添加模组(Mods)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%80%E6%9C%8D-1"><span class="nav-number">4.6.</span> <span class="nav-text">开服</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E7%AB%AF%E9%85%8D%E7%BD%AE"><span class="nav-number">5.</span> <span class="nav-text">服务端配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E7%AB%AF%E4%BC%98%E5%8C%96"><span class="nav-number">6.</span> <span class="nav-text">服务端优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9C%E7%A8%8B%E8%81%94%E6%9C%BA%E8%AE%BE%E7%BD%AE"><span class="nav-number">7.</span> <span class="nav-text">远程联机设置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%B9%E6%8D%AE%E4%BD%A0%E7%9A%84%E7%BD%91%E7%BB%9C%E7%8E%AF%E5%A2%83%E9%98%85%E8%AF%BB"><span class="nav-number">7.1.</span> <span class="nav-text">根据你的网络环境阅读</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IPv4%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91"><span class="nav-number">7.2.</span> <span class="nav-text">IPv4端口转发</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IPv4-%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%EF%BC%88%E4%B8%8D%E5%BB%BA%E8%AE%AE%EF%BC%89"><span class="nav-number">7.3.</span> <span class="nav-text">IPv4 内网穿透（不建议）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IPv6-%E9%98%B2%E7%81%AB%E5%A2%99%E6%94%BE%E8%A1%8C"><span class="nav-number">7.4.</span> <span class="nav-text">IPv6 防火墙放行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DDNS"><span class="nav-number">7.5.</span> <span class="nav-text">DDNS</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="分数受害者"
+      src="/uploads/avatar.jpg">
+  <p class="site-author-name" itemprop="name">分数受害者</p>
+  <div class="site-description" itemprop="description">人生如痴人说梦，充满着喧哗与骚动，却没有任何意义</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">36</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">88</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://scorevictim.github.io/posts/314433349/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+      <meta itemprop="name" content="分数受害者">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="青崖之间">
+      <meta itemprop="description" content="人生如痴人说梦，充满着喧哗与骚动，却没有任何意义">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="如何在Linux下架设我的世界(Minecraft)模组(Mod)服务器 | 青崖之间">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          如何在Linux下架设我的世界(Minecraft)模组(Mod)服务器
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-11-11 11:11:11" itemprop="dateCreated datePublished" datetime="2022-11-11T11:11:11-08:00">2022-11-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-11-12 17:37:40" itemprop="dateModified" datetime="2023-11-12T17:37:40-08:00">2023-11-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%A8%B1%E4%B9%90%E8%87%B3%E6%AD%BB/" itemprop="url" rel="index"><span itemprop="name">娱乐至死</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>7.9k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>7 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><img src="/images/mcserver/mc.jpg" alt="banner"></p>
+<span id="more"></span>
+
+<p style="text-align: center;"><strong>多年以后，面对纷繁嘈杂的世界，他仍能回忆起与朋友无虑且放肆地挥霍人生的那个遥远的下午。</strong></p>
+
+<hr>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>“我的世界”这款游戏的影响力，对于笔者这一年龄段的游戏玩家，绝对是毋庸置疑的，就算你不十分了解，也一定听说过它。还记得在笔者读初中的时候第一次接触到它，由于在当时还没有类似的游戏存在，因此这个有着绝对“全开放”世界+生存主题的游戏深深吸引了本人幼小的心灵。在很长一段时间中一度作为本学渣在父母不在时偷偷玩的游戏首选项。</p>
+<p>而玩过我的世界的玩家都应该能感受到，这种打怪+搭方块的游戏，单机一个人玩固然有乐趣，然而玩多了总会疲倦，如果有好友一块联机游戏，则体验可以直上一层楼。</p>
+<p>但是如何进行联机，则是一个很大的问题，对于普通玩家来说，联机更多地只是在某一方的电脑上打开游戏，在设置中点“开放至局域网”，然后几个人连到同一个WIFI下进入游戏房间。然而这样的方法有很大的局限性：首先便是主机需要一直开着游戏，不能做其他事；然后是所有人必须处于同一个局域网下；这显然是不现实的，毕竟我们总不能天天背着电脑到别人家里联机打游戏。更何况，虽然联机很好，但有些时候也是想一个人玩的，上述方式进行游戏时，必须让存档所在的主机玩家同时打开游戏开服，这显然会给他人带来很多麻烦。</p>
+<p>因此，我们需要的实际上是一种服务器的模式：在有朋友需要联机时，大家接入同一个服务器，彼此可见；在所有人下线后，服务器也不会关闭，仍保持运行，这样每个人想要自己玩时也可以随时加入。</p>
+<p>而为了实现这样的需求，对于普通玩家就出现了相当大的壁垒：一方面是我们对于服务端&#x2F;客户端运行模式需要有了解，另一方面，更多的是需要对计算机网络有一定认知。正如笔者所言，当年是初中时接触的这款游戏，然而由于小孩子的智力水平普遍较低（暴论），笔者也不例外，当时本人的智力显然不足以让我学明白开服的原理，再加上当年打游戏更多的只是为了逃避学习，就更没有认真学习如何开服了。</p>
+<p><img src="/images/xuexip.gif"></p>
+<p>虽说在之后的好多年内，本学渣对着许多教程都没能研究出来如何实现开服，然而这些零零散散的阅读并非毫无作用，在这过程中，笔者不知不觉中也获得了许多“没什么用”的知识：如学习了IP地址后，知道了IPv4公网地址的告罄，也得知了大部分运营商不提供公网IPv4；如了解了NAT&#x2F;PAT后，就明白了内网下全设备共用同一个公网IP，也就知道了为什么明明家里有公网IP时，对方直接输IP也无法进行远程连接；研究Hamachi时，明白了VPN的大致运行逻辑；在杂七杂八的论坛帖中也了解了一些路由、DDNS、ACL控制、IPv6、Linux系统操作等一系列网络和运维领域的东西。可以说，研究Minecraft的开服，是本人日后各种折腾的知识累积“奇点”。</p>
+<p>总而言之吧，在日积月累下，终于在读本科的某一天，本学渣基本了解明白了开服所需的大部分知识体系，于是和室友合租了一台云服务器，开了一个自己整合的mod服，与几位室友在其中快乐地消耗了好一段人生。</p>
+<p><img src="/images/tietie.png"></p>
+<p>然而正所谓：胜地不常，盛筵难再；兰亭已矣，梓泽丘墟。</p>
+<p>人生能够肆意挥霍的青春转瞬即逝，本科毕业后，大家都四散忙于各自的人生，再难有当年的心境和时间去娱乐，事实上，时至今日就算再打开Minecraft，我也失去了当年的游玩兴致（可能是所谓的电子阳痿罢），只能朦胧记得曾经似乎在其中得到过快乐，剩下便只有感叹时间的易逝。</p>
+<p>虽然客观来说，本人年龄算不上大，因此在这里大发青春感慨总难免是显得惺惺作态、娇柔做作，然而缅怀青春这件事，其实无关年龄。恐怕，只要我们意识到自己离坟墓的距离日益减少，就自然而然会产生出怀念更年轻的自己的感受罢。此文的内容，对于本人大概率已经没有什么用处了，然而我还是要写下这篇文章，以纪念本人在这荒唐的世界中荒唐地度过的一些荒唐的时间。</p>
+<hr>
+<h2 id="总览及准备"><a href="#总览及准备" class="headerlink" title="总览及准备"></a>总览及准备</h2><p>如标题所述，本文介绍的是将服务器架设在Linux操作系统之上。选择Linux的原因有很多，最重要的原因便是：看着牛逼。尤其是如果你和本人一样，是纯文科专业，没有什么计算机背景，那在Linux上搭完以后，看着一个控制台中不停地刷代码，成就感会很足，周围的人也会感觉你很牛逼。当然了，在懂计算机的朋友面前，最好还是收起来，不要给他们献丑的好。</p>
+<p>当然了，Linux也有省资源、启动速度快等优点，但与上述原因相比都不太重要。</p>
+<p>那么首先，我们肯定需要有一台安装了Linux系统的计算机，你可以选择在实体机上装Linux，也可以建立一台虚拟机，这里就不介绍方式了，否则篇幅放不下。如果不会的话，可以先学习下基础的Linux系统安装方式。</p>
+<p>本人习惯的Linux发行版是Ubuntu，于是本教程基于Ubuntu撰写，如果你想用Debian或者CentOS也可以，但每一步的指令可能会有一些不同，需自行确认。</p>
+<p>对于配置方面，开服主要吃的是内存，最好有8g以上的内存，当然，如果你只有两三个一起玩的朋友，那4g也是够用的，2g就比较勉强了，服务器会不定期卡死。CPU方面，总归是越强越好了，最低也得有2GHZ，否则模组服大概率会开不起来。除此之外，网络是重中之重，如果你租云服务器，最好是买不限带宽的流量计费，而不是买带宽计费那种，毕竟国内的带宽实在是太贵了。不过可能不太容易买到就是了。如果你要在自己家开服，那要保证宽带的上行带宽，注意一定要是上行带宽，不是下载带宽，这里最好和宽带运营商确认下，因为现在国内很多千兆网只有下载是千兆，实际只有二十几兆的上行。而开服的话，上行需要大于50兆，最好有100m，当然也是人越多需求越高。</p>
+<p>说实话，这里的价格门槛还是有点高的，尤其是对于不富有的学生党，我想大部分是无力一人承担服务器的价格的（反正当年本人是无力承担的），最好还是和朋友合租云服务器或者合购物理机。</p>
+<p>安装完系统后，先运行更新：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update</span><br><span class="line">sudo apt upgrade</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="部署原生Java服务端"><a href="#部署原生Java服务端" class="headerlink" title="部署原生Java服务端"></a>部署原生Java服务端</h2><p>如果你仅需要搭建一个纯原生的服务器环境，则只需阅读这一部分即可，否则请直接阅读下一章节。</p>
+<h3 id="Screen安装"><a href="#Screen安装" class="headerlink" title="Screen安装"></a>Screen安装</h3><p>Screen是一个控制台应用，通过Screen建立控制台后，断开服务器的SSH连接不会中断服务运行。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install screen</span><br></pre></td></tr></table></figure>
+
+<p>安装完后，通过下述指令创建一个控制台：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">screen -S MC</span><br></pre></td></tr></table></figure>
+
+<p>重新SSH连入系统后，通过下述指令回到服务端所在窗口：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">screen -r MC</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注：新版的Ubuntu自带Screen，所以这步不是必须。</p>
+</blockquote>
+<h3 id="JRE安装"><a href="#JRE安装" class="headerlink" title="JRE安装"></a>JRE安装</h3><p>由于Minecraft是基于Java编写，所以在打开服务端前，需要先安装Java运行环境JRE。（JDK也行，会自动包含JRE）：</p>
+<p>如果你要运行1.17以上的服务端，那么安装最新JRE即可：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install default-jre</span><br></pre></td></tr></table></figure>
+
+<p>如果你要运行1.17以下的服务端，那么需安装Java 8：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install openjdk-8-jdk-headless</span><br></pre></td></tr></table></figure>
+
+<p>检查安装的版本：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -version</span><br></pre></td></tr></table></figure>
+
+<h3 id="服务端下载"><a href="#服务端下载" class="headerlink" title="服务端下载"></a>服务端下载</h3><p>首先创建一个放服务端的文件夹，这里叫做MC</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> MC</span><br></pre></td></tr></table></figure>
+
+<p>进入MC文件夹：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> MC</span><br></pre></td></tr></table></figure>
+
+<p>下载服务端文件：</p>
+<p>我们这里以本人写文章时的最新服务端为例：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https://launcher.mojang.com/v1/objects/c8f83c5655308435b3dcf03c06d9fe8740a77469/server.jar</span><br></pre></td></tr></table></figure>
+
+<p>为了方便管理，我们对于下载的文件改名：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mv</span> server.jar McServer.jar</span><br></pre></td></tr></table></figure>
+
+<p>初始化：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -jar McServer.jar --nogui</span><br></pre></td></tr></table></figure>
+
+<p>此时会报错，需要先接受EULA，见下文。</p>
+<h3 id="接受EULA"><a href="#接受EULA" class="headerlink" title="接受EULA"></a>接受EULA</h3><p>初次运行完后，目录下会生成<code>eula.txt</code>文件，用Vim或其它的文本编辑器将其中的<code>eula=false</code>改为<code>eula=true</code></p>
+<h3 id="开服"><a href="#开服" class="headerlink" title="开服"></a>开服</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -Xmx1024M -Xms1024M -jar McServer.jar nogui</span><br></pre></td></tr></table></figure>
+
+<p>-Xmx -Xms用于指定使用内存的最大最小值(MB)，可根据实际使用情况调整。此时我们的最基础的一个服务器就开启完成了。</p>
+<hr>
+<h2 id="部署模组服务端-Forge版"><a href="#部署模组服务端-Forge版" class="headerlink" title="部署模组服务端(Forge版)"></a>部署模组服务端(Forge版)</h2><p>如果你在读这一部分，那么表示你不仅希望玩原生内容，还想打上各类的mod丰富游戏体验。当然，一般来说，总是要打一些Mod的，否则没什么意思。</p>
+<h3 id="Screen安装-1"><a href="#Screen安装-1" class="headerlink" title="Screen安装"></a>Screen安装</h3><p>Screen是一个控制台应用，通过Screen建立控制台后，断开服务器的SSH连接不会中断服务运行。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install screen</span><br></pre></td></tr></table></figure>
+
+<p>安装完后，通过下述指令创建一个控制台：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">screen -S MC</span><br></pre></td></tr></table></figure>
+
+<p>重新SSH连入系统后，通过下述指令回到服务端所在窗口：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">screen -r MC</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注：新版的Ubuntu自带Screen，所以这步不是必须。</p>
+</blockquote>
+<h3 id="JRE安装-1"><a href="#JRE安装-1" class="headerlink" title="JRE安装"></a>JRE安装</h3><p>由于Minecraft是基于Java编写，所以在打开服务端前，需要先安装Java运行环境JRE。（JDK也行，会自动包含JRE）：</p>
+<p>如果你要运行1.17以上的服务端，那么安装最新JRE即可：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install default-jre</span><br></pre></td></tr></table></figure>
+
+<p>如果你要运行1.17以下的服务端，那么需安装Java 8：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install openjdk-8-jdk-headless</span><br></pre></td></tr></table></figure>
+
+<p>检查安装的版本：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -version</span><br></pre></td></tr></table></figure>
+
+<h3 id="Forge服务端下载"><a href="#Forge服务端下载" class="headerlink" title="Forge服务端下载"></a>Forge服务端下载</h3><p>要安装Mod，则需要装Mod管理器，我们这里使用Forge，你也可以选择Fabric等管理器，这里只展示Forge的用法。</p>
+<p>在这里下载对应版本的Forge安装器：</p>
+<p><a target="_blank" rel="noopener" href="https://files.minecraftforge.net/net/minecraftforge/forge/">Forge</a> </p>
+<p>将下载的文件放在服务器目录下，然后：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -jar forge-x.xx.x-installer.jar --installServer</span><br></pre></td></tr></table></figure>
+
+<p>等待读条完毕后，进行初始化：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -jar forge-x.xx.x-universal.jar --nogui</span><br></pre></td></tr></table></figure>
+
+<p>此时会报错，需要先接受EULA，见下文。</p>
+<h3 id="接受EULA-1"><a href="#接受EULA-1" class="headerlink" title="接受EULA"></a>接受EULA</h3><p>初次运行完后，目录下会生成<code>eula.txt</code>文件，用Vim或其它的文本编辑器将其中的<code>eula=false</code>改为<code>eula=true</code></p>
+<h3 id="添加模组-Mods"><a href="#添加模组-Mods" class="headerlink" title="添加模组(Mods)"></a>添加模组(Mods)</h3><p>这一步很容易，只需在服务器目录下创建一个mods文件夹，然后将想打的mod放进去即可。</p>
+<p>这里分享两个mod下载站：</p>
+<p>如果你有办法连到外网，那么我推荐使用CurseForge，这里有很多一线的创作者在更新，也可以直接下做好的整合包。</p>
+<p>如果你在使用中国大陆的网络，那么我推荐MCBBS，这里既有国内的优秀mod制作者制作的mod，也有搬运国外的优秀mod的贴子。</p>
+<h3 id="开服-1"><a href="#开服-1" class="headerlink" title="开服"></a>开服</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -Xmx1024M -Xms512M -jar forge-x.xx.x-universal.jar -nogui</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="服务端配置"><a href="#服务端配置" class="headerlink" title="服务端配置"></a>服务端配置</h2><p>所有的配置都在文件：<code>server.properties</code> 中</p>
+<p>需要留意的是<code>online-mode</code>这一选项，这是检测连接的客户端是否为正版的选项，我想大部分中文用户都是盗版玩家，所以首先将其改为false，否则会无法连接。</p>
+<p><code>server-port</code> &#x2F;&#x2F;这个是占用的端口，默认25565，如果保持默认，那么登陆服务器的时候不用输入端口号</p>
+<p><code>max-players</code> &#x2F;&#x2F;这个是最大人数，默认是20人</p>
+<p>其余的可以根据自身需求配置，保持默认一般就可以</p>
+<hr>
+<h2 id="服务端优化"><a href="#服务端优化" class="headerlink" title="服务端优化"></a>服务端优化</h2><p>下述方法可以起到心理层面上的优化作用。</p>
+<p>以下是启动脚本</p>
+<p>java -server -d64 -Xmx3550M -Xms3550M -Xss256k -XX:PermSize&#x3D;256m -XX:MaxPermSize&#x3D;256m -XX:NewSize&#x3D;1024m -XX:MaxNewSize&#x3D;1024m -XX:+UseParNewGC -XX:+CMSIncrementalPacing -XX:+UseFastAccessorMethods -XX:+UseConcMarkSweepGC -XX:MaxGCPauseMillis&#x3D;100 -XX:+CMSParallelRemarkEnabled -XX:ParallelGCThreads&#x3D;20 -jar minecraft_server.1.8.jar nogui</p>
+<p>参数说明</p>
+<p>-server：一定要作为第一个参数，会使JVM启动速度变慢，但会显着提升JVM性能</p>
+<p>-d64：强制使用64位JVM，如果不是64位系统和java请去掉</p>
+<p>-Xmx3550m：设置JVM最大堆内存为3550M。</p>
+<p>-Xms3550m：设置JVM初始堆内存为3550M。此值可以设置与-Xmx相同，以避免每次垃圾回收完成后JVM重新分配内存。</p>
+<p>-Xss128k：设置每个线程的栈大小。JDK5.0以后每个线程栈大小为1M，之前每个线程栈大小为256K。应当根据应用的线程所需内存大小进行调整。在相同物理内存下，减小这个值能生成更多的线程。但是操作系统对一个进程内的线程数还是有限制的，不能无限生成，经验值在3000~5000左右。需要注意的是：当这个值被设置的较大(例如&gt;2MB)时将会在很大程度上降低系统的性能。</p>
+<p>-Xmn2g：设置年轻代大小为2G。在整个堆内存大小确定的情况下，增大年轻代将会减小年老代，反之亦然。此值关系到JVM垃圾回收，对系统性能影响较大，官方推荐配置为整个堆大小的3&#x2F;8。</p>
+<p>-XX:NewSize&#x3D;1024m：设置年轻代初始值为1024M。</p>
+<p>-XX:MaxNewSize&#x3D;1024m：设置年轻代最大值为1024M。</p>
+<p>-XX:PermSize&#x3D;256m：设置持久代初始值为256M。</p>
+<p>-XX:MaxPermSize&#x3D;256m：设置持久代最大值为256M。</p>
+<p>-XX:NewRatio&#x3D;4：设置年轻代(包括1个Eden和2个Survivor区)与年老代的比值。表示年轻代比年老代为1:4。</p>
+<p>-XX:SurvivorRatio&#x3D;4：设置年轻代中Eden区与Survivor区的比值。表示2个Survivor区(JVM堆内存年轻代中默认有2个大小相等的Survivor区)与1个Eden区的比值为2:4，即1个Survivor区占整个年轻代大小的1&#x2F;6。</p>
+<p>-XX:MaxTenuringThreshold&#x3D;7：表示一个对象如果在Survivor区(救助空间)移动了7次还没有被垃圾回收就进入年老代。如果设置为0的话，则年轻代对象不经过Survivor区，直接进入年老代，对于需要大量常驻内存的应用，这样做可以提高效率。如果将此值设置为一个较大值，则年轻代对象会在Survivor区进行多次复制，这样可以增加对象在年轻代存活时间，增加对象在年轻代被垃圾回收的概率，减少Full GC的频率，这样做可以在某种程度上提高服务稳定性。</p>
+<p>GC(垃圾回收)参数</p>
+<p>Sun HotSpot JVM 通常使用的 GC 算法是分代回收。即把对象按生命周期不同分为年轻代和年老代。新的对象会先生成在Young Area，在几次 GC 以后，如果没有收集到，就会逐渐升级到Tenured Area。</p>
+<p>Sun JVM 默认的回收器称为 serial collector ，即串行回收，我们也可以使用多线程并发回收来提高效率。需要注意的是，在单核的机器上，使用默认的回收器可能会更好。</p>
+<p>-XX:+UseParNewGC：为年轻代对象使用并发回收，会缩短年轻代对象的回收时间</p>
+<p>-XX:+UseConcMarkSweepGC：为年老代使用并发回收</p>
+<p>-XX:+UseParallelGC：该收集器和 UseConcMarkSweepGC 是互相排斥的，为新生代使用并行清除，年老代使用单线程Mark-Sweep-Compact的垃圾收集器。</p>
+<hr>
+<h2 id="远程联机设置"><a href="#远程联机设置" class="headerlink" title="远程联机设置"></a>远程联机设置</h2><p>开好服务器，当然需要能在公网环境连上才有用，这里探讨几种不同的网络环境下的联机方法：</p>
+<h3 id="根据你的网络环境阅读"><a href="#根据你的网络环境阅读" class="headerlink" title="根据你的网络环境阅读"></a>根据你的网络环境阅读</h3><ol>
+<li><p>无V4公网IP，无V6公网IP</p>
+<p> （这种情况，首先建议你换家运营商。）</p>
+<p> 对于IPv4，参考下文中的IPv4内网穿透；</p>
+<p> 对于IPv6，可能得使用4To6Tunnel之类的技术，不建议折腾，对于这种网络，建议换一家运营商。</p>
+</li>
+<li><p>有V4公网IP，无V6公网IP</p>
+<p> 这样的情况可能比较罕见，无法组双栈，但至少IPv4可以稳定连接，参考下文中的端口转发。</p>
+<p> 参考下文中的IPv4端口转发。</p>
+</li>
+<li><p>无V4公网IP，有V6公网IP</p>
+<p> 对于IPv4，参考下文中的IPv4内网穿透。</p>
+<p> 对于IPv6，参考下文中的IPv6防火墙放行。</p>
+</li>
+<li><p>有V4公网IP，有V6公网IP</p>
+<p> 对于IPv4，参考下文中的IPv4端口转发。</p>
+<p> 对于IPv6，参考下文中的IPv6防火墙放行。</p>
+</li>
+</ol>
+<hr>
+<h3 id="IPv4端口转发"><a href="#IPv4端口转发" class="headerlink" title="IPv4端口转发"></a>IPv4端口转发</h3><p>当我们说你有IPv4的公网地址时，实际说的是你的路由器的WAN口有一个公网地址，所有的网络流量都会经由这一个端口在你的内网和公网之间流动，这一切的行为都由路由器控制，因此我们所要设计的是：将哪些网络流量转发至我们的内部服务器？通常来说我们以端口进行过滤。例如MC的服务器默认开启在25565端口，不修改这个的前提下，我们可以在路由器中设置将WAN口所有的25565端口的入站流量，都转发至我们内网服务器的25565端口，这里的操作需要参考你的路由器的说明书，正常来说所有路由器都有这一基础功能。当然这两个端口都可以自定义，但这里就举例最方便的方式了，当我们做好转发后，便可以通过IP:25565的方式在游戏中连接我们的服务器了。</p>
+<hr>
+<h3 id="IPv4-内网穿透（不建议）"><a href="#IPv4-内网穿透（不建议）" class="headerlink" title="IPv4 内网穿透（不建议）"></a>IPv4 内网穿透（不建议）</h3><p>对于内网穿透，本人并不建议，其本质上就是做了服务器中转，无论是带宽还是延迟都会受到很大影响。</p>
+<p>但是对于大多数用户来说，也就只有这一个办法了。（好多年前还可以通过组VPN来实现联机，但现在在国内可能会面临未备案的法律风险，所以这条路可以说已经不通了）</p>
+<p>关于内网穿透，免费方案是—FRP</p>
+<p>当然，说是免费，你至少也得租一台云服务器才行，这样才能有公网IP。只不过不需要买配置很高的，服务器只要提供带宽即可。</p>
+<p>FRP由客户端和服务端组成，服务端的IP就是最终我们用来连接的IP。</p>
+<p>然而，与其租台服务器折腾这个，不如直接买现有的付费方案，反正都要花钱。</p>
+<hr>
+<h3 id="IPv6-防火墙放行"><a href="#IPv6-防火墙放行" class="headerlink" title="IPv6 防火墙放行"></a>IPv6 防火墙放行</h3><p>当你有IPv6时，对于大多数用户来说是无需配置的，直接就可以使用，然而如果你的路由器存在防火墙，则需根据路由器系统，找到IPv6防火墙设置，进行关闭。</p>
+<p>当然，关闭防火墙并不是最好的选择，最好的是仅仅将服务器的机器的IP和MC所在端口号进行放行，然而考虑到大部分路由器对于IPv6防火墙的支持很差，不一定有这一功能，在不使用OpenWrt或者其它高级点的路由器系统的情况下，可能无法实现需求，索性就关了就好。</p>
+<hr>
+<h3 id="DDNS"><a href="#DDNS" class="headerlink" title="DDNS"></a>DDNS</h3><p>最后，当一切都可以运行时，还有一个大幅提升体验性的事情可以做，那就是动态域名服务。由于很多时候，我们就算有公网IP，它也时不时地会变化，这样会导致每次连接时都要先查一下当前IP是什么，很不方便，如果可以像访问谷歌百度一样，每次输入域名，就会容易很多。</p>
+<p>为了实现这个，我们首先要购买一个域名，可以买的地方很多，如NameCheap、阿里云等等，这里就不多赘述。</p>
+<p>有了我们自己的域名，下一步就是域名与IP绑定，也就是DNS，然而正如前文所述，当IP变化时，DNS就会失效，因此我们需要一个服务动态地将域名与IP进行关联。</p>
+<p>要做DDNS，其实工具也有很多，笔者比较熟悉的是<code>ddns-go</code>，只需在Docker中启动，就可以看到直观的Web管理界面，这里就不赘述细节了，到它的官方文档查看即可。</p>
+<p>当这一步做好后，我们就有了一个可以通过域名访问的服务器啦~</p>
+<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>请我一杯咖啡吧！</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/Sponsor/wechat.png" alt="分数受害者 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/Sponsor/alipay.jpg" alt="分数受害者 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>原作者： </strong>分数受害者
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://scorevictim.github.io/posts/314433349/" title="如何在Linux下架设我的世界(Minecraft)模组(Mod)服务器">https://scorevictim.github.io/posts/314433349/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E6%95%99%E7%A8%8B/" rel="tag"># 教程</a>
+              <a href="/tags/Minecraft/" rel="tag"># Minecraft</a>
+              <a href="/tags/%E6%88%91%E7%9A%84%E4%B8%96%E7%95%8C/" rel="tag"># 我的世界</a>
+              <a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/" rel="tag"># 服务器</a>
+              <a href="/tags/Linux/" rel="tag"># Linux</a>
+              <a href="/tags/%E6%A8%A1%E7%BB%84/" rel="tag"># 模组</a>
+              <a href="/tags/Mod/" rel="tag"># Mod</a>
+              <a href="/tags/IPv4-IPv6-%E5%8F%8C%E6%A0%88/" rel="tag"># IPv4/IPv6 双栈</a>
+              <a href="/tags/DDNS/" rel="tag"># DDNS</a>
+              <a href="/tags/%E8%BF%9C%E7%A8%8B%E8%81%94%E6%9C%BA/" rel="tag"># 远程联机</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/posts/23186/" rel="prev" title="《玫瑰花的葬礼》吉他谱">
+                  <i class="fa fa-angle-left"></i> 《玫瑰花的葬礼》吉他谱
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/posts/9273/" rel="next" title="Linux下如何配置多版本Ruby开发环境">
+                  Linux下如何配置多版本Ruby开发环境 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2022 – 
+    <span itemprop="copyrightYear">2023</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">分数受害者</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">204k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">3:06</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  
+
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://scorevictim.github.io/posts/314433349/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"scorevictim/blogcomments","issue_term":"title","theme":"github-dark"}</script>
+<script src="/js/third-party/comments/utterances.js"></script>
+
+</body>
+</html>

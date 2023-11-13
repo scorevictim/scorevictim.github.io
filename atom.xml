@@ -173,6 +173,43 @@
   </entry>
   
   <entry>
+    <title>如何在Linux下架设我的世界(Minecraft)模组(Mod)服务器</title>
+    <link href="https://scorevictim.github.io/posts/314433349/"/>
+    <id>https://scorevictim.github.io/posts/314433349/</id>
+    <published>2022-11-11T19:11:11.000Z</published>
+    <updated>2023-11-13T01:37:40.933Z</updated>
+    
+    
+    <summary type="html">搭建Minecraft纯净/模组服，并开启IPv4/IPv6双栈支持</summary>
+    
+    
+    
+    <category term="娱乐至死" scheme="https://scorevictim.github.io/categories/%E5%A8%B1%E4%B9%90%E8%87%B3%E6%AD%BB/"/>
+    
+    
+    <category term="教程" scheme="https://scorevictim.github.io/tags/%E6%95%99%E7%A8%8B/"/>
+    
+    <category term="Minecraft" scheme="https://scorevictim.github.io/tags/Minecraft/"/>
+    
+    <category term="我的世界" scheme="https://scorevictim.github.io/tags/%E6%88%91%E7%9A%84%E4%B8%96%E7%95%8C/"/>
+    
+    <category term="服务器" scheme="https://scorevictim.github.io/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/"/>
+    
+    <category term="Linux" scheme="https://scorevictim.github.io/tags/Linux/"/>
+    
+    <category term="模组" scheme="https://scorevictim.github.io/tags/%E6%A8%A1%E7%BB%84/"/>
+    
+    <category term="Mod" scheme="https://scorevictim.github.io/tags/Mod/"/>
+    
+    <category term="IPv4/IPv6 双栈" scheme="https://scorevictim.github.io/tags/IPv4-IPv6-%E5%8F%8C%E6%A0%88/"/>
+    
+    <category term="DDNS" scheme="https://scorevictim.github.io/tags/DDNS/"/>
+    
+    <category term="远程联机" scheme="https://scorevictim.github.io/tags/%E8%BF%9C%E7%A8%8B%E8%81%94%E6%9C%BA/"/>
+    
+  </entry>
+  
+  <entry>
     <title>《玫瑰花的葬礼》吉他谱</title>
     <link href="https://scorevictim.github.io/posts/23186/"/>
     <id>https://scorevictim.github.io/posts/23186/</id>
@@ -486,41 +523,6 @@
     <category term="吉他" scheme="https://scorevictim.github.io/tags/%E5%90%89%E4%BB%96/"/>
     
     <category term="娱乐" scheme="https://scorevictim.github.io/tags/%E5%A8%B1%E4%B9%90/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>机器学习基础笔记（三）</title>
-    <link href="https://scorevictim.github.io/posts/40095/"/>
-    <id>https://scorevictim.github.io/posts/40095/</id>
-    <published>2022-05-15T14:18:09.000Z</published>
-    <updated>2023-11-12T06:39:18.422Z</updated>
-    
-    
-    <summary type="html">记录下机器学习中，常用的基础概念以及代码</summary>
-    
-    
-    
-    <category term="学习笔记" scheme="https://scorevictim.github.io/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-    
-    <category term="数据分析" scheme="https://scorevictim.github.io/tags/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/"/>
-    
-    <category term="笔记" scheme="https://scorevictim.github.io/tags/%E7%AC%94%E8%AE%B0/"/>
-    
-    <category term="建模" scheme="https://scorevictim.github.io/tags/%E5%BB%BA%E6%A8%A1/"/>
-    
-    <category term="python" scheme="https://scorevictim.github.io/tags/python/"/>
-    
-    <category term="机器学习" scheme="https://scorevictim.github.io/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
-    
-    <category term="自然语言处理" scheme="https://scorevictim.github.io/tags/%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86/"/>
-    
-    <category term="NLP" scheme="https://scorevictim.github.io/tags/NLP/"/>
-    
-    <category term="神经网络" scheme="https://scorevictim.github.io/tags/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/"/>
-    
-    <category term="Neural Networks" scheme="https://scorevictim.github.io/tags/Neural-Networks/"/>
     
   </entry>
   
