@@ -6,7 +6,7 @@
   <link href="https://scorevictim.github.io/atom.xml" rel="self"/>
   
   <link href="https://scorevictim.github.io/"/>
-  <updated>2023-11-12T08:20:55.728Z</updated>
+  <updated>2023-12-30T20:22:28.501Z</updated>
   <id>https://scorevictim.github.io/</id>
   
   <author>
@@ -15,6 +15,35 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>如何对Proxmox下的Ubuntu虚拟机LVM磁盘扩容</title>
+    <link href="https://scorevictim.github.io/posts/2295135744/"/>
+    <id>https://scorevictim.github.io/posts/2295135744/</id>
+    <published>2023-12-30T20:00:47.000Z</published>
+    <updated>2023-12-30T20:22:28.501Z</updated>
+    
+    
+    <summary type="html">记录在Proxmox下扩容Ubuntu虚拟机LVM磁盘的流程</summary>
+    
+    
+    
+    <category term="学习笔记" scheme="https://scorevictim.github.io/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+    
+    <category term="VM" scheme="https://scorevictim.github.io/tags/VM/"/>
+    
+    <category term="虚拟机" scheme="https://scorevictim.github.io/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/"/>
+    
+    <category term="Ubuntu" scheme="https://scorevictim.github.io/tags/Ubuntu/"/>
+    
+    <category term="Proxmox" scheme="https://scorevictim.github.io/tags/Proxmox/"/>
+    
+    <category term="磁盘扩容" scheme="https://scorevictim.github.io/tags/%E7%A3%81%E7%9B%98%E6%89%A9%E5%AE%B9/"/>
+    
+    <category term="LVM" scheme="https://scorevictim.github.io/tags/LVM/"/>
+    
+  </entry>
   
   <entry>
     <title>记Hexo博客主题迁移及更名 - Next/青崖之间</title>
@@ -502,27 +531,6 @@
     <category term="regression" scheme="https://scorevictim.github.io/tags/regression/"/>
     
     <category term="回归" scheme="https://scorevictim.github.io/tags/%E5%9B%9E%E5%BD%92/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>《红玫瑰》吉他谱</title>
-    <link href="https://scorevictim.github.io/posts/47643/"/>
-    <id>https://scorevictim.github.io/posts/47643/</id>
-    <published>2022-05-18T15:21:00.000Z</published>
-    <updated>2023-11-12T06:39:18.402Z</updated>
-    
-    
-    <summary type="html">《红玫瑰》乐谱归档</summary>
-    
-    
-    
-    <category term="吉他谱" scheme="https://scorevictim.github.io/categories/%E5%90%89%E4%BB%96%E8%B0%B1/"/>
-    
-    
-    <category term="吉他" scheme="https://scorevictim.github.io/tags/%E5%90%89%E4%BB%96/"/>
-    
-    <category term="娱乐" scheme="https://scorevictim.github.io/tags/%E5%A8%B1%E4%B9%90/"/>
     
   </entry>
   
